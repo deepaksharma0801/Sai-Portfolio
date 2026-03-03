@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f2b3d"/>
+      <stop offset="0.55" stop-color="#1f4b3b"/>
+      <stop offset="1" stop-color="#2a5a46"/>
+    </linearGradient>
+    <radialGradient id="planet" cx="70%" cy="35%" r="28%">
+      <stop offset="0" stop-color="#ffd39b"/>
+      <stop offset="1" stop-color="#f1975d"/>
+    </radialGradient>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7e2c2" stop-opacity="0"/>
+      <stop offset="1" stop-color="#f7e2c2" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="600" rx="36" fill="url(#bg)"/>
+  <g opacity="0.6" fill="#f9f4ea">
+    <circle cx="120" cy="90" r="2"/>
+    <circle cx="230" cy="140" r="1.8"/>
+    <circle cx="360" cy="90" r="2.4"/>
+    <circle cx="520" cy="130" r="1.6"/>
+    <circle cx="760" cy="110" r="2"/>
+    <circle cx="680" cy="210" r="1.4"/>
+    <circle cx="560" cy="230" r="1.9"/>
+  </g>
+  <circle cx="670" cy="230" r="120" fill="url(#planet)"/>
+  <circle cx="670" cy="230" r="150" fill="none" stroke="#f9f4ea" stroke-opacity="0.25" stroke-width="2"/>
+  <path d="M120 430 C260 370 360 370 500 430" fill="none" stroke="#f9f4ea" stroke-opacity="0.4" stroke-width="3"/>
+  <path d="M160 470 C290 420 390 420 540 480" fill="none" stroke="#f9f4ea" stroke-opacity="0.2" stroke-width="2"/>
+  <g transform="translate(190 270)">
+    <path d="M0 40 L100 0 L140 80 L40 120 Z" fill="#f9f4ea" opacity="0.12"/>
+    <path d="M25 55 L85 25 L110 80 L50 100 Z" fill="#f9f4ea" opacity="0.25"/>
+    <path d="M70 20 L110 0 L140 40" fill="none" stroke="#f9f4ea" stroke-opacity="0.5" stroke-width="3"/>
+  </g>
+  <path d="M320 180 C360 130 410 110 470 90" stroke="url(#trail)" stroke-width="6" fill="none"/>
+  <path d="M300 210 C350 150 410 130 470 105" stroke="#f9f4ea" stroke-opacity="0.2" stroke-width="2" fill="none"/>
+  <circle cx="470" cy="90" r="6" fill="#f9f4ea"/>
+</svg>
