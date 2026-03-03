@@ -206,6 +206,20 @@
 
         .hero {
             padding: 80px 0 90px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            top: -120px;
+            right: -120px;
+            background: radial-gradient(circle, rgba(214, 122, 98, 0.35), transparent 70%);
+            opacity: 0.7;
+            animation: drift 12s ease-in-out infinite;
         }
 
         .hero-grid {
@@ -227,6 +241,9 @@
             font-size: 12px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            animation: floatY 6s ease-in-out infinite;
         }
 
         .badge::before {
@@ -237,6 +254,15 @@
             background: var(--accent);
         }
 
+        .badge::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            transform: translateX(-120%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
         .hero-title {
             font-size: clamp(2.8rem, 6vw, 5.2rem);
             line-height: 1.05;
@@ -244,7 +270,7 @@
             font-weight: 800;
             opacity: 0;
             transform: translateY(18px);
-            animation: fadeUp 0.9s ease forwards;
+            animation: fadeUp 1.1s ease forwards;
         }
 
         .hero-title span {
@@ -258,7 +284,7 @@
             font-weight: 500;
             opacity: 0;
             transform: translateY(18px);
-            animation: fadeUp 0.9s ease 0.1s forwards;
+            animation: fadeUp 1.1s ease 0.15s forwards;
         }
 
         .hero-description {
@@ -268,7 +294,7 @@
             line-height: 1.8;
             opacity: 0;
             transform: translateY(18px);
-            animation: fadeUp 0.9s ease 0.2s forwards;
+            animation: fadeUp 1.1s ease 0.25s forwards;
         }
 
         .cta-row {
@@ -278,7 +304,7 @@
             gap: 14px;
             opacity: 0;
             transform: translateY(18px);
-            animation: fadeUp 0.9s ease 0.3s forwards;
+            animation: fadeUp 1.1s ease 0.35s forwards;
         }
 
         .btn {
@@ -337,7 +363,7 @@
             box-shadow: var(--shadow);
             transform: translateY(8px);
             opacity: 0;
-            animation: fadeUp 0.9s ease 0.35s forwards;
+            animation: fadeUp 1.2s ease 0.4s forwards;
         }
 
         .portrait {
@@ -406,13 +432,39 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(26px);
+            filter: blur(6px);
+            transition: opacity 1.2s ease, transform 1.2s ease, filter 1.2s ease;
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+
+        .reveal.slow {
+            transition-duration: 1.7s;
         }
 
         .reveal.in-view {
             opacity: 1;
             transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .reveal-mask {
+            position: relative;
+            overflow: hidden;
+            --mask-bg: var(--bg);
+        }
+
+        .reveal-mask::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--mask-bg);
+            transform: translateX(0);
+            transition: transform 1.4s ease;
+        }
+
+        .reveal-mask.in-view::after {
+            transform: translateX(105%);
         }
 
         .parallax {
@@ -422,12 +474,17 @@
         }
 
         .float-card {
+            --rx: 0deg;
+            --ry: 0deg;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            transform: translateY(var(--parallax, 0px));
+            transform: translateY(var(--parallax, 0px)) rotateX(var(--rx)) rotateY(var(--ry));
+            transform-style: preserve-3d;
         }
 
         .float-card:hover {
-            transform: translateY(calc(var(--parallax, 0px) - 6px));
+            --rx: 2deg;
+            --ry: -2deg;
+            transform: translateY(calc(var(--parallax, 0px) - 6px)) rotateX(var(--rx)) rotateY(var(--ry));
             box-shadow: 0 22px 40px rgba(31, 45, 36, 0.12);
         }
 
@@ -435,6 +492,53 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes floatY {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                transform: translateX(-120%);
+            }
+            50% {
+                transform: translateX(120%);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes drift {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-20px, 12px) scale(1.05);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.12);
+                opacity: 1;
             }
         }
 
@@ -598,6 +702,8 @@
             position: relative;
             min-height: 230px;
             overflow: hidden;
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
         }
 
         .project-media::after {
@@ -607,6 +713,19 @@
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.05);
+        }
+
+        .project-media::before {
+            content: "";
+            position: absolute;
+            inset: -30% -30%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+            transform: translateX(-120%);
+            transition: transform 0.8s ease;
+        }
+
+        .project-card:hover .project-media::before {
+            transform: translateX(120%);
         }
 
         .project-media span {
@@ -745,6 +864,18 @@
             right: -40px;
         }
 
+        .contact-panel::before {
+            content: "";
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(214, 122, 98, 0.2);
+            bottom: -60px;
+            left: -40px;
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
         .contact-panel h2 {
             font-size: clamp(2rem, 4vw, 3rem);
         }
@@ -871,7 +1002,7 @@
                 </div>
                 <div class="hero-card float-card" data-parallax="0.12">
                     <div class="portrait">
-                        <img src="profile.png" alt="Sai Deepak Sharma Nadiminty portrait" />
+                        <img src="photo ds.png" alt="Sai Deepak Sharma Nadiminty portrait" />
                     </div>
                     <h3>Focused on impact</h3>
                     <p>
@@ -897,12 +1028,12 @@
 
         <section id="about">
             <div class="container">
-                <div class="section-heading reveal">
+                <div class="section-heading reveal reveal-mask slow">
                     <h2>About Me</h2>
                     <p>Blending data, design, and engineering to build responsible AI products and experiences.</p>
                 </div>
                 <div class="about-grid">
-                <div class="about-text reveal">
+                <div class="about-text reveal slow">
                         <p>
                             I&#39;m a Data Science graduate student at Arizona State University with a passion for leveraging AI and machine learning to solve complex, real-world problems.
                         </p>
@@ -915,7 +1046,7 @@
                             <span>Crafting intelligent solutions at the intersection of data science, artificial intelligence, and human experience.</span>
                         </div>
                     </div>
-                    <div class="about-stats reveal">
+                    <div class="about-stats reveal" data-stagger-group>
                         <div class="about-stat float-card">
                             <strong>5+</strong>
                             <span>Major Projects</span>
@@ -935,12 +1066,12 @@
 
         <section id="experience">
             <div class="container">
-                <div class="section-heading reveal">
+                <div class="section-heading reveal reveal-mask slow">
                     <h2>Experience</h2>
                     <p>Hands-on roles delivering operational excellence and applied AI solutions.</p>
                 </div>
-                <div class="experience-list">
-                    <div class="experience-card float-card reveal">
+                <div class="experience-list" data-stagger-group>
+                    <div class="experience-card float-card reveal slow">
                         <div class="experience-meta">
                             <span class="experience-date">AUG 2025 - PRESENT</span>
                             <h3>Strategic Operations and Administrative Assistant</h3>
@@ -959,7 +1090,7 @@
                         </div>
                     </div>
 
-                    <div class="experience-card float-card reveal">
+                    <div class="experience-card float-card reveal slow">
                         <div class="experience-meta">
                             <span class="experience-date">APR 2024 - JUN 2024</span>
                             <h3>Gen AI/ML Intern</h3>
@@ -983,12 +1114,12 @@
 
         <section id="projects">
             <div class="container">
-                <div class="section-heading reveal">
+                <div class="section-heading reveal reveal-mask slow">
                     <h2>Featured Projects</h2>
                     <p>A selection of work across AI/ML, data visualization, and applied research.</p>
                 </div>
 
-                <div class="project-card float-card reveal">
+                <div class="project-card float-card reveal slow">
                     <div class="project-media" data-parallax="0.08">
                         <span>Scrollytelling</span>
                     </div>
@@ -1011,7 +1142,7 @@
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
                     <div class="project-media" data-parallax="0.08">
                         <span>RAG Security</span>
                     </div>
@@ -1036,7 +1167,7 @@
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
                     <div class="project-media" data-parallax="0.08">
                         <span>Urban GANs</span>
                     </div>
@@ -1060,7 +1191,7 @@
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
                     <div class="project-media" data-parallax="0.08">
                         <span>Population Analytics</span>
                     </div>
@@ -1083,7 +1214,7 @@
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
                     <div class="project-media" data-parallax="0.08">
                         <span>Vision AI</span>
                     </div>
@@ -1111,12 +1242,12 @@
 
         <section id="skills">
             <div class="container">
-                <div class="section-heading reveal">
+                <div class="section-heading reveal reveal-mask slow">
                     <h2>Technical Skills</h2>
                     <p>Focused on modern AI stacks, data analysis, and full-stack development.</p>
                 </div>
-                <div class="skills-grid">
-                    <div class="skill-card float-card reveal">
+                <div class="skills-grid" data-stagger-group>
+                    <div class="skill-card float-card reveal slow">
                         <h3>Programming &amp; Development</h3>
                         <div class="skill-list">
                             <span class="skill-item">Python</span>
@@ -1130,7 +1261,7 @@
                         </div>
                     </div>
 
-                    <div class="skill-card float-card reveal">
+                    <div class="skill-card float-card reveal slow">
                         <h3>AI &amp; Machine Learning</h3>
                         <div class="skill-list">
                             <span class="skill-item">Deep Learning</span>
@@ -1149,7 +1280,7 @@
                         </div>
                     </div>
 
-                    <div class="skill-card float-card reveal">
+                    <div class="skill-card float-card reveal slow">
                         <h3>Data &amp; Analytics</h3>
                         <div class="skill-list">
                             <span class="skill-item">Tableau</span>
@@ -1164,7 +1295,7 @@
                         </div>
                     </div>
 
-                    <div class="skill-card float-card reveal">
+                    <div class="skill-card float-card reveal slow">
                         <h3>Tools &amp; Technologies</h3>
                         <div class="skill-list">
                             <span class="skill-item">API Development</span>
@@ -1183,12 +1314,12 @@
 
         <section id="education">
             <div class="container">
-                <div class="section-heading reveal">
+                <div class="section-heading reveal reveal-mask slow">
                     <h2>Academic Journey</h2>
                     <p>Formal training that grounds my work in rigorous technical foundations.</p>
                 </div>
-                <div class="education-grid">
-                    <div class="education-card float-card reveal">
+                <div class="education-grid" data-stagger-group>
+                    <div class="education-card float-card reveal slow">
                         <div class="education-icon">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M2 8l10-4 10 4-10 4L2 8z"></path>
@@ -1209,7 +1340,7 @@
                         </div>
                     </div>
 
-                    <div class="education-card float-card reveal">
+                    <div class="education-card float-card reveal slow">
                         <div class="education-icon">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M2 8l10-4 10 4-10 4L2 8z"></path>
@@ -1234,7 +1365,7 @@
 
         <section id="contact">
             <div class="container">
-                <div class="contact-panel reveal">
+                <div class="contact-panel reveal reveal-mask slow" style="--mask-bg: #2f644d;">
                     <h2>Always excited to work on meaningful engineering challenges.</h2>
                     <p>Open to full-time roles, internships, and collaborations.</p>
                     <div class="contact-actions">
@@ -1260,6 +1391,13 @@
         const scrollRail = document.getElementById("scroll-rail");
         const parallaxItems = Array.from(document.querySelectorAll("[data-parallax]"));
         let ticking = false;
+
+        document.querySelectorAll("[data-stagger-group]").forEach(group => {
+            const items = Array.from(group.querySelectorAll(".reveal"));
+            items.forEach((item, index) => {
+                item.style.setProperty("--reveal-delay", `${index * 120}ms`);
+            });
+        });
 
         const dots = sections.map(section => {
             const dot = document.createElement("button");
