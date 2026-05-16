@@ -5,7 +5,7 @@ Single-file, static portfolio website.
 ## Files
 - `index.html` - Main website (all HTML/CSS/JS in one file)
 - `index.backup-2026-02-06.html` - Backup of the previous version
-- `resume.pdf` - Optional. Place your resume here to enable the Resume button.
+- `resume_new.pdf` - Resume linked from the Resume button.
 
 ## How to view locally
 Open `index.html` in your browser.

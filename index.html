@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sai Deepak Sharma Nadiminty - Portfolio</title>
-    <meta name="description" content="Portfolio of Sai Deepak Sharma Nadiminty, Data Scientist, AI/ML Engineer, and Creative Technologist." />
-    <meta name="theme-color" content="#f8f5f0" />
-    <meta property="og:title" content="Sai Deepak Sharma Nadiminty - Portfolio" />
-    <meta property="og:description" content="Data Scientist • AI/ML Engineer • Creative Technologist" />
+    <title>Sai Deepak Sharma Nadiminty - AI/Data Science Portfolio</title>
+    <meta name="description" content="AI and data science portfolio of Sai Deepak Sharma Nadiminty, featuring secure RAG systems, computer vision, GANs, analytics, and scrollytelling data products." />
+    <meta name="author" content="Sai Deepak Sharma Nadiminty" />
+    <meta name="theme-color" content="#f6f8f5" />
+    <meta property="og:title" content="Sai Deepak Sharma Nadiminty - AI/Data Science Portfolio" />
+    <meta property="og:description" content="Secure RAG systems, computer vision models, GAN research, analytics, and interactive data storytelling." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="phot ds.jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" />
     <style>
         :root {
-            --bg: #f7f5f1;
-            --bg-soft: #fbf8f3;
+            --bg: #f6f8f5;
+            --bg-soft: #eef7f2;
             --card: #ffffff;
-            --border: #e3ded5;
-            --text: #1c3a2e;
-            --muted: #5c6f64;
-            --accent: #d67a62;
-            --accent-2: #245742;
-            --accent-soft: #e7f0e9;
-            --shadow: 0 22px 50px rgba(35, 47, 41, 0.08);
+            --border: #d7e3de;
+            --text: #102a2b;
+            --muted: #526b67;
+            --accent: #f06449;
+            --accent-2: #0f6b5f;
+            --accent-3: #2d9cdb;
+            --accent-4: #f6b73c;
+            --accent-5: #7357ff;
+            --accent-soft: #e6f6ef;
+            --story-accent: var(--accent);
+            --shadow: 0 24px 60px rgba(16, 42, 43, 0.11);
+            --glow: 0 24px 80px rgba(45, 156, 219, 0.18);
             --radius-xl: 28px;
             --radius-lg: 20px;
             --radius-md: 16px;
@@ -51,10 +59,11 @@
             position: fixed;
             inset: 0;
             background:
-                radial-gradient(circle at 12% 18%, rgba(219, 235, 229, 0.95), transparent 45%),
-                radial-gradient(circle at 82% 12%, rgba(252, 226, 215, 0.85), transparent 42%),
-                radial-gradient(circle at 78% 78%, rgba(220, 236, 241, 0.75), transparent 50%),
-                radial-gradient(circle at 18% 75%, rgba(243, 228, 200, 0.65), transparent 48%);
+                radial-gradient(circle at 10% 18%, rgba(45, 156, 219, 0.20), transparent 44%),
+                radial-gradient(circle at 82% 10%, rgba(240, 100, 73, 0.20), transparent 40%),
+                radial-gradient(circle at 76% 78%, rgba(115, 87, 255, 0.14), transparent 46%),
+                radial-gradient(circle at 20% 76%, rgba(246, 183, 60, 0.18), transparent 42%),
+                linear-gradient(135deg, rgba(255,255,255,0.62), rgba(230,246,239,0.35));
             pointer-events: none;
             z-index: -1;
             opacity: 0.9;
@@ -66,8 +75,8 @@
             position: fixed;
             inset: 0;
             background-image:
-                radial-gradient(rgba(38, 78, 62, 0.16) 1px, transparent 1px),
-                linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 40%);
+                radial-gradient(rgba(15, 107, 95, 0.14) 1px, transparent 1px),
+                linear-gradient(120deg, rgba(255, 255, 255, 0.30), transparent 40%);
             background-size: 26px 26px, 100% 100%;
             opacity: 0.45;
             pointer-events: none;
@@ -152,9 +161,9 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(248, 245, 240, 0.88);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(231, 225, 216, 0.7);
+            background: rgba(246, 248, 245, 0.82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(215, 227, 222, 0.72);
         }
 
         .nav-inner {
@@ -174,7 +183,7 @@
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 26px;
+            gap: clamp(14px, 2vw, 26px);
             font-size: 13px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -209,6 +218,93 @@
             align-items: center;
         }
 
+        .nav-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--accent-2);
+            cursor: pointer;
+            place-items: center;
+            box-shadow: 0 12px 30px rgba(16, 42, 43, 0.08);
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            border-radius: 999px;
+            background: currentColor;
+            position: relative;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .nav-toggle span::before,
+        .nav-toggle span::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 18px;
+            height: 2px;
+            border-radius: inherit;
+            background: currentColor;
+            transition: transform 0.25s ease, top 0.25s ease;
+        }
+
+        .nav-toggle span::before {
+            top: -6px;
+        }
+
+        .nav-toggle span::after {
+            top: 6px;
+        }
+
+        body.nav-open .nav-toggle span {
+            background: transparent;
+        }
+
+        body.nav-open .nav-toggle span::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        body.nav-open .nav-toggle span::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            left: 6vw;
+            right: 6vw;
+            top: calc(100% + 8px);
+            padding: 14px;
+            border: 1px solid rgba(215, 227, 222, 0.92);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 24px 70px rgba(16, 42, 43, 0.15);
+            backdrop-filter: blur(18px);
+            z-index: 1001;
+        }
+
+        .mobile-menu a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 13px 14px;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu a:focus {
+            background: var(--accent-soft);
+            color: var(--accent-2);
+        }
+
         .icon-btn {
             width: 36px;
             height: 36px;
@@ -234,9 +330,10 @@
             height: 420px;
             top: -120px;
             right: -120px;
-            background: radial-gradient(circle, rgba(214, 122, 98, 0.35), transparent 70%);
+            background: conic-gradient(from 120deg, rgba(45, 156, 219, 0.20), rgba(240, 100, 73, 0.28), rgba(246, 183, 60, 0.18), rgba(15, 107, 95, 0.20), rgba(45, 156, 219, 0.20));
             opacity: 0.7;
             animation: drift 12s ease-in-out infinite;
+            filter: blur(8px);
         }
 
         .hero-grid {
@@ -252,7 +349,7 @@
             gap: 8px;
             padding: 10px 18px;
             border-radius: 999px;
-            background: var(--accent-soft);
+            background: linear-gradient(135deg, rgba(230, 246, 239, 0.98), rgba(237, 245, 255, 0.98));
             color: var(--accent-2);
             font-weight: 600;
             font-size: 12px;
@@ -268,7 +365,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--accent);
+            background: var(--story-accent);
         }
 
         .badge::after {
@@ -341,9 +438,9 @@
         }
 
         .btn-primary {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #ff8a5b);
             color: white;
-            box-shadow: 0 18px 30px rgba(225, 124, 99, 0.25);
+            box-shadow: 0 18px 34px rgba(240, 100, 73, 0.26);
         }
 
         .btn-secondary {
@@ -372,6 +469,43 @@
             transform: translateX(120%);
         }
 
+        .scroll-cue {
+            margin-top: 34px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 1.1s ease 0.5s forwards;
+        }
+
+        .scroll-cue span {
+            width: 22px;
+            height: 36px;
+            border-radius: 999px;
+            border: 1px solid rgba(15, 107, 95, 0.42);
+            position: relative;
+            display: inline-block;
+        }
+
+        .scroll-cue span::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 7px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--story-accent);
+            transform: translateX(-50%);
+            animation: scrollCue 1.7s ease-in-out infinite;
+        }
+
         .hero-card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -387,8 +521,8 @@
             width: 100%;
             aspect-ratio: 4 / 3;
             border-radius: 22px;
-            background: linear-gradient(140deg, #f0ebe3 0%, #e6f2ea 60%, #fde7df 100%);
-            border: 2px solid #f0e7dc;
+            background: linear-gradient(140deg, #eef7f2 0%, #e7f4ff 55%, #ffe8df 100%);
+            border: 2px solid rgba(215, 227, 222, 0.9);
             overflow: hidden;
             display: grid;
             place-items: center;
@@ -445,6 +579,7 @@
 
         section {
             padding: 80px 0;
+            scroll-margin-top: 96px;
         }
 
         .reveal {
@@ -530,6 +665,17 @@
             }
         }
 
+        @keyframes scrollCue {
+            0%, 100% {
+                transform: translate(-50%, 0);
+                opacity: 0.35;
+            }
+            50% {
+                transform: translate(-50%, 13px);
+                opacity: 1;
+            }
+        }
+
         @keyframes gradientShift {
             0%, 100% {
                 background-position: 0% 50%;
@@ -565,6 +711,66 @@
             }
             50% {
                 transform: translate(-12px, 16px) scale(1.03);
+            }
+        }
+
+        @keyframes signalGlow {
+            0%, 100% {
+                transform: translateX(-50%) rotate(0deg) scale(1);
+                opacity: 0.72;
+            }
+            50% {
+                transform: translateX(-50%) rotate(14deg) scale(1.06);
+                opacity: 0.94;
+            }
+        }
+
+        @keyframes solarPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 54px color-mix(in srgb, var(--story-accent), transparent 44%);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.07);
+                box-shadow: 0 0 82px color-mix(in srgb, var(--story-accent), transparent 24%);
+            }
+        }
+
+        @keyframes planetFloat {
+            0%, 100% {
+                translate: 0 0;
+            }
+            50% {
+                translate: 0 -9px;
+            }
+        }
+
+        @keyframes sunburstSpin {
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        @keyframes reverseSpin {
+            to {
+                rotate: -360deg;
+            }
+        }
+
+        @keyframes skylineRise {
+            from {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+            to {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes dashDrift {
+            to {
+                stroke-dashoffset: -120;
             }
         }
 
@@ -604,7 +810,9 @@
             padding: 18px 20px;
             border-radius: 18px;
             border: 1px solid var(--border);
-            background: var(--bg-soft);
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.88), rgba(238,247,242,0.92)),
+                linear-gradient(120deg, rgba(45,156,219,0.08), rgba(246,183,60,0.08));
         }
 
         .now-card h4 {
@@ -645,6 +853,504 @@
             font-size: 0.9rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
+        }
+
+        .signal-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signal-section::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 6%;
+            width: min(780px, 90vw);
+            aspect-ratio: 1;
+            transform: translateX(-50%);
+            background:
+                radial-gradient(circle, color-mix(in srgb, var(--story-accent), transparent 82%), transparent 58%),
+                conic-gradient(from 210deg, rgba(45,156,219,0.12), rgba(240,100,73,0.14), rgba(115,87,255,0.12), rgba(246,183,60,0.12), rgba(45,156,219,0.12));
+            filter: blur(34px);
+            opacity: 0.8;
+            pointer-events: none;
+            animation: signalGlow 16s ease-in-out infinite;
+        }
+
+        .signal-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.72fr) minmax(300px, 0.88fr);
+            gap: 18px;
+            align-items: stretch;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signal-card,
+        .constellation-card {
+            border: 1px solid rgba(215, 227, 222, 0.9);
+            border-radius: var(--radius-xl);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.91), rgba(238,247,242,0.78)),
+                linear-gradient(120deg, color-mix(in srgb, var(--story-accent), transparent 88%), transparent 70%);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signal-card::after,
+        .constellation-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.48), transparent);
+            transform: translateX(-120%);
+            transition: transform 0.8s ease;
+            pointer-events: none;
+        }
+
+        .signal-card:hover::after,
+        .constellation-card:hover::after {
+            transform: translateX(120%);
+        }
+
+        .signal-card-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .signal-card-header span {
+            color: var(--muted);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .signal-card-header strong {
+            color: var(--story-accent);
+            font-size: 0.86rem;
+            white-space: nowrap;
+        }
+
+        .solar-system {
+            min-height: 390px;
+            position: relative;
+            border-radius: 26px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.96) 0 12%, transparent 13%),
+                radial-gradient(circle at 52% 48%, color-mix(in srgb, var(--story-accent), transparent 80%), transparent 55%),
+                linear-gradient(145deg, rgba(16,42,43,0.94), rgba(15,107,95,0.86));
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .solar-system::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(rgba(255,255,255,0.55) 1px, transparent 1px),
+                radial-gradient(rgba(255,255,255,0.26) 1px, transparent 1px);
+            background-position: 0 0, 13px 19px;
+            background-size: 44px 44px, 62px 62px;
+            opacity: 0.32;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-ring-1 {
+            width: 44%;
+            aspect-ratio: 1;
+        }
+
+        .orbit-ring-2 {
+            width: 68%;
+            aspect-ratio: 1;
+        }
+
+        .orbit-ring-3 {
+            width: 88%;
+            aspect-ratio: 1;
+        }
+
+        .solar-core {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            color: white;
+            background:
+                radial-gradient(circle at 35% 30%, #fff4d5, var(--accent-4) 34%, var(--accent) 72%);
+            box-shadow: 0 0 54px color-mix(in srgb, var(--story-accent), transparent 44%);
+            z-index: 2;
+            animation: solarPulse 4.8s ease-in-out infinite;
+        }
+
+        .solar-core strong {
+            display: block;
+            font-size: 1.05rem;
+            letter-spacing: 0.08em;
+        }
+
+        .solar-core span {
+            font-size: 0.72rem;
+            font-weight: 700;
+            opacity: 0.86;
+        }
+
+        .planet {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 0;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-weight: 800;
+            font-size: 0.72rem;
+            cursor: pointer;
+            background: linear-gradient(145deg, var(--planet-color), color-mix(in srgb, var(--planet-color), #102a2b 34%));
+            box-shadow: 0 18px 34px rgba(0,0,0,0.22);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, outline-color 0.35s ease;
+            z-index: 3;
+            animation: planetFloat 7s ease-in-out infinite;
+        }
+
+        .planet:focus-visible {
+            outline: 3px solid rgba(255,255,255,0.72);
+            outline-offset: 4px;
+        }
+
+        .planet span {
+            pointer-events: none;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+        }
+
+        .planet.active {
+            transform: scale(1.13);
+            outline: 3px solid rgba(255,255,255,0.48);
+            box-shadow: 0 24px 46px color-mix(in srgb, var(--planet-color), transparent 50%);
+        }
+
+        .planet-space {
+            --planet-color: var(--accent-3);
+            left: 15%;
+            top: 52%;
+            animation-delay: -1s;
+        }
+
+        .planet-rag {
+            --planet-color: var(--accent);
+            left: 30%;
+            top: 18%;
+            animation-delay: -2.1s;
+        }
+
+        .planet-urban {
+            --planet-color: var(--accent-5);
+            right: 18%;
+            top: 28%;
+            animation-delay: -3.2s;
+        }
+
+        .planet-population {
+            --planet-color: var(--accent-2);
+            right: 28%;
+            bottom: 14%;
+            animation-delay: -4.3s;
+        }
+
+        .planet-waste {
+            --planet-color: var(--accent-4);
+            left: 42%;
+            bottom: 5%;
+            color: #102a2b;
+            animation-delay: -5.4s;
+        }
+
+        .orbit-caption {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(215, 227, 222, 0.92);
+            background: rgba(255,255,255,0.78);
+            display: grid;
+            gap: 4px;
+        }
+
+        .orbit-caption strong {
+            color: var(--story-accent);
+        }
+
+        .orbit-caption span {
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .skill-sunburst {
+            min-height: 280px;
+            border-radius: 26px;
+            display: grid;
+            place-items: center;
+            position: relative;
+            background:
+                radial-gradient(circle, rgba(255,255,255,0.95) 0 24%, transparent 25%),
+                repeating-conic-gradient(from -18deg, var(--accent-3) 0 34deg, var(--accent) 34deg 72deg, var(--accent-5) 72deg 116deg, var(--accent-4) 116deg 156deg, var(--accent-2) 156deg 198deg);
+            box-shadow: inset 0 0 0 20px rgba(255,255,255,0.52), inset 0 0 0 48px rgba(255,255,255,0.24);
+            animation: sunburstSpin 26s linear infinite;
+        }
+
+        .skill-sunburst::before {
+            content: "";
+            position: absolute;
+            width: 72%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 1px dashed rgba(16,42,43,0.22);
+            animation: reverseSpin 22s linear infinite;
+        }
+
+        .sunburst-core {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            text-align: center;
+            background: rgba(255,255,255,0.94);
+            color: var(--text);
+            box-shadow: 0 18px 40px rgba(16,42,43,0.16);
+            z-index: 2;
+            animation: reverseSpin 26s linear infinite;
+        }
+
+        .sunburst-core strong {
+            font-size: 1.5rem;
+            color: var(--accent-2);
+        }
+
+        .sunburst-core span {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .sunburst-legend {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sunburst-legend span {
+            padding: 7px 10px;
+            border-radius: 999px;
+            color: var(--text);
+            font-size: 0.78rem;
+            font-weight: 800;
+            background: color-mix(in srgb, var(--legend-color), white 72%);
+            border: 1px solid color-mix(in srgb, var(--legend-color), white 42%);
+        }
+
+        .github-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .github-metrics div {
+            padding: 12px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.74);
+            border: 1px solid rgba(215,227,222,0.9);
+        }
+
+        .github-metrics strong {
+            display: block;
+            color: var(--story-accent);
+            font-size: 1.35rem;
+        }
+
+        .github-metrics span {
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .github-skyline {
+            height: 152px;
+            padding: 0 4px;
+            display: flex;
+            align-items: end;
+            gap: 4px;
+            border-bottom: 2px solid rgba(15,107,95,0.16);
+            background:
+                linear-gradient(180deg, transparent, rgba(15,107,95,0.06)),
+                repeating-linear-gradient(to top, rgba(15,107,95,0.08) 0 1px, transparent 1px 34px);
+        }
+
+        .github-bar {
+            flex: 1;
+            min-width: 5px;
+            height: var(--bar-height, 20%);
+            border-radius: 7px 7px 2px 2px;
+            background: linear-gradient(180deg, color-mix(in srgb, var(--story-accent), white 12%), var(--accent-2));
+            box-shadow: 0 10px 18px color-mix(in srgb, var(--story-accent), transparent 82%);
+            transform-origin: bottom;
+            animation: skylineRise 0.8s cubic-bezier(0.16,1,0.3,1) both;
+            animation-delay: var(--bar-delay, 0ms);
+        }
+
+        .github-language-strip {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .language-pill {
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(215,227,222,0.94);
+            background: rgba(255,255,255,0.76);
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+
+        .signal-stats {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signal-stat {
+            padding: 18px;
+            border: 1px solid rgba(215,227,222,0.9);
+            border-radius: 18px;
+            background: rgba(255,255,255,0.78);
+            box-shadow: 0 18px 44px rgba(16,42,43,0.08);
+            transform: translateY(12px);
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+
+        .signal-stats.in-view .signal-stat {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .signal-stat strong {
+            display: block;
+            color: var(--story-accent);
+            font-size: clamp(1.45rem, 3vw, 2.3rem);
+            line-height: 1;
+        }
+
+        .signal-stat span {
+            margin-top: 8px;
+            display: block;
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .constellation-card {
+            margin-top: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .constellation {
+            width: 100%;
+            min-height: 250px;
+            display: block;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 20% 70%, rgba(45,156,219,0.13), transparent 30%),
+                radial-gradient(circle at 72% 24%, rgba(240,100,73,0.12), transparent 34%),
+                linear-gradient(135deg, rgba(16,42,43,0.95), rgba(15,107,95,0.88));
+        }
+
+        .constellation-line {
+            fill: none;
+            stroke: rgba(255,255,255,0.6);
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-dasharray: 9 11;
+            animation: dashDrift 11s linear infinite;
+        }
+
+        .constellation-line.faint {
+            opacity: 0.42;
+            stroke-width: 1.7;
+            animation-duration: 15s;
+        }
+
+        .star-node circle {
+            fill: var(--story-accent);
+            stroke: rgba(255,255,255,0.82);
+            stroke-width: 3;
+            filter: drop-shadow(0 0 14px color-mix(in srgb, var(--story-accent), transparent 38%));
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: fill 0.35s ease, transform 0.35s ease;
+        }
+
+        .star-node {
+            cursor: pointer;
+        }
+
+        .star-node text {
+            fill: rgba(255,255,255,0.86);
+            text-anchor: middle;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+
+        .star-node.active circle {
+            transform: scale(1.25);
+            fill: var(--accent-4);
+        }
+
+        .star-node:focus-visible circle {
+            stroke: #ffffff;
+            stroke-width: 5;
         }
 
         .experience-list {
@@ -724,12 +1430,13 @@
 
         .project-media {
             border-radius: 20px;
-            background: linear-gradient(140deg, #2a5a46 0%, #234a3a 60%, #2f5b47 100%);
+            background: linear-gradient(140deg, #0f6b5f 0%, #102a2b 58%, #2d9cdb 100%);
             position: relative;
             min-height: 230px;
             overflow: hidden;
             background-size: 200% 200%;
             animation: gradientShift 10s ease infinite;
+            isolation: isolate;
         }
 
         .project-media.has-image {
@@ -739,46 +1446,51 @@
         }
 
         .project-media.space {
-            background-image: url("https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=80&w=1400");
+            background-image: url("https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=2400&q=90");
             background-position: center;
         }
 
         .project-media.rag {
-            background-image: url("https://images.unsplash.com/photo-1762330467475-a565d04e1808?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=80&w=1400");
+            background-image: url("https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?auto=format&fit=crop&w=2400&q=90");
             background-position: center;
         }
 
         .project-media.urban {
-            background-image: url("https://images.unsplash.com/photo-1760827508441-ccbedd7d1c5b?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=80&w=1400");
+            background-image: url("https://images.unsplash.com/photo-1499669404910-ba8b35824a3c?auto=format&fit=crop&w=2400&q=90");
             background-position: center;
         }
 
         .project-media.population {
-            background-image: url("https://images.unsplash.com/photo-1744705221117-9c726f9497b0?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=80&w=1400");
+            background-image: url("https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=2400&q=90");
             background-position: center;
         }
 
         .project-media.waste {
-            background-image: url("https://images.unsplash.com/photo-1771172195332-3bc9ded9f3b5?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=80&w=1400");
+            background-image: url("https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=2400&q=90");
             background-position: center;
         }
 
         .project-media::after {
             content: "";
             position: absolute;
-            inset: 12% 8% 20% 10%;
+            inset: 0;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background:
+                linear-gradient(135deg, rgba(16, 42, 43, 0.12), transparent 44%),
+                linear-gradient(0deg, rgba(16, 42, 43, 0.42), transparent 64%);
+            opacity: 0.86;
+            z-index: 0;
         }
 
         .project-media::before {
             content: "";
             position: absolute;
             inset: -30% -30%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.24), transparent);
             transform: translateX(-120%);
             transition: transform 0.8s ease;
+            z-index: 1;
         }
 
         .project-card:hover .project-media::before {
@@ -796,6 +1508,8 @@
             font-size: 0.7rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
+            z-index: 2;
+            backdrop-filter: blur(10px);
         }
 
         .project-content h3 {
@@ -811,7 +1525,7 @@
         }
 
         .project-content .project-date {
-            color: var(--accent);
+            color: var(--story-accent);
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 10px;
@@ -829,6 +1543,234 @@
             gap: 8px;
             margin-top: 12px;
             font-size: 0.9rem;
+        }
+
+        .project-proof {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin: 16px 0 4px;
+        }
+
+        .proof-item {
+            padding: 10px 12px;
+            border: 1px solid rgba(215, 227, 222, 0.92);
+            border-radius: 14px;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.92), rgba(238,247,242,0.72)),
+                linear-gradient(120deg, color-mix(in srgb, var(--story-accent), transparent 88%), transparent);
+        }
+
+        .proof-item strong {
+            display: block;
+            color: var(--story-accent);
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .proof-item span {
+            color: var(--muted);
+            font-size: 0.74rem;
+            line-height: 1.35;
+        }
+
+        .story-layout {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
+            gap: clamp(28px, 5vw, 58px);
+            align-items: start;
+        }
+
+        .story-map {
+            position: sticky;
+            top: 108px;
+            min-height: calc(100vh - 132px);
+            padding: 28px;
+            border: 1px solid rgba(215, 227, 222, 0.9);
+            border-radius: var(--radius-xl);
+            background:
+                linear-gradient(160deg, rgba(255,255,255,0.90), rgba(238,247,242,0.80)),
+                linear-gradient(135deg, rgba(45,156,219,0.11), rgba(240,100,73,0.08));
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .story-map::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--story-accent), var(--accent-3), var(--accent-4));
+            transform-origin: top;
+            transform: scaleY(var(--story-progress, 0));
+            transition: transform 0.25s ease, background 0.5s ease;
+        }
+
+        .story-kicker {
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--story-accent);
+        }
+
+        .story-map h3 {
+            margin-top: 12px;
+            font-size: clamp(1.55rem, 3vw, 2.35rem);
+            line-height: 1.08;
+            color: var(--text);
+        }
+
+        .story-map p {
+            margin-top: 14px;
+            color: var(--muted);
+            line-height: 1.72;
+        }
+
+        .story-meter {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(15, 107, 95, 0.12);
+            margin: 24px 0;
+            overflow: hidden;
+        }
+
+        .story-meter span {
+            display: block;
+            height: 100%;
+            width: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--story-accent), var(--accent-3));
+            transform: scaleX(var(--story-progress, 0));
+            transform-origin: left;
+            transition: transform 0.25s ease, background 0.5s ease;
+        }
+
+        .story-chapters {
+            display: grid;
+            gap: 10px;
+        }
+
+        .story-chapter {
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px 12px;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid rgba(215, 227, 222, 0.86);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.66);
+            color: var(--muted);
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+
+        .story-chapter span {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: rgba(15, 107, 95, 0.08);
+            color: var(--accent-2);
+            font-weight: 800;
+            font-size: 0.78rem;
+        }
+
+        .story-chapter strong {
+            display: block;
+            color: var(--text);
+            font-size: 0.92rem;
+        }
+
+        .story-chapter small {
+            grid-column: 2;
+            line-height: 1.45;
+        }
+
+        .story-chapter.active {
+            border-color: color-mix(in srgb, var(--story-accent), white 30%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(238,247,242,0.92));
+            color: var(--text);
+            transform: translateX(8px);
+            box-shadow: 0 14px 32px rgba(16, 42, 43, 0.10);
+        }
+
+        .story-chapter.active span {
+            background: var(--story-accent);
+            color: #fff;
+        }
+
+        .project-sequence {
+            position: relative;
+        }
+
+        .project-sequence::before {
+            content: "";
+            position: absolute;
+            left: 22px;
+            top: 16px;
+            bottom: 16px;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(15,107,95,0.16), rgba(45,156,219,0.28), rgba(240,100,73,0.16));
+        }
+
+        .project-sequence .project-card {
+            margin-left: 42px;
+            position: relative;
+        }
+
+        .project-sequence .project-card + .project-card {
+            margin-top: clamp(38px, 8vh, 78px) !important;
+        }
+
+        .story-card::before {
+            content: attr(data-story-step);
+            position: absolute;
+            left: -58px;
+            top: 28px;
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: var(--card);
+            border: 2px solid rgba(15,107,95,0.22);
+            color: var(--accent-2);
+            font-size: 0.82rem;
+            font-weight: 800;
+            box-shadow: 0 12px 28px rgba(16, 42, 43, 0.12);
+            transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
+            z-index: 3;
+        }
+
+        .story-card.story-active::before {
+            background: var(--story-accent);
+            border-color: var(--story-accent);
+            color: white;
+            transform: scale(1.12);
+        }
+
+        .story-card.story-active {
+            border-color: color-mix(in srgb, var(--story-accent), white 45%);
+            box-shadow: 0 42px 88px rgba(16, 42, 43, 0.16), 0 0 0 1px color-mix(in srgb, var(--story-accent), transparent 75%);
+        }
+
+        .story-card.story-active .project-media {
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 24px 54px color-mix(in srgb, var(--story-accent), transparent 75%);
+        }
+
+        .story-card {
+            opacity: 0.72;
+            transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s ease, border-color 0.3s ease;
+        }
+
+        .story-card.story-active {
+            opacity: 1;
         }
 
         .skills-grid {
@@ -900,7 +1842,9 @@
         }
 
         .contact-panel {
-            background: #2f644d;
+            background:
+                linear-gradient(135deg, rgba(16,42,43,0.96), rgba(15,107,95,0.96)),
+                linear-gradient(120deg, rgba(45,156,219,0.28), rgba(240,100,73,0.22));
             color: #f9f6f0;
             border-radius: var(--radius-xl);
             padding: 48px;
@@ -916,7 +1860,7 @@
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            background: rgba(249, 246, 240, 0.08);
+            background: rgba(255, 255, 255, 0.10);
             top: -50px;
             right: -40px;
         }
@@ -927,7 +1871,7 @@
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            background: rgba(214, 122, 98, 0.2);
+            background: rgba(240, 100, 73, 0.24);
             bottom: -60px;
             left: -40px;
             animation: pulseGlow 6s ease-in-out infinite;
@@ -951,13 +1895,13 @@
 
         .contact-actions .btn-secondary {
             background: #f9f6f0;
-            color: #2f6b51;
+            color: var(--accent-2);
             border-color: transparent;
         }
 
         footer {
             padding: 40px 0 60px;
-            color: rgba(79, 106, 94, 0.7);
+            color: rgba(82, 107, 103, 0.78);
             font-size: 0.9rem;
         }
 
@@ -965,8 +1909,32 @@
             .hero-grid,
             .about-grid,
             .experience-card,
-            .project-card {
+            .project-card,
+            .story-layout,
+            .signal-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .signal-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .solar-system {
+                min-height: 340px;
+            }
+
+            .story-map {
+                position: relative;
+                top: auto;
+                min-height: auto;
+            }
+
+            .project-sequence::before {
+                left: 18px;
+            }
+
+            .project-sequence .project-card {
+                margin-left: 36px;
             }
 
             .nav-links {
@@ -975,6 +1943,14 @@
 
             .nav-actions {
                 display: none;
+            }
+
+            .nav-toggle {
+                display: grid;
+            }
+
+            body.nav-open .mobile-menu {
+                display: grid;
             }
 
             .scroll-rail {
@@ -998,6 +1974,52 @@
             .contact-panel {
                 padding: 32px;
             }
+
+            .project-proof {
+                grid-template-columns: 1fr;
+            }
+
+            .story-map {
+                padding: 22px;
+            }
+
+            .project-sequence::before,
+            .story-card::before {
+                display: none;
+            }
+
+            .project-sequence .project-card {
+                margin-left: 0;
+            }
+
+            .signal-card,
+            .constellation-card {
+                padding: 18px;
+            }
+
+            .signal-stats,
+            .github-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .solar-system {
+                min-height: 300px;
+            }
+
+            .planet {
+                width: 56px;
+                height: 56px;
+                font-size: 0.66rem;
+            }
+
+            .solar-core {
+                width: 88px;
+                height: 88px;
+            }
+
+            .constellation {
+                min-height: 210px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1006,10 +2028,404 @@
                 animation: none !important;
                 transition: none !important;
             }
+
+            .page-intro,
+            .cursor-dot,
+            .cursor-ring,
+            .orb,
+            .particle {
+                display: none !important;
+            }
+
+            .reveal,
+            .hero-title,
+            .hero-subtitle,
+            .hero-description,
+            .cta-row,
+            .scroll-cue,
+            .hero-card {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+
+        /* ============================================================
+           NEXT-LEVEL ANIMATIONS
+        ============================================================ */
+
+        /* ── Intro curtain ── */
+        .page-intro {
+            position: fixed;
+            inset: 0;
+            background: var(--accent-2);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .page-intro-logo {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.24em;
+            opacity: 0;
+            transform: scale(0.82);
+            animation: introLogo 0.75s cubic-bezier(0.16,1,0.3,1) 0.25s forwards;
+        }
+        .page-intro.exit {
+            animation: introCurtain 0.75s cubic-bezier(0.76,0,0.24,1) 1.35s forwards;
+        }
+        @keyframes introLogo {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes introCurtain {
+            to { transform: translateY(-100%); }
+        }
+
+        /* ── Custom cursor ── */
+        .cursor-dot,
+        .cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+        }
+        .cursor-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            transition: width 0.2s ease, height 0.2s ease, background 0.3s ease;
+        }
+        .cursor-ring {
+            width: 34px;
+            height: 34px;
+            border: 2px solid var(--accent);
+            opacity: 0.55;
+            transition: width 0.35s cubic-bezier(0.16,1,0.3,1),
+                        height 0.35s cubic-bezier(0.16,1,0.3,1),
+                        opacity 0.3s ease,
+                        border-color 0.4s ease;
+        }
+        .cursor-ring.hovering {
+            width: 58px;
+            height: 58px;
+            opacity: 0.28;
+            border-color: var(--accent-2);
+        }
+        .cursor-dot.clicking {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* ── Floating orbs (mouse-following) ── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(72px);
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            will-change: transform;
+        }
+        .orb-1 {
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, color-mix(in srgb, var(--story-accent), transparent 62%), transparent 68%);
+        }
+        .orb-2 {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(45,156,219,0.28), transparent 68%);
+        }
+        .orb.visible { opacity: 1; }
+
+        /* ── Nav scrolled glass ── */
+        nav { transition: background 0.4s ease, box-shadow 0.4s ease; }
+        nav.scrolled {
+            background: rgba(246,248,245,0.96);
+            box-shadow: 0 4px 32px rgba(16,42,43,0.10);
+            backdrop-filter: blur(22px);
+        }
+
+        /* ── Gradient animated text on hero accent span ── */
+        .hero-title span {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-4) 36%, var(--accent-3) 72%, var(--accent-2) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 5s ease infinite;
+        }
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50%       { background-position: 100% 50%; }
+        }
+
+        /* ── Section heading underline draw ── */
+        .section-heading h2 {
+            position: relative;
+            display: inline-block;
+        }
+        .section-heading h2::after {
+            content: "";
+            position: absolute;
+            bottom: -6px; left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--story-accent), var(--accent-3), var(--accent-4));
+            border-radius: 999px;
+            transition: width 1.1s cubic-bezier(0.16,1,0.3,1) 0.25s;
+        }
+        .section-heading.in-view h2::after { width: 100%; }
+
+        /* ── Scroll dot tooltips ── */
+        .scroll-dot {
+            position: relative;
+        }
+        .scroll-dot::before {
+            content: attr(aria-label);
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%) translateX(6px);
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            background: var(--card);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+        .scroll-dot:hover::before {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* ── Portrait glow ring on hover ── */
+        .portrait { position: relative; }
+        .portrait::after {
+            content: "";
+            position: absolute;
+            inset: -5px;
+            border-radius: 27px;
+            background: linear-gradient(135deg, var(--accent), transparent 50%, var(--accent-2));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.45s ease;
+        }
+        .hero-card:hover .portrait::after { opacity: 0.65; }
+
+        /* ── Stat count-up flash ── */
+        .stat strong,
+        .about-stat strong {
+            transition: transform 0.15s ease;
+        }
+        .stat strong.pop,
+        .about-stat strong.pop {
+            animation: statPop 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+        @keyframes statPop {
+            0%   { transform: scale(1); }
+            45%  { transform: scale(1.22); color: var(--accent); }
+            100% { transform: scale(1); }
+        }
+
+        /* ── Magnetic button glow on hover ── */
+        .btn-primary:hover {
+            box-shadow: 0 22px 48px color-mix(in srgb, var(--story-accent), transparent 58%), 0 0 0 1px color-mix(in srgb, var(--story-accent), transparent 78%);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        /* ── Experience card left accent bar ── */
+        .experience-card {
+            position: relative;
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                        box-shadow 0.35s ease,
+                        border-color 0.3s ease;
+            overflow: hidden;
+        }
+        .experience-card::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 14px; bottom: 14px;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+            border-radius: 999px;
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .experience-card:hover::before {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+        .experience-card:hover {
+            transform: translateX(7px);
+            border-color: color-mix(in srgb, var(--story-accent), white 52%);
+            box-shadow: 0 28px 60px rgba(16,42,43,0.13);
+        }
+
+        /* ── Project card hover lift + scroll-aware media polish ── */
+        .project-card {
+            transition: transform 0.45s cubic-bezier(0.16,1,0.3,1),
+                        box-shadow 0.45s ease,
+                        border-color 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(214,122,98,0.35);
+            box-shadow: 0 44px 90px rgba(35,47,41,0.16);
+        }
+        .project-media.has-image {
+            transition: background-position 0.45s ease, filter 0.45s ease;
+            background-size: cover;
+        }
+        .project-card:hover .project-media.has-image,
+        .story-card.story-active .project-media.has-image {
+            filter: saturate(1.12) contrast(1.05);
+        }
+
+        /* ── Skill pill stagger reveal ── */
+        .skill-item {
+            opacity: 0;
+            transform: translateY(10px) scale(0.88);
+            transition: opacity 0.35s ease, transform 0.35s ease,
+                        background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+        .skill-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .skill-item:hover {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+            color: var(--accent-2);
+            transform: translateY(-2px) scale(1.06);
+        }
+        .tag {
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+        .tag:hover {
+            background: var(--accent-soft);
+            color: var(--accent-2);
+            transform: translateY(-1px);
+        }
+
+        /* ── Skill card animated border glow ── */
+        .skill-card {
+            position: relative;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .skill-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--accent), transparent 40%, var(--accent-2));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            filter: blur(14px);
+        }
+        .skill-card:hover::after {
+            opacity: 0.18;
+        }
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 22px 48px rgba(35,47,41,0.12);
+        }
+
+        /* ── Education card hover ── */
+        .education-card {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 52px rgba(35,47,41,0.12);
+        }
+        .education-icon {
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
+        }
+        .education-card:hover .education-icon {
+            transform: scale(1.18) rotate(6deg);
+            background: rgba(214,122,98,0.18);
+        }
+
+        /* ── Contact panel glow ── */
+        .contact-panel {
+            transition: box-shadow 0.45s ease;
+        }
+        .contact-panel:hover {
+            box-shadow: 0 48px 90px rgba(15,107,95,0.34), 0 0 0 1px rgba(255,255,255,0.12);
+        }
+
+        /* ── About stat card pop ── */
+        .about-stat {
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
+        }
+        .about-stat:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 24px 50px rgba(16,42,43,0.13);
+        }
+
+        /* ── Floating particles in hero ── */
+        .hero { overflow: hidden; }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleRise linear infinite;
+        }
+        @keyframes particleRise {
+            0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 0.7; }
+            100% { transform: translateY(-520px) rotate(540deg); opacity: 0; }
+        }
+
+        /* ── Smooth reveal upgrade: slide + scale ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            filter: blur(8px);
+            transition: opacity 1.3s ease, transform 1.3s ease, filter 1.3s ease;
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
         }
     </style>
 </head>
 <body>
+    <!-- Intro curtain -->
+    <div class="page-intro" id="page-intro" aria-hidden="true">
+        <div class="page-intro-logo">SDSN</div>
+    </div>
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+    <!-- Mouse-following orbs -->
+    <div class="orb orb-1" id="orb1" aria-hidden="true"></div>
+    <div class="orb orb-2" id="orb2" aria-hidden="true"></div>
+
     <a class="skip-link" href="#about">Skip to content</a>
     <div class="scroll-progress-bar" aria-hidden="true"><span></span></div>
     <div class="scroll-rail" aria-hidden="true" id="scroll-rail"></div>
@@ -1019,6 +2435,7 @@
             <div class="logo">SDSN</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
+                <li><a href="#signals">Signals</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -1038,6 +2455,19 @@
                     </svg>
                 </a>
             </div>
+            <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#about">About</a>
+            <a href="#signals">Signals</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+            <a href="resume_new.pdf">Resume</a>
         </div>
     </nav>
 
@@ -1045,16 +2475,20 @@
         <section class="hero">
             <div class="container hero-grid">
                 <div>
-                    <div class="badge">Data Scientist • AI/ML Engineer • Creative Technologist</div>
+                    <div class="badge">AI/Data Scientist • Secure RAG • Computer Vision</div>
                     <h1 class="hero-title">Sai Deepak <span>Sharma Nadiminty</span></h1>
                     <p class="hero-subtitle">MS @Arizona State University | Strategic Marketing Operations @Knowledge Enterprise ASU</p>
                     <p class="hero-description">
-                        Crafting intelligent solutions at the intersection of data science, artificial intelligence, and human experience.
+                        I build applied AI systems and data stories that make complex signals usable, from secure retrieval workflows to computer vision models and interactive analytics.
                     </p>
                     <div class="cta-row">
                         <a href="#projects" class="btn btn-primary">Explore My Work</a>
                         <a href="resume_new.pdf" class="btn btn-secondary">Resume</a>
                         <a href="#contact" class="btn btn-secondary">Let&#39;s Connect</a>
+                    </div>
+                    <div class="scroll-cue" aria-hidden="true">
+                        <span></span>
+                        <small>Scroll the story</small>
                     </div>
                 </div>
                 <div class="hero-card float-card" data-parallax="0.12">
@@ -1063,7 +2497,7 @@
                     </div>
                     <h3>Focused on impact</h3>
                     <p>
-                        Building AI systems that blend rigorous engineering with human-centered storytelling, from secure RAG platforms to data-driven narratives.
+                        My work combines model building, product thinking, and narrative design so technical systems are easier to trust, explain, and act on.
                     </p>
                     <div class="stats">
                         <div class="stat">
@@ -1087,20 +2521,20 @@
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
                     <h2>About Me</h2>
-                    <p>Blending data, design, and engineering to build responsible AI products and experiences.</p>
+                    <p>Blending data, design, and engineering to build responsible AI products, decision tools, and visual narratives.</p>
                 </div>
                 <div class="about-grid">
                 <div class="about-text reveal slow">
                         <p>
-                            I&#39;m a Data Science graduate student at Arizona State University with a passion for leveraging AI and machine learning to solve complex, real-world problems.
+                            I&#39;m a Data Science graduate student at Arizona State University focused on applied AI systems, analytics workflows, and human-centered data products.
                         </p>
                         <p>
-                            From developing secure RAG chatbots to creating AI-assisted urban planning tools, I thrive at the intersection of technology and innovation. My work spans computer vision, natural language processing, and interactive data visualization.
+                            From secure RAG chatbots to AI-assisted urban planning and vision-based classification, I like projects where the model is only part of the work. The real craft is making the output clear, useful, and grounded in evidence.
                         </p>
                         <div class="now-card">
                             <h4>Currently</h4>
                             <p>MS @Arizona State University · Strategic Marketing Operations @Knowledge Enterprise ASU</p>
-                            <span>Crafting intelligent solutions at the intersection of data science, artificial intelligence, and human experience.</span>
+                            <span>Building a portfolio around secure AI, computer vision, analytics, and scrollytelling interfaces.</span>
                         </div>
                     </div>
                     <div class="about-stats reveal" data-stagger-group>
@@ -1117,6 +2551,148 @@
                             <span>Tech Skills</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="signals" class="signal-section">
+            <div class="container">
+                <div class="section-heading reveal reveal-mask slow">
+                    <h2>Signal Map</h2>
+                    <p>A compact, living view of the projects, skills, metrics, and GitHub traces behind the portfolio.</p>
+                </div>
+
+                <div class="signal-grid">
+                    <div class="signal-card signal-orbit-card reveal slow">
+                        <div class="signal-card-header">
+                            <span>Project Solar System</span>
+                            <strong>5 active worlds</strong>
+                        </div>
+                        <div class="solar-system" aria-label="Project solar system visualization">
+                            <div class="orbit-ring orbit-ring-1"></div>
+                            <div class="orbit-ring orbit-ring-2"></div>
+                            <div class="orbit-ring orbit-ring-3"></div>
+                            <div class="solar-core">
+                                <strong>SDSN</strong>
+                                <span>AI/Data</span>
+                            </div>
+                            <button class="planet planet-space active" type="button" data-signal-index="0" aria-label="Space missions project">
+                                <span>Space</span>
+                            </button>
+                            <button class="planet planet-rag" type="button" data-signal-index="1" aria-label="Secure RAG project">
+                                <span>RAG</span>
+                            </button>
+                            <button class="planet planet-urban" type="button" data-signal-index="2" aria-label="Urban GANs project">
+                                <span>GANs</span>
+                            </button>
+                            <button class="planet planet-population" type="button" data-signal-index="3" aria-label="Singapore demographic analytics project">
+                                <span>1957</span>
+                            </button>
+                            <button class="planet planet-waste" type="button" data-signal-index="4" aria-label="Waste classification project">
+                                <span>72.93</span>
+                            </button>
+                        </div>
+                        <div class="orbit-caption" id="orbit-caption">
+                            <strong>Space Missions</strong>
+                            <span>3 data sources stitched into a scroll-led story.</span>
+                        </div>
+                    </div>
+
+                    <div class="signal-card signal-skills-card reveal slow">
+                        <div class="signal-card-header">
+                            <span>Skill Sunburst</span>
+                            <strong>4 domains</strong>
+                        </div>
+                        <div class="skill-sunburst" aria-label="Skill sunburst visualization">
+                            <div class="sunburst-core">
+                                <strong>AI</strong>
+                                <span>Data Systems</span>
+                            </div>
+                        </div>
+                        <div class="sunburst-legend">
+                            <span style="--legend-color: var(--accent-3);">ML</span>
+                            <span style="--legend-color: var(--accent);">RAG</span>
+                            <span style="--legend-color: var(--accent-5);">Viz</span>
+                            <span style="--legend-color: var(--accent-4);">Ops</span>
+                        </div>
+                    </div>
+
+                    <div class="signal-card signal-github-card reveal slow">
+                        <div class="signal-card-header">
+                            <span>GitHub Skyline</span>
+                            <strong id="github-status">Syncing public activity</strong>
+                        </div>
+                        <div class="github-metrics">
+                            <div>
+                                <strong id="github-repos">--</strong>
+                                <span>Public repos</span>
+                            </div>
+                            <div>
+                                <strong id="github-languages">--</strong>
+                                <span>Languages</span>
+                            </div>
+                            <div>
+                                <strong id="github-updated">--</strong>
+                                <span>Last push</span>
+                            </div>
+                        </div>
+                        <div class="github-skyline" id="github-skyline" aria-label="GitHub public activity skyline"></div>
+                        <div class="github-language-strip" id="github-language-strip" aria-label="Top GitHub languages"></div>
+                    </div>
+                </div>
+
+                <div class="signal-stats reveal slow" data-stagger-group>
+                    <div class="signal-stat">
+                        <strong>5</strong>
+                        <span>Major Projects</span>
+                    </div>
+                    <div class="signal-stat">
+                        <strong>3</strong>
+                        <span>NASA/UNOOSA/Kaggle Sources</span>
+                    </div>
+                    <div class="signal-stat">
+                        <strong>50</strong>
+                        <span>Cities Modeled</span>
+                    </div>
+                    <div class="signal-stat">
+                        <strong>72.93%</strong>
+                        <span>Vision Accuracy</span>
+                    </div>
+                    <div class="signal-stat">
+                        <strong>1957-2023</strong>
+                        <span>Demographic Window</span>
+                    </div>
+                </div>
+
+                <div class="constellation-card reveal slow">
+                    <div class="signal-card-header">
+                        <span>Impact Constellation</span>
+                        <strong>How the work connects</strong>
+                    </div>
+                    <svg class="constellation" viewBox="0 0 920 320" role="img" aria-label="Impact constellation connecting portfolio signals">
+                        <path class="constellation-line" d="M120 210 L270 92 L430 170 L610 72 L770 198" />
+                        <path class="constellation-line faint" d="M270 92 L300 250 L430 170 L510 252 L610 72" />
+                        <g class="star-node" data-signal-index="0" transform="translate(120 210)" tabindex="0" role="button" aria-label="Story signal">
+                            <circle r="14"></circle>
+                            <text y="-28">Story</text>
+                        </g>
+                        <g class="star-node" data-signal-index="1" transform="translate(270 92)" tabindex="0" role="button" aria-label="Privacy signal">
+                            <circle r="14"></circle>
+                            <text y="-28">Privacy</text>
+                        </g>
+                        <g class="star-node" data-signal-index="2" transform="translate(430 170)" tabindex="0" role="button" aria-label="Generation signal">
+                            <circle r="14"></circle>
+                            <text y="-28">Generation</text>
+                        </g>
+                        <g class="star-node" data-signal-index="3" transform="translate(610 72)" tabindex="0" role="button" aria-label="Forecasting signal">
+                            <circle r="14"></circle>
+                            <text y="-28">Forecasting</text>
+                        </g>
+                        <g class="star-node" data-signal-index="4" transform="translate(770 198)" tabindex="0" role="button" aria-label="Vision signal">
+                            <circle r="14"></circle>
+                            <text y="-28">Vision</text>
+                        </g>
+                    </svg>
                 </div>
             </div>
         </section>
@@ -1142,7 +2718,7 @@
                         </div>
                         <div>
                             <p class="hero-description">
-                                Supporting operations, optimizing workflows, and managing interdisciplinary projects while collaborating with a talented team of marketing managers, designers, writers, and creatives.
+                                Supporting marketing operations with workflow optimization, analytics, API-oriented thinking, and cross-functional coordination across managers, designers, writers, and creative teams.
                             </p>
                         </div>
                     </div>
@@ -1161,7 +2737,7 @@
                         </div>
                         <div>
                             <p class="hero-description">
-                                Worked with various Gen AI based tools, developed and fine-tuned diverse models, and ensured that high-quality outputs were being delivered across multiple projects.
+                                Built and refined generative AI workflows with LangChain, LLM experimentation, and model fine-tuning, with attention to output quality and practical delivery constraints.
                             </p>
                         </div>
                     </div>
@@ -1169,14 +2745,50 @@
             </div>
         </section>
 
-        <section id="projects">
+        <section id="projects" class="story-section">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
                     <h2>Featured Projects</h2>
-                    <p>A selection of work across AI/ML, data visualization, and applied research.</p>
+                    <p>Scroll through the arc: narrative data, secure AI, generated cities, demographic signals, and vision systems.</p>
                 </div>
 
-                <div class="project-card float-card reveal slow">
+                <div class="story-layout">
+                    <aside class="story-map reveal slow" aria-label="Project scroll narrative">
+                        <div class="story-kicker">Project Storyline</div>
+                        <h3 id="story-title">From raw signals to useful systems</h3>
+                        <p id="story-copy">Each project moves one step deeper into the way I work: gather evidence, build the model, shape the interface, and make the result usable.</p>
+                        <div class="story-meter" aria-hidden="true"><span></span></div>
+                        <div class="story-chapters">
+                            <button class="story-chapter active" type="button" data-story-index="0" data-story-title="Data becomes a journey" data-story-copy="A space missions narrative turns historical records into a scroll-led exploration of progress, collaboration, and risk.">
+                                <span>01</span>
+                                <strong>Space Missions</strong>
+                                <small>Data storytelling and visual rhythm.</small>
+                            </button>
+                            <button class="story-chapter" type="button" data-story-index="1" data-story-title="Knowledge stays protected" data-story-copy="The RAG chatbot chapter focuses on secure retrieval, privacy, and practical adoption for organizations using LLMs.">
+                                <span>02</span>
+                                <strong>Secure RAG</strong>
+                                <small>LLM infrastructure with guardrails.</small>
+                            </button>
+                            <button class="story-chapter" type="button" data-story-index="2" data-story-title="Cities become generative" data-story-copy="Urban design moves from static plans to generated alternatives using conditional GANs and optimization.">
+                                <span>03</span>
+                                <strong>Urban GANs</strong>
+                                <small>Computer vision for planning choices.</small>
+                            </button>
+                            <button class="story-chapter" type="button" data-story-index="3" data-story-title="Population signals clarify decisions" data-story-copy="Demographic analysis turns decades of Singapore population data into interpretable trends for planning and forecasting.">
+                                <span>04</span>
+                                <strong>Singapore Trends</strong>
+                                <small>Analytics for long-range context.</small>
+                            </button>
+                            <button class="story-chapter" type="button" data-story-index="4" data-story-title="Vision closes the loop" data-story-copy="Waste classification brings the story back to applied systems: perception, prediction, and measurable model performance.">
+                                <span>05</span>
+                                <strong>Vision AI</strong>
+                                <small>Modeling physical-world signals.</small>
+                            </button>
+                        </div>
+                    </aside>
+
+                    <div class="project-sequence">
+                <div class="project-card float-card reveal slow story-card story-active" data-story-index="0" data-story-step="01">
                     <div class="project-media has-image space" data-parallax="0.08">
                         <span>Scrollytelling</span>
                     </div>
@@ -1186,6 +2798,11 @@
                         <p>
                             Created an interactive scrollytelling website chronicling space missions from Sputnik to modern Mars explorations. Integrated datasets from NASA, UNOOSA, and Kaggle to deliver engaging visualizations that highlight technological advancements, international collaborations, mission purposes, and challenges like orbital debris, combining analytical depth with a human-centered narrative.
                         </p>
+                        <div class="project-proof" aria-label="Project proof points">
+                            <div class="proof-item"><strong>3 data sources</strong><span>NASA, UNOOSA, and Kaggle</span></div>
+                            <div class="proof-item"><strong>Scroll narrative</strong><span>Historical missions turned into chapters</span></div>
+                            <div class="proof-item"><strong>D3 visuals</strong><span>Interactive exploration and comparison</span></div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">React.js</span>
                             <span class="tag">Python</span>
@@ -1193,11 +2810,11 @@
                             <span class="tag">D3.js</span>
                             <span class="tag">CSS</span>
                         </div>
-                        <a class="project-link" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">View on GitHub</a>
+                        <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=space" target="_blank" rel="noreferrer">Find Repository</a>
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow story-card" data-story-index="1" data-story-step="02" style="margin-top: 28px;">
                     <div class="project-media has-image rag" data-parallax="0.08">
                         <span>RAG Security</span>
                     </div>
@@ -1207,6 +2824,11 @@
                         <p>
                             Developed an anonymized Retrieval-Augmented Generation (RAG) framework with TLS encryption to enable secure, customizable chatbots for SaaS-based LLMs. Implemented via modern web tools and OpenAI API, the system ensures data privacy, basic GDPR/CCPA compliance, and accessibility for organizations without advanced technical resources.
                         </p>
+                        <div class="project-proof" aria-label="Project proof points">
+                            <div class="proof-item"><strong>RAG</strong><span>Retrieval workflow for support answers</span></div>
+                            <div class="proof-item"><strong>TLS</strong><span>Encrypted communication layer</span></div>
+                            <div class="proof-item"><strong>Privacy</strong><span>Anonymized customer context</span></div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">LLM</span>
                             <span class="tag">AI</span>
@@ -1216,11 +2838,11 @@
                             <span class="tag">Encryption</span>
                             <span class="tag">RAG</span>
                         </div>
-                        <a class="project-link" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">View on GitHub</a>
+                        <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=rag" target="_blank" rel="noreferrer">Find Repository</a>
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow story-card" data-story-index="2" data-story-step="03" style="margin-top: 28px;">
                     <div class="project-media has-image urban" data-parallax="0.08">
                         <span>Urban GANs</span>
                     </div>
@@ -1230,19 +2852,24 @@
                         <p>
                             Developed an AI framework using conditional GANs and multi-objective optimization to generate realistic urban block layouts. Trained on 3,050 images from 50 cities, the model produces diverse designs to support computer-aided urban planning and optimize city livability and infrastructure.
                         </p>
+                        <div class="project-proof" aria-label="Project proof points">
+                            <div class="proof-item"><strong>3,050 images</strong><span>Training set across urban layouts</span></div>
+                            <div class="proof-item"><strong>50 cities</strong><span>Broader design pattern coverage</span></div>
+                            <div class="proof-item"><strong>cGAN</strong><span>Generated planning alternatives</span></div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">Machine Learning</span>
                             <span class="tag">Deep Learning</span>
                             <span class="tag">GANs</span>
                             <span class="tag">Computer Vision</span>
                             <span class="tag">Python</span>
-                            <span class="tag">AI- ML</span>
+                            <span class="tag">AI/ML</span>
                         </div>
-                        <a class="project-link" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">View on GitHub</a>
+                        <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=urban" target="_blank" rel="noreferrer">Find Repository</a>
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow story-card" data-story-index="3" data-story-step="04" style="margin-top: 28px;">
                     <div class="project-media has-image population" data-parallax="0.08">
                         <span>Population Analytics</span>
                     </div>
@@ -1252,6 +2879,11 @@
                         <p>
                             Analyzed the demographic composition of Singapore residents from 1957 to 2023, focusing on the distribution and trends across age groups, ethnicity, and gender. The dataset provides comprehensive demographic information that is crucial for understanding Singapore&#39;s population dynamics and social development.
                         </p>
+                        <div class="project-proof" aria-label="Project proof points">
+                            <div class="proof-item"><strong>1957-2023</strong><span>Long-range demographic view</span></div>
+                            <div class="proof-item"><strong>3 dimensions</strong><span>Age, ethnicity, and gender</span></div>
+                            <div class="proof-item"><strong>Forecasting</strong><span>Population trend interpretation</span></div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">Tableau</span>
                             <span class="tag">Excel</span>
@@ -1259,11 +2891,11 @@
                             <span class="tag">Python</span>
                             <span class="tag">Research</span>
                         </div>
-                        <a class="project-link" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">View on GitHub</a>
+                        <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=singapore" target="_blank" rel="noreferrer">Find Repository</a>
                     </div>
                 </div>
 
-                <div class="project-card float-card reveal slow" style="margin-top: 28px;">
+                <div class="project-card float-card reveal slow story-card" data-story-index="4" data-story-step="05" style="margin-top: 28px;">
                     <div class="project-media has-image waste" data-parallax="0.08">
                         <span>Vision AI</span>
                     </div>
@@ -1273,6 +2905,11 @@
                         <p>
                             Developed a CNN-SVM hybrid model, significantly improving classification precision and outperforming traditional CNN-only frameworks in material identification tasks. Implemented advanced augmentation techniques, achieving 72.93% test accuracy, enhancing model generalization, and effectively reducing overfitting.
                         </p>
+                        <div class="project-proof" aria-label="Project proof points">
+                            <div class="proof-item"><strong>72.93%</strong><span>Reported test accuracy</span></div>
+                            <div class="proof-item"><strong>CNN-SVM</strong><span>Hybrid classification approach</span></div>
+                            <div class="proof-item"><strong>Augmented</strong><span>Generalization-focused training</span></div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">Machine Learning</span>
                             <span class="tag">Deep Learning</span>
@@ -1281,7 +2918,9 @@
                             <span class="tag">AI</span>
                             <span class="tag">Research</span>
                         </div>
-                        <a class="project-link" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">View on GitHub</a>
+                        <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=waste" target="_blank" rel="noreferrer">Find Repository</a>
+                    </div>
+                </div>
                     </div>
                 </div>
             </div>
@@ -1412,7 +3051,7 @@
 
         <section id="contact">
             <div class="container">
-                <div class="contact-panel reveal reveal-mask slow" style="--mask-bg: #2f644d;">
+                <div class="contact-panel reveal reveal-mask slow" style="--mask-bg: #102a2b;">
                     <h2>Always excited to work on meaningful engineering challenges.</h2>
                     <p>Open to full-time roles, internships, and collaborations.</p>
                     <div class="contact-actions">
@@ -1427,23 +3066,167 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Sai Deepak Sharma Nadiminty. All rights reserved.</p>
+            <p>&copy; 2026 Sai Deepak Sharma Nadiminty. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
-        const sections = Array.from(document.querySelectorAll("section[id]"));
+        /* ──────────────────────────────────────────
+           INTRO CURTAIN
+        ────────────────────────────────────────── */
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const finePointer = window.matchMedia("(pointer: fine)").matches;
+        const richMotion = !reduceMotion && finePointer;
+        const intro = document.getElementById("page-intro");
+        if (reduceMotion) {
+            intro.style.display = "none";
+        } else {
+            intro.classList.add("exit");
+            setTimeout(() => { intro.style.display = "none"; }, 2200);
+        }
+
+        /* ──────────────────────────────────────────
+           CUSTOM CURSOR
+        ────────────────────────────────────────── */
+        const cursorDot  = document.getElementById("cursor-dot");
+        const cursorRing = document.getElementById("cursor-ring");
+        let mouseX = -200, mouseY = -200;
+        let ringX  = -200, ringY  = -200;
+
+        if (richMotion) {
+            document.addEventListener("mousemove", e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            (function animateCursor() {
+                ringX += (mouseX - ringX) * 0.12;
+                ringY += (mouseY - ringY) * 0.12;
+                cursorDot.style.left  = mouseX + "px";
+                cursorDot.style.top   = mouseY + "px";
+                cursorRing.style.left = ringX + "px";
+                cursorRing.style.top  = ringY + "px";
+                requestAnimationFrame(animateCursor);
+            })();
+
+            document.querySelectorAll("a, button, .float-card, .skill-item, .tag").forEach(el => {
+                el.addEventListener("mouseenter", () => cursorRing.classList.add("hovering"));
+                el.addEventListener("mouseleave", () => cursorRing.classList.remove("hovering"));
+            });
+
+            document.addEventListener("mousedown", () => cursorDot.classList.add("clicking"));
+            document.addEventListener("mouseup",   () => cursorDot.classList.remove("clicking"));
+        } else {
+            cursorDot.style.display = "none";
+            cursorRing.style.display = "none";
+        }
+
+        /* ──────────────────────────────────────────
+           MOUSE-FOLLOWING ORBS
+        ────────────────────────────────────────── */
+        const orb1 = document.getElementById("orb1");
+        const orb2 = document.getElementById("orb2");
+        let orb1X = 0, orb1Y = 0, orb2X = 0, orb2Y = 0;
+
+        if (richMotion) {
+            document.addEventListener("mousemove", e => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                orb1.classList.add("visible");
+                orb2.classList.add("visible");
+            });
+
+            (function animateOrbs() {
+                orb1X += (mouseX - 180 - orb1X) * 0.04;
+                orb1Y += (mouseY - 180 - orb1Y) * 0.04;
+                orb2X += (mouseX - 140 - orb2X) * 0.07;
+                orb2Y += (mouseY - 140 - orb2Y) * 0.07;
+                orb1.style.left = orb1X + "px";
+                orb1.style.top  = orb1Y + "px";
+                orb2.style.left = orb2X + "px";
+                orb2.style.top  = orb2Y + "px";
+                requestAnimationFrame(animateOrbs);
+            })();
+        } else {
+            orb1.style.display = "none";
+            orb2.style.display = "none";
+        }
+
+        /* ──────────────────────────────────────────
+           FLOATING PARTICLES IN HERO
+        ────────────────────────────────────────── */
+        const heroSection = document.querySelector(".hero");
+        const particleColors = [
+            "rgba(214,122,98,0.55)", "rgba(36,87,66,0.4)",
+            "rgba(214,122,98,0.3)", "rgba(200,230,215,0.7)"
+        ];
+        if (!reduceMotion) {
+            const particleCount = finePointer ? 18 : 8;
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement("div");
+                p.className = "particle";
+                const size = Math.random() * 7 + 3;
+                p.style.cssText = `
+                    width:${size}px; height:${size}px;
+                    left:${Math.random() * 100}%;
+                    bottom:${-size}px;
+                    background:${particleColors[i % particleColors.length]};
+                    animation-duration:${Math.random() * 10 + 8}s;
+                    animation-delay:${Math.random() * 10}s;
+                    filter:blur(${Math.random() * 2}px);
+                `;
+                heroSection.appendChild(p);
+            }
+        }
+
+        /* ──────────────────────────────────────────
+           STAGGER GROUP DELAYS
+        ────────────────────────────────────────── */
+        document.querySelectorAll("[data-stagger-group]").forEach(group => {
+            const items = Array.from(group.children);
+            items.forEach((item, index) => {
+                item.style.setProperty("--reveal-delay", `${index * 130}ms`);
+            });
+        });
+
+        /* ──────────────────────────────────────────
+           SCROLL RAIL DOTS
+        ────────────────────────────────────────── */
+        const navLinks   = Array.from(document.querySelectorAll(".nav-links a"));
+        const sections   = Array.from(document.querySelectorAll("section[id]"));
         const progressBar = document.querySelector(".scroll-progress-bar span");
-        const scrollRail = document.getElementById("scroll-rail");
+        const scrollRail  = document.getElementById("scroll-rail");
         const parallaxItems = Array.from(document.querySelectorAll("[data-parallax]"));
+        const nav = document.querySelector("nav");
+        const navToggle = document.querySelector(".nav-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const sectionAccents = {
+            about: "#0f6b5f",
+            signals: "#2d9cdb",
+            experience: "#f06449",
+            skills: "#7357ff",
+            education: "#2d9cdb",
+            contact: "#f6b73c"
+        };
         let ticking = false;
 
-        document.querySelectorAll("[data-stagger-group]").forEach(group => {
-            const items = Array.from(group.querySelectorAll(".reveal"));
-            items.forEach((item, index) => {
-                item.style.setProperty("--reveal-delay", `${index * 120}ms`);
-            });
+        function closeMobileNav() {
+            document.body.classList.remove("nav-open");
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.setAttribute("aria-label", "Open navigation");
+        }
+
+        navToggle.addEventListener("click", () => {
+            const isOpen = document.body.classList.toggle("nav-open");
+            navToggle.setAttribute("aria-expanded", String(isOpen));
+            navToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+        });
+
+        mobileMenu.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", closeMobileNav);
+        });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") closeMobileNav();
         });
 
         const dots = sections.map(section => {
@@ -1452,36 +3235,341 @@
             dot.type = "button";
             dot.setAttribute("aria-label", section.id);
             dot.addEventListener("click", () => {
-                section.scrollIntoView({ behavior: "smooth", block: "start" });
+                section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
             });
             scrollRail.appendChild(dot);
             return dot;
         });
 
+        /* ──────────────────────────────────────────
+           PROJECT SCROLLYTELLING
+        ────────────────────────────────────────── */
+        const storyMap = document.querySelector(".story-map");
+        const storyTitle = document.getElementById("story-title");
+        const storyCopy = document.getElementById("story-copy");
+        const storyChapters = Array.from(document.querySelectorAll(".story-chapter"));
+        const storyCards = Array.from(document.querySelectorAll(".story-card"));
+        const storyColors = ["#2d9cdb", "#f06449", "#7357ff", "#0f6b5f", "#f6b73c"];
+        let activeStoryIndex = 0;
+
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        function setStoryIndex(index) {
+            if (!storyChapters[index]) return;
+            activeStoryIndex = index;
+            const chapter = storyChapters[index];
+            document.documentElement.style.setProperty("--story-accent", storyColors[index] || "var(--accent)");
+            storyTitle.textContent = chapter.dataset.storyTitle;
+            storyCopy.textContent = chapter.dataset.storyCopy;
+            storyChapters.forEach((item, itemIndex) => item.classList.toggle("active", itemIndex === index));
+            storyCards.forEach(card => {
+                card.classList.toggle("story-active", Number(card.dataset.storyIndex) === index);
+            });
+        }
+
+        storyChapters.forEach(chapter => {
+            chapter.addEventListener("click", () => {
+                const index = Number(chapter.dataset.storyIndex);
+                const target = storyCards.find(card => Number(card.dataset.storyIndex) === index);
+                if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+                setStoryIndex(index);
+            });
+        });
+
+        setStoryIndex(0);
+
+        /* ──────────────────────────────────────────
+           SIGNAL MAP + GITHUB SKYLINE
+        ────────────────────────────────────────── */
+        const signalData = [
+            {
+                title: "Space Missions",
+                copy: "3 public data sources stitched into a scroll-led exploration of launches, objects, and debris.",
+                color: "#2d9cdb"
+            },
+            {
+                title: "Secure RAG",
+                copy: "An anonymized retrieval workflow with TLS, chunking, semantic search, and privacy-aware support flows.",
+                color: "#f06449"
+            },
+            {
+                title: "Urban GANs",
+                copy: "3,050 city images from 50 places turned into generated planning options with Pix2Pix-style modeling.",
+                color: "#7357ff"
+            },
+            {
+                title: "Singapore Analytics",
+                copy: "1957-2023 demographic signals shaped into interpretable forecasting and planning windows.",
+                color: "#0f6b5f"
+            },
+            {
+                title: "Vision AI",
+                copy: "A CNN-SVM pipeline for waste classification with a reported 72.93% test accuracy signal.",
+                color: "#f6b73c"
+            }
+        ];
+        const planets = Array.from(document.querySelectorAll(".planet"));
+        const starNodes = Array.from(document.querySelectorAll(".star-node"));
+        const orbitCaption = document.getElementById("orbit-caption");
+        let activeSignalIndex = 0;
+
+        function setSignalIndex(index) {
+            const signal = signalData[index];
+            if (!signal || !orbitCaption) return;
+            activeSignalIndex = index;
+            document.documentElement.style.setProperty("--story-accent", signal.color);
+            planets.forEach(item => item.classList.toggle("active", Number(item.dataset.signalIndex) === index));
+            starNodes.forEach(item => item.classList.toggle("active", Number(item.dataset.signalIndex) === index));
+            orbitCaption.querySelector("strong").textContent = signal.title;
+            orbitCaption.querySelector("span").textContent = signal.copy;
+        }
+
+        [...planets, ...starNodes].forEach(item => {
+            const activate = () => setSignalIndex(Number(item.dataset.signalIndex));
+            item.addEventListener("click", activate);
+            item.addEventListener("mouseenter", activate);
+            item.addEventListener("focus", activate);
+            item.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    activate();
+                }
+            });
+        });
+
+        setSignalIndex(0);
+
+        const githubUsername = "deepaksharma0801";
+        const githubStatus = document.getElementById("github-status");
+        const githubRepos = document.getElementById("github-repos");
+        const githubLanguages = document.getElementById("github-languages");
+        const githubUpdated = document.getElementById("github-updated");
+        const githubSkyline = document.getElementById("github-skyline");
+        const githubLanguageStrip = document.getElementById("github-language-strip");
+        const fallbackActivity = [2, 4, 3, 7, 5, 1, 6, 8, 4, 3, 9, 5, 2, 7, 6, 4, 10, 8, 5, 3, 7, 11, 6, 4, 8, 5, 9, 12, 7, 4, 6, 10, 5, 8, 11, 7, 13, 9, 6, 10, 8, 12];
+        const fallbackLanguages = {
+            Python: 7,
+            JavaScript: 5,
+            Jupyter: 4,
+            HTML: 2
+        };
+
+        function renderSkyline(values) {
+            if (!githubSkyline) return;
+            const activity = values.length ? values : fallbackActivity;
+            const max = Math.max(...activity, 1);
+            const bars = activity.map((value, index) => {
+                const bar = document.createElement("span");
+                const height = Math.max(12, Math.round((value / max) * 100));
+                bar.className = "github-bar";
+                bar.title = `${value} public event${value === 1 ? "" : "s"}`;
+                bar.style.setProperty("--bar-height", `${height}%`);
+                bar.style.setProperty("--bar-delay", `${index * 18}ms`);
+                return bar;
+            });
+            githubSkyline.replaceChildren(...bars);
+        }
+
+        function renderLanguages(languageCounts) {
+            if (!githubLanguageStrip) return;
+            const entries = Object.entries(languageCounts)
+                .filter(([, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 4);
+            const safeEntries = entries.length ? entries : Object.entries(fallbackLanguages);
+            const total = safeEntries.reduce((sum, [, count]) => sum + count, 0) || 1;
+            const pills = safeEntries.map(([name, count]) => {
+                const pill = document.createElement("span");
+                pill.className = "language-pill";
+                pill.textContent = `${name} ${Math.max(1, Math.round((count / total) * 100))}%`;
+                return pill;
+            });
+            githubLanguageStrip.replaceChildren(...pills);
+        }
+
+        function daysSince(dateString) {
+            const then = new Date(dateString).getTime();
+            if (Number.isNaN(then)) return "--";
+            const days = Math.max(0, Math.floor((Date.now() - then) / 86400000));
+            if (days === 0) return "today";
+            if (days === 1) return "1d";
+            return `${days}d`;
+        }
+
+        function renderFallbackGithub() {
+            if (githubStatus) githubStatus.textContent = "Static fallback";
+            if (githubRepos) githubRepos.textContent = "5+";
+            if (githubLanguages) githubLanguages.textContent = "4";
+            if (githubUpdated) githubUpdated.textContent = "Live";
+            renderSkyline(fallbackActivity);
+            renderLanguages(fallbackLanguages);
+        }
+
+        function aggregateRecentEvents(events) {
+            const today = new Date();
+            const keys = [];
+            for (let i = 41; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                keys.push(date.toISOString().slice(0, 10));
+            }
+            const counts = new Map(keys.map(key => [key, 0]));
+            events.forEach(event => {
+                const key = String(event.created_at || "").slice(0, 10);
+                if (counts.has(key)) counts.set(key, counts.get(key) + 1);
+            });
+            return Array.from(counts.values());
+        }
+
+        async function fetchGithubJson(path) {
+            const response = await fetch(`https://api.github.com/users/${githubUsername}/${path}`);
+            if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+            return response.json();
+        }
+
+        async function syncGithubSignals() {
+            renderFallbackGithub();
+            const repoTask = fetchGithubJson("repos?per_page=100&sort=pushed").then(repos => {
+                const publicRepos = Array.isArray(repos) ? repos.filter(repo => !repo.fork) : [];
+                const visibleRepos = publicRepos.length ? publicRepos : repos;
+                const languages = {};
+                visibleRepos.forEach(repo => {
+                    if (repo.language) languages[repo.language] = (languages[repo.language] || 0) + 1;
+                });
+                const latestRepo = visibleRepos
+                    .filter(repo => repo.pushed_at)
+                    .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))[0];
+                githubRepos.textContent = String(visibleRepos.length || "5+");
+                githubLanguages.textContent = String(Object.keys(languages).length || 4);
+                githubUpdated.textContent = latestRepo ? daysSince(latestRepo.pushed_at) : "Live";
+                renderLanguages(languages);
+            });
+
+            const eventTask = fetchGithubJson("events/public?per_page=100").then(events => {
+                renderSkyline(Array.isArray(events) ? aggregateRecentEvents(events) : fallbackActivity);
+            });
+
+            const results = await Promise.allSettled([repoTask, eventTask]);
+            if (githubStatus) {
+                githubStatus.textContent = results.some(result => result.status === "fulfilled")
+                    ? "Live public sync"
+                    : "Static fallback";
+            }
+        }
+
+        if (githubSkyline) {
+            syncGithubSignals();
+        }
+
+        /* ──────────────────────────────────────────
+           COUNT-UP ANIMATION
+        ────────────────────────────────────────── */
+        function countUp(el) {
+            const target = parseFloat(el.textContent.replace(/[^0-9.]/g, ""));
+            const suffix = el.textContent.replace(/[0-9.]/g, "");
+            if (isNaN(target)) return;
+            const duration = 1100;
+            const start = performance.now();
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(eased * target) + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = target + suffix;
+                    el.classList.add("pop");
+                    setTimeout(() => el.classList.remove("pop"), 600);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        /* ──────────────────────────────────────────
+           MAGNETIC BUTTONS
+        ────────────────────────────────────────── */
+        if (richMotion) {
+            document.querySelectorAll(".btn").forEach(btn => {
+                btn.addEventListener("mousemove", e => {
+                    const rect = btn.getBoundingClientRect();
+                    const dx = e.clientX - (rect.left + rect.width / 2);
+                    const dy = e.clientY - (rect.top  + rect.height / 2);
+                    btn.style.transform = `translate(${dx * 0.18}px, ${dy * 0.22}px) translateY(-2px)`;
+                });
+                btn.addEventListener("mouseleave", () => {
+                    btn.style.transform = "";
+                });
+            });
+        }
+
+        /* ──────────────────────────────────────────
+           SCROLL HANDLER
+        ────────────────────────────────────────── */
         function updateScroll() {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            const scrollTop  = window.scrollY;
+            const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+            const progress   = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
             progressBar.style.width = `${progress}%`;
 
+            /* Gradient progress bar color */
+            const hue = docHeight > 0 ? Math.round(scrollTop / docHeight * 90) : 0;
+            progressBar.style.background = `linear-gradient(90deg, hsl(${14 + hue},66%,65%), hsl(${14 + hue + 40},66%,55%))`;
+
+            /* Nav scrolled state */
+            nav.classList.toggle("scrolled", scrollTop > 30);
+
+            /* Active section */
             let current = sections[0];
             sections.forEach(section => {
-                if (scrollTop >= section.offsetTop - 160) {
-                    current = section;
-                }
+                if (scrollTop >= section.offsetTop - 180) current = section;
             });
 
             navLinks.forEach(link => {
                 link.classList.toggle("active", link.getAttribute("href") === `#${current.id}`);
             });
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle("active", sections[index].id === current.id);
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active", sections[i].id === current.id);
             });
+            if (current.id === "signals" && signalData[activeSignalIndex]) {
+                document.documentElement.style.setProperty("--story-accent", signalData[activeSignalIndex].color);
+            } else if (current.id !== "projects" && sectionAccents[current.id]) {
+                document.documentElement.style.setProperty("--story-accent", sectionAccents[current.id]);
+            }
 
+            /* Project scrollytelling active chapter + media pan */
+            if (storyMap && storyCards.length) {
+                const storyRect = document.getElementById("projects").getBoundingClientRect();
+                const storyProgress = clamp((window.innerHeight * 0.72 - storyRect.top) / Math.max(storyRect.height - window.innerHeight * 0.2, 1), 0, 1);
+                storyMap.style.setProperty("--story-progress", storyProgress.toFixed(3));
+
+                let nearestIndex = activeStoryIndex;
+                let nearestDistance = Infinity;
+                storyCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const center = (rect.top + rect.height / 2) / window.innerHeight;
+                    const distance = Math.abs(center - 0.48);
+                    const depth = clamp(1 - distance * 1.65, 0, 1);
+                    card.style.setProperty("--card-depth", depth.toFixed(3));
+                    const media = card.querySelector(".project-media.has-image");
+                    if (media) {
+                        const pan = clamp(50 + (0.5 - center) * 14, 42, 58);
+                        media.style.backgroundPosition = `center ${pan.toFixed(1)}%`;
+                    }
+                    if (rect.bottom > window.innerHeight * 0.14 && rect.top < window.innerHeight * 0.86 && distance < nearestDistance) {
+                        nearestDistance = distance;
+                        nearestIndex = Number(card.dataset.storyIndex);
+                    }
+                });
+                if (nearestIndex !== activeStoryIndex) setStoryIndex(nearestIndex);
+            }
+
+            /* Parallax */
             parallaxItems.forEach(item => {
-                const rate = Number(item.dataset.parallax) || 0.1;
-                const rect = item.getBoundingClientRect();
+                const rate   = Number(item.dataset.parallax) || 0.1;
+                const rect   = item.getBoundingClientRect();
                 const offset = (rect.top - window.innerHeight / 2) * rate * -0.2;
                 item.style.setProperty("--parallax", `${offset}px`);
                 item.classList.add("parallax");
@@ -1491,29 +3579,65 @@
         }
 
         function requestTick() {
-            if (!ticking) {
-                window.requestAnimationFrame(updateScroll);
-                ticking = true;
-            }
+            if (!ticking) { window.requestAnimationFrame(updateScroll); ticking = true; }
         }
 
         window.addEventListener("scroll", requestTick, { passive: true });
-        window.addEventListener("resize", requestTick);
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 960) closeMobileNav();
+            requestTick();
+        });
         updateScroll();
 
-        const revealObserver = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("in-view");
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.15 }
-        );
+        /* ──────────────────────────────────────────
+           INTERSECTION OBSERVER — reveals + specials
+        ────────────────────────────────────────── */
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                el.classList.add("in-view");
+                revealObserver.unobserve(el);
+            });
+        }, { threshold: 0.12 });
 
         document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+        /* Section headings — underline + count-up trigger */
+        const headingObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("in-view");
+                headingObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll(".section-heading").forEach(el => headingObserver.observe(el));
+
+        /* Stats count-up when scrolled into view */
+        const statObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.querySelectorAll("strong").forEach(countUp);
+                statObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.4 });
+
+        document.querySelectorAll(".stats, .about-stats").forEach(el => statObserver.observe(el));
+
+        /* Skill pill stagger reveal */
+        const skillObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const pills = entry.target.querySelectorAll(".skill-item");
+                pills.forEach((pill, i) => {
+                    setTimeout(() => pill.classList.add("visible"), i * 55);
+                });
+                skillObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll(".skill-list").forEach(el => skillObserver.observe(el));
     </script>
 </body>
 </html>
