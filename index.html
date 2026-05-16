@@ -745,18 +745,6 @@
             }
         }
 
-        @keyframes sunburstSpin {
-            to {
-                rotate: 360deg;
-            }
-        }
-
-        @keyframes reverseSpin {
-            to {
-                rotate: -360deg;
-            }
-        }
-
         @keyframes skylineRise {
             from {
                 transform: scaleY(0);
@@ -1054,6 +1042,11 @@
             box-shadow: 0 24px 46px color-mix(in srgb, var(--planet-color), transparent 50%);
         }
 
+        .planet:hover:not(.active) {
+            transform: scale(1.07);
+            box-shadow: 0 22px 42px rgba(0,0,0,0.28);
+        }
+
         .planet-space {
             --planet-color: var(--accent-3);
             left: 15%;
@@ -1109,71 +1102,174 @@
             line-height: 1.5;
         }
 
-        .skill-sunburst {
-            min-height: 280px;
-            border-radius: 26px;
+        .skill-matrix {
             display: grid;
-            place-items: center;
-            position: relative;
-            background:
-                radial-gradient(circle, rgba(255,255,255,0.95) 0 24%, transparent 25%),
-                repeating-conic-gradient(from -18deg, var(--accent-3) 0 34deg, var(--accent) 34deg 72deg, var(--accent-5) 72deg 116deg, var(--accent-4) 116deg 156deg, var(--accent-2) 156deg 198deg);
-            box-shadow: inset 0 0 0 20px rgba(255,255,255,0.52), inset 0 0 0 48px rgba(255,255,255,0.24);
-            animation: sunburstSpin 26s linear infinite;
+            gap: 14px;
         }
 
-        .skill-sunburst::before {
-            content: "";
-            position: absolute;
-            width: 72%;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            border: 1px dashed rgba(16,42,43,0.22);
-            animation: reverseSpin 22s linear infinite;
+        .skill-domain-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
         }
 
-        .sunburst-core {
-            width: 112px;
-            height: 112px;
-            border-radius: 50%;
-            display: grid;
-            place-content: center;
-            text-align: center;
-            background: rgba(255,255,255,0.94);
+        .skill-domain {
+            border: 1px solid rgba(215,227,222,0.96);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.76);
             color: var(--text);
-            box-shadow: 0 18px 40px rgba(16,42,43,0.16);
-            z-index: 2;
-            animation: reverseSpin 26s linear infinite;
+            cursor: pointer;
+            padding: 11px 12px;
+            text-align: left;
+            font: inherit;
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
         }
 
-        .sunburst-core strong {
-            font-size: 1.5rem;
-            color: var(--accent-2);
-        }
-
-        .sunburst-core span {
-            font-size: 0.75rem;
-            color: var(--muted);
+        .skill-domain span {
+            display: block;
+            color: inherit;
+            font-size: 0.78rem;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
         }
 
-        .sunburst-legend {
-            margin-top: 16px;
+        .skill-domain small {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .skill-domain:hover,
+        .skill-domain:focus-visible {
+            transform: translateY(-2px);
+            border-color: color-mix(in srgb, var(--skill-color), white 22%);
+        }
+
+        .skill-domain.active {
+            background: linear-gradient(135deg, color-mix(in srgb, var(--skill-color), white 8%), color-mix(in srgb, var(--skill-color), #102a2b 18%));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 14px 32px color-mix(in srgb, var(--skill-color), transparent 72%);
+        }
+
+        .skill-domain.active small {
+            color: rgba(255,255,255,0.78);
+        }
+
+        .skill-focus-panel {
+            border-radius: 20px;
+            border: 1px solid rgba(215,227,222,0.92);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.88), rgba(238,247,242,0.84)),
+                radial-gradient(circle at 8% 12%, color-mix(in srgb, var(--story-accent), transparent 84%), transparent 34%);
+            padding: 16px;
+        }
+
+        .skill-focus-top {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .skill-focus-top strong {
+            display: block;
+            color: var(--story-accent);
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .skill-focus-top span {
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .skill-meter {
+            width: min(140px, 42%);
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(15,107,95,0.12);
+            overflow: hidden;
+        }
+
+        .skill-meter span {
+            display: block;
+            width: var(--skill-strength, 82%);
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--story-accent), var(--accent-4));
+            transition: width 0.55s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .skill-summary {
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .skill-chip-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
 
-        .sunburst-legend span {
+        .skill-chip {
             padding: 7px 10px;
             border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--story-accent), white 50%);
+            background: color-mix(in srgb, var(--story-accent), white 86%);
             color: var(--text);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+
+        .skill-project-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .skill-project-match {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border: 1px solid rgba(215,227,222,0.94);
+            border-left: 4px solid var(--story-accent);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.74);
+            color: var(--text);
+            cursor: pointer;
+            font: inherit;
+            padding: 10px 12px;
+            text-align: left;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .skill-project-match:hover,
+        .skill-project-match:focus-visible {
+            transform: translateX(4px);
+            border-color: color-mix(in srgb, var(--story-accent), white 35%);
+            box-shadow: 0 12px 26px rgba(16,42,43,0.08);
+        }
+
+        .skill-project-match span {
             font-size: 0.78rem;
             font-weight: 800;
-            background: color-mix(in srgb, var(--legend-color), white 72%);
-            border: 1px solid color-mix(in srgb, var(--legend-color), white 42%);
+        }
+
+        .skill-project-match small {
+            color: var(--muted);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
 
         .github-metrics {
@@ -1226,6 +1322,13 @@
             transform-origin: bottom;
             animation: skylineRise 0.8s cubic-bezier(0.16,1,0.3,1) both;
             animation-delay: var(--bar-delay, 0ms);
+            cursor: help;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .github-bar:hover {
+            transform: scaleY(1.08);
+            filter: brightness(1.12);
         }
 
         .github-language-strip {
@@ -1998,8 +2101,18 @@
             }
 
             .signal-stats,
-            .github-metrics {
+            .github-metrics,
+            .skill-domain-tabs {
                 grid-template-columns: 1fr;
+            }
+
+            .skill-focus-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .skill-meter {
+                width: 100%;
             }
 
             .solar-system {
@@ -2559,16 +2672,16 @@
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
                     <h2>Signal Map</h2>
-                    <p>A compact, living view of the projects, skills, metrics, and GitHub traces behind the portfolio.</p>
+                    <p>Click through the project nodes, skill domains, and live GitHub traces to see how the work connects.</p>
                 </div>
 
                 <div class="signal-grid">
                     <div class="signal-card signal-orbit-card reveal slow">
                         <div class="signal-card-header">
-                            <span>Project Solar System</span>
-                            <strong>5 active worlds</strong>
+                            <span>Project Orbit</span>
+                            <strong>5 project nodes</strong>
                         </div>
-                        <div class="solar-system" aria-label="Project solar system visualization">
+                        <div class="solar-system" aria-label="Interactive project orbit visualization">
                             <div class="orbit-ring orbit-ring-1"></div>
                             <div class="orbit-ring orbit-ring-2"></div>
                             <div class="orbit-ring orbit-ring-3"></div>
@@ -2600,20 +2713,42 @@
 
                     <div class="signal-card signal-skills-card reveal slow">
                         <div class="signal-card-header">
-                            <span>Skill Sunburst</span>
-                            <strong>4 domains</strong>
+                            <span>Skill Matrix</span>
+                            <strong id="skill-active-domain">Machine Learning</strong>
                         </div>
-                        <div class="skill-sunburst" aria-label="Skill sunburst visualization">
-                            <div class="sunburst-core">
-                                <strong>AI</strong>
-                                <span>Data Systems</span>
+                        <div class="skill-matrix" aria-label="Interactive skill matrix">
+                            <div class="skill-domain-tabs" role="tablist" aria-label="Skill domains">
+                                <button class="skill-domain active" type="button" data-skill-index="0" role="tab" aria-selected="true" style="--skill-color: var(--accent-3);">
+                                    <span>ML Systems</span>
+                                    <small>models + evaluation</small>
+                                </button>
+                                <button class="skill-domain" type="button" data-skill-index="1" role="tab" aria-selected="false" style="--skill-color: var(--accent);">
+                                    <span>RAG + Security</span>
+                                    <small>retrieval + privacy</small>
+                                </button>
+                                <button class="skill-domain" type="button" data-skill-index="2" role="tab" aria-selected="false" style="--skill-color: var(--accent-5);">
+                                    <span>Data Viz</span>
+                                    <small>stories + dashboards</small>
+                                </button>
+                                <button class="skill-domain" type="button" data-skill-index="3" role="tab" aria-selected="false" style="--skill-color: var(--accent-2);">
+                                    <span>Data Ops</span>
+                                    <small>pipelines + APIs</small>
+                                </button>
                             </div>
-                        </div>
-                        <div class="sunburst-legend">
-                            <span style="--legend-color: var(--accent-3);">ML</span>
-                            <span style="--legend-color: var(--accent);">RAG</span>
-                            <span style="--legend-color: var(--accent-5);">Viz</span>
-                            <span style="--legend-color: var(--accent-4);">Ops</span>
+                            <div class="skill-focus-panel">
+                                <div class="skill-focus-top">
+                                    <div>
+                                        <strong id="skill-score">92</strong>
+                                        <span>Applied strength</span>
+                                    </div>
+                                    <div class="skill-meter" aria-hidden="true">
+                                        <span id="skill-meter-fill"></span>
+                                    </div>
+                                </div>
+                                <p class="skill-summary" id="skill-summary">Modeling work across classification, forecasting, and generative image systems.</p>
+                            </div>
+                            <div class="skill-chip-list" id="skill-chip-list" aria-label="Skills in selected domain"></div>
+                            <div class="skill-project-list" id="skill-project-list" aria-label="Projects using selected domain"></div>
                         </div>
                     </div>
 
@@ -3320,7 +3455,11 @@
             if (!signal || !orbitCaption) return;
             activeSignalIndex = index;
             document.documentElement.style.setProperty("--story-accent", signal.color);
-            planets.forEach(item => item.classList.toggle("active", Number(item.dataset.signalIndex) === index));
+            planets.forEach(item => {
+                const active = Number(item.dataset.signalIndex) === index;
+                item.classList.toggle("active", active);
+                item.setAttribute("aria-pressed", String(active));
+            });
             starNodes.forEach(item => item.classList.toggle("active", Number(item.dataset.signalIndex) === index));
             orbitCaption.querySelector("strong").textContent = signal.title;
             orbitCaption.querySelector("span").textContent = signal.copy;
@@ -3340,6 +3479,104 @@
         });
 
         setSignalIndex(0);
+
+        const skillDomains = [
+            {
+                title: "Machine Learning",
+                score: 92,
+                color: "#2d9cdb",
+                summary: "Modeling work across classification, forecasting, and generative image systems.",
+                skills: ["Python", "TensorFlow", "Scikit-learn", "CNN-SVM", "GANs"],
+                projects: [
+                    { name: "Vision AI", signalIndex: 4, type: "classification" },
+                    { name: "Urban GANs", signalIndex: 2, type: "generation" },
+                    { name: "Singapore Analytics", signalIndex: 3, type: "forecasting" }
+                ]
+            },
+            {
+                title: "RAG + Security",
+                score: 88,
+                color: "#f06449",
+                summary: "Retrieval workflows designed around anonymization, chunking, TLS, and support automation.",
+                skills: ["Vector Search", "Embeddings", "TLS", "Anonymization", "Workflow Design"],
+                projects: [
+                    { name: "Secure RAG", signalIndex: 1, type: "privacy" },
+                    { name: "GitHub Sync", signalIndex: 0, type: "public API" }
+                ]
+            },
+            {
+                title: "Data Visualization",
+                score: 90,
+                color: "#7357ff",
+                summary: "Scrollytelling, dashboards, and visual systems that turn dense datasets into decisions.",
+                skills: ["D3-style Thinking", "Dashboard UX", "Story Maps", "Interaction Design", "Responsive UI"],
+                projects: [
+                    { name: "Space Missions", signalIndex: 0, type: "scrollytelling" },
+                    { name: "Signal Map", signalIndex: 0, type: "interactive UI" },
+                    { name: "Singapore Analytics", signalIndex: 3, type: "trend story" }
+                ]
+            },
+            {
+                title: "Data Ops",
+                score: 84,
+                color: "#0f6b5f",
+                summary: "Cleaning, joining, and shaping data from public APIs, Kaggle files, and research datasets.",
+                skills: ["Pandas", "APIs", "ETL", "Kaggle", "GitHub Data"],
+                projects: [
+                    { name: "Space Missions", signalIndex: 0, type: "multi-source" },
+                    { name: "Waste Classification", signalIndex: 4, type: "dataset prep" },
+                    { name: "GitHub Skyline", signalIndex: 1, type: "live fetch" }
+                ]
+            }
+        ];
+        const skillDomainButtons = Array.from(document.querySelectorAll(".skill-domain"));
+        const skillActiveDomain = document.getElementById("skill-active-domain");
+        const skillScore = document.getElementById("skill-score");
+        const skillMeterFill = document.getElementById("skill-meter-fill");
+        const skillSummary = document.getElementById("skill-summary");
+        const skillChipList = document.getElementById("skill-chip-list");
+        const skillProjectList = document.getElementById("skill-project-list");
+
+        function renderSkillDomain(index) {
+            const domain = skillDomains[index];
+            if (!domain) return;
+            document.documentElement.style.setProperty("--story-accent", domain.color);
+            skillDomainButtons.forEach((button, buttonIndex) => {
+                const active = buttonIndex === index;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-selected", String(active));
+            });
+            if (skillActiveDomain) skillActiveDomain.textContent = domain.title;
+            if (skillScore) skillScore.textContent = domain.score;
+            if (skillMeterFill) skillMeterFill.style.setProperty("--skill-strength", `${domain.score}%`);
+            if (skillSummary) skillSummary.textContent = domain.summary;
+            if (skillChipList) {
+                const chips = domain.skills.map(skill => {
+                    const chip = document.createElement("span");
+                    chip.className = "skill-chip";
+                    chip.textContent = skill;
+                    return chip;
+                });
+                skillChipList.replaceChildren(...chips);
+            }
+            if (skillProjectList) {
+                const matches = domain.projects.map(project => {
+                    const match = document.createElement("button");
+                    match.className = "skill-project-match";
+                    match.type = "button";
+                    match.innerHTML = `<span>${project.name}</span><small>${project.type}</small>`;
+                    match.addEventListener("click", () => setSignalIndex(project.signalIndex));
+                    return match;
+                });
+                skillProjectList.replaceChildren(...matches);
+            }
+        }
+
+        skillDomainButtons.forEach(button => {
+            button.addEventListener("click", () => renderSkillDomain(Number(button.dataset.skillIndex)));
+        });
+
+        renderSkillDomain(0);
 
         const githubUsername = "deepaksharma0801";
         const githubStatus = document.getElementById("github-status");
