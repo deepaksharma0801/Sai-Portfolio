@@ -763,6 +763,46 @@
             }
         }
 
+        @keyframes contactOrbit {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translate(-22px, 18px) rotate(16deg) scale(1.04);
+            }
+        }
+
+        @keyframes sparkPulse {
+            0%, 100% {
+                transform: scaleY(0.78);
+                opacity: 0.58;
+            }
+            50% {
+                transform: scaleY(1.08);
+                opacity: 1;
+            }
+        }
+
+        @keyframes statusBlink {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.78;
+            }
+            50% {
+                transform: scale(1.18);
+                opacity: 1;
+            }
+        }
+
+        @keyframes contactFloat {
+            0%, 100% {
+                transform: translate3d(0, 0, 0);
+            }
+            50% {
+                transform: translate3d(14px, -18px, 0);
+            }
+        }
+
         .section-heading {
             display: flex;
             flex-direction: column;
@@ -2382,38 +2422,53 @@
 
         .contact-panel {
             background:
-                linear-gradient(135deg, rgba(16,42,43,0.96), rgba(15,107,95,0.96)),
+                radial-gradient(circle at 16% 18%, rgba(45,156,219,0.24), transparent 28%),
+                radial-gradient(circle at 84% 82%, rgba(246,183,60,0.18), transparent 32%),
+                linear-gradient(135deg, rgba(16,42,43,0.97), rgba(15,107,95,0.94)),
                 linear-gradient(120deg, rgba(45,156,219,0.28), rgba(240,100,73,0.22));
             color: #f9f6f0;
             border-radius: var(--radius-xl);
             padding: 48px;
             display: grid;
-            gap: 20px;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.75fr);
+            gap: 28px;
+            align-items: center;
             position: relative;
             overflow: hidden;
+            isolation: isolate;
         }
 
         .contact-panel::after {
             content: "";
             position: absolute;
-            width: 180px;
-            height: 180px;
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.10);
-            top: -50px;
-            right: -40px;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 62%);
+            top: -92px;
+            right: -76px;
+            animation: contactOrbit 12s ease-in-out infinite;
         }
 
         .contact-panel::before {
             content: "";
             position: absolute;
-            width: 140px;
-            height: 140px;
+            width: 210px;
+            height: 210px;
             border-radius: 50%;
-            background: rgba(240, 100, 73, 0.24);
-            bottom: -60px;
-            left: -40px;
-            animation: pulseGlow 6s ease-in-out infinite;
+            background:
+                radial-gradient(circle at 58% 46%, rgba(240,100,73,0.5) 0 4px, transparent 5px),
+                radial-gradient(circle, rgba(246,183,60,0.18), transparent 62%);
+            bottom: -98px;
+            left: -70px;
+            animation: pulseGlow 5.5s ease-in-out infinite;
+        }
+
+        .contact-copy,
+        .contact-card {
+            position: relative;
+            z-index: 1;
         }
 
         .contact-panel h2 {
@@ -2423,6 +2478,24 @@
         .contact-panel p {
             color: rgba(249, 246, 240, 0.75);
             line-height: 1.7;
+        }
+
+        .contact-sparkline {
+            display: flex;
+            align-items: end;
+            gap: 7px;
+            height: 44px;
+            margin: 4px 0 4px;
+        }
+
+        .contact-sparkline span {
+            width: 9px;
+            height: var(--spark-height);
+            border-radius: 999px;
+            background: linear-gradient(180deg, var(--accent-4), var(--accent));
+            box-shadow: 0 0 18px rgba(246,183,60,0.22);
+            animation: sparkPulse 1.9s ease-in-out infinite;
+            animation-delay: var(--spark-delay, 0ms);
         }
 
         .contact-actions {
@@ -2438,6 +2511,153 @@
             border-color: transparent;
         }
 
+        .contact-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .contact-chip {
+            padding: 8px 11px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.08);
+            color: rgba(249,246,240,0.86);
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-card {
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 24px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06)),
+                radial-gradient(circle at 18% 18%, rgba(45,156,219,0.18), transparent 42%);
+            padding: 20px;
+            box-shadow: 0 24px 58px rgba(0,0,0,0.18);
+            backdrop-filter: blur(18px);
+        }
+
+        .contact-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .contact-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(249,246,240,0.86);
+            font-size: 0.74rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .contact-status::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #67e8a5;
+            box-shadow: 0 0 0 7px rgba(103,232,165,0.14), 0 0 22px rgba(103,232,165,0.65);
+            animation: statusBlink 1.8s ease-in-out infinite;
+        }
+
+        .contact-card strong {
+            color: white;
+            font-size: 1.05rem;
+        }
+
+        .contact-lanes {
+            display: grid;
+            gap: 10px;
+        }
+
+        .contact-lane {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 10px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .contact-lane-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            font-weight: 900;
+        }
+
+        .contact-lane span {
+            color: white;
+            font-weight: 800;
+        }
+
+        .contact-lane small {
+            color: rgba(249,246,240,0.64);
+            font-weight: 700;
+        }
+
+        .contact-lane em {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--lane-color);
+            box-shadow: 0 0 18px var(--lane-color);
+            font-style: normal;
+        }
+
+        .contact-mini-note {
+            margin-top: 16px;
+            color: rgba(249,246,240,0.68);
+            font-size: 0.9rem;
+        }
+
+        .contact-float {
+            position: absolute;
+            z-index: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.34);
+            animation: contactFloat 7s ease-in-out infinite;
+        }
+
+        .contact-float.one {
+            right: 15%;
+            top: 8%;
+            background: var(--accent);
+        }
+
+        .contact-float.two {
+            right: 38%;
+            bottom: 13%;
+            background: var(--accent-4);
+            animation-delay: -2.2s;
+        }
+
+        .contact-float.three {
+            left: 7%;
+            bottom: 25%;
+            background: var(--accent-3);
+            animation-delay: -4s;
+        }
+
         footer {
             padding: 40px 0 60px;
             color: rgba(82, 107, 103, 0.78);
@@ -2450,6 +2670,7 @@
             .experience-card,
             .project-card,
             .story-layout,
+            .contact-panel,
             .signal-grid,
             .capability-atlas,
             .journey-legs {
@@ -2523,6 +2744,18 @@
 
             .contact-panel {
                 padding: 32px;
+            }
+
+            .contact-card {
+                padding: 16px;
+            }
+
+            .contact-lane {
+                grid-template-columns: auto 1fr;
+            }
+
+            .contact-lane em {
+                display: none;
             }
 
             .project-proof {
@@ -3669,13 +3902,65 @@
         <section id="contact">
             <div class="container">
                 <div class="contact-panel reveal reveal-mask slow" style="--mask-bg: #102a2b;">
-                    <h2>Always excited to work on meaningful engineering challenges.</h2>
-                    <p>Open to full-time roles, internships, and collaborations.</p>
-                    <div class="contact-actions">
-                        <a href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer" class="btn btn-secondary">LinkedIn</a>
-                        <a href="mailto:deepak.nadiminti@gmail.com" class="btn btn-secondary">Contact Me</a>
+                    <span class="contact-float one"></span>
+                    <span class="contact-float two"></span>
+                    <span class="contact-float three"></span>
+                    <div class="contact-copy">
+                        <h2>Got a hard AI/data problem? I am already curious.</h2>
+                        <p>Open to full-time roles, internships, and collaborations where engineering, product thinking, and messy real-world data meet.</p>
+                        <div class="contact-sparkline" aria-hidden="true">
+                            <span style="--spark-height: 42%; --spark-delay: 0ms;"></span>
+                            <span style="--spark-height: 68%; --spark-delay: 110ms;"></span>
+                            <span style="--spark-height: 52%; --spark-delay: 220ms;"></span>
+                            <span style="--spark-height: 88%; --spark-delay: 330ms;"></span>
+                            <span style="--spark-height: 64%; --spark-delay: 440ms;"></span>
+                            <span style="--spark-height: 96%; --spark-delay: 550ms;"></span>
+                            <span style="--spark-height: 58%; --spark-delay: 660ms;"></span>
+                        </div>
+                        <div class="contact-actions">
+                            <a href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer" class="btn btn-secondary">LinkedIn</a>
+                            <a href="mailto:deepak.nadiminti@gmail.com" class="btn btn-secondary">Contact Me</a>
+                        </div>
+                        <div class="contact-chips" aria-label="Collaboration interests">
+                            <span class="contact-chip">AI products</span>
+                            <span class="contact-chip">Data stories</span>
+                            <span class="contact-chip">RAG systems</span>
+                            <span class="contact-chip">Vision models</span>
+                        </div>
                     </div>
-                    <p>Let&#39;s connect.</p>
+                    <aside class="contact-card" aria-label="Contact availability">
+                        <div class="contact-card-top">
+                            <span class="contact-status">Available</span>
+                            <strong>Build queue</strong>
+                        </div>
+                        <div class="contact-lanes">
+                            <div class="contact-lane" style="--lane-color: #2d9cdb;">
+                                <div class="contact-lane-icon">01</div>
+                                <div>
+                                    <span>Prototype</span>
+                                    <small>Turn ideas into a working interface</small>
+                                </div>
+                                <em></em>
+                            </div>
+                            <div class="contact-lane" style="--lane-color: #f6b73c;">
+                                <div class="contact-lane-icon">02</div>
+                                <div>
+                                    <span>Model</span>
+                                    <small>ML, RAG, analytics, and evaluation</small>
+                                </div>
+                                <em></em>
+                            </div>
+                            <div class="contact-lane" style="--lane-color: #f06449;">
+                                <div class="contact-lane-icon">03</div>
+                                <div>
+                                    <span>Ship</span>
+                                    <small>Make it understandable and usable</small>
+                                </div>
+                                <em></em>
+                            </div>
+                        </div>
+                        <p class="contact-mini-note">Best fit: teams building useful AI systems with strong data storytelling.</p>
+                    </aside>
                 </div>
             </div>
         </section>
@@ -4279,6 +4564,128 @@
         });
 
         renderCapability(0);
+
+        /* ──────────────────────────────────────────
+           REAL ACADEMIC MAP
+        ────────────────────────────────────────── */
+        function initAcademicMap() {
+            const mapEl = document.getElementById("academic-map");
+            const loadingEl = document.getElementById("map-loading");
+            if (!mapEl) return;
+            if (!window.L) {
+                if (loadingEl) {
+                    loadingEl.textContent = "Map library unavailable";
+                    loadingEl.style.background = "rgba(16,42,43,0.86)";
+                }
+                return;
+            }
+
+            const amaravati = {
+                label: "SRM University AP",
+                sublabel: "Amaravati, India",
+                latlng: [16.5062, 80.6480],
+                iconClass: "map-pin-amaravati",
+                short: "IN"
+            };
+            const tempe = {
+                label: "Arizona State University",
+                sublabel: "Tempe, Arizona",
+                latlng: [33.4255, 248.0719],
+                iconClass: "map-pin-tempe",
+                short: "US"
+            };
+            const route = [
+                amaravati.latlng,
+                [20.4, 103.8],
+                [29.2, 132.4],
+                [41.5, 160.6],
+                [47.2, 190.2],
+                [42.6, 220.1],
+                tempe.latlng
+            ];
+
+            const map = L.map(mapEl, {
+                attributionControl: true,
+                scrollWheelZoom: false,
+                zoomControl: true,
+                worldCopyJump: false
+            });
+
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 7,
+                minZoom: 2,
+                attribution: "&copy; OpenStreetMap contributors"
+            }).addTo(map);
+
+            const pinIcon = point => L.divIcon({
+                className: "map-pin-icon",
+                html: `<div class="map-pin ${point.iconClass}"><span>${point.short}</span></div>`,
+                iconSize: [42, 42],
+                iconAnchor: [21, 36],
+                popupAnchor: [0, -34]
+            });
+
+            [amaravati, tempe].forEach(point => {
+                L.marker(point.latlng, { icon: pinIcon(point) })
+                    .addTo(map)
+                    .bindPopup(`<strong>${point.label}</strong><br>${point.sublabel}`);
+            });
+
+            L.polyline(route, {
+                color: "rgba(16,42,43,0.22)",
+                weight: 14,
+                opacity: 0.42,
+                lineCap: "round",
+                interactive: false
+            }).addTo(map);
+
+            L.polyline(route, {
+                className: "journey-map-route",
+                color: "#f06449",
+                weight: 5,
+                opacity: 0.95,
+                lineCap: "round"
+            }).addTo(map).bindPopup("Academic route: Amaravati to Tempe");
+
+            const bounds = L.latLngBounds(route);
+            map.fitBounds(bounds, { padding: [32, 32], maxZoom: 2.4 });
+
+            const planeIcon = L.divIcon({
+                className: "map-plane-icon",
+                html: "<div class=\"map-plane\">&gt;</div>",
+                iconSize: [38, 38],
+                iconAnchor: [19, 19]
+            });
+            const planeMarker = L.marker(route[0], { icon: planeIcon, interactive: false }).addTo(map);
+
+            function routePosition(progress) {
+                const scaled = progress * (route.length - 1);
+                const index = Math.min(Math.floor(scaled), route.length - 2);
+                const local = scaled - index;
+                const start = route[index];
+                const end = route[index + 1];
+                return [
+                    start[0] + (end[0] - start[0]) * local,
+                    start[1] + (end[1] - start[1]) * local
+                ];
+            }
+
+            if (!reduceMotion) {
+                const start = performance.now();
+                const duration = 8500;
+                function animatePlane(now) {
+                    const progress = ((now - start) % duration) / duration;
+                    planeMarker.setLatLng(routePosition(progress));
+                    requestAnimationFrame(animatePlane);
+                }
+                requestAnimationFrame(animatePlane);
+            }
+
+            if (loadingEl) loadingEl.remove();
+            setTimeout(() => map.invalidateSize(), 250);
+        }
+
+        initAcademicMap();
 
         /* ──────────────────────────────────────────
            COUNT-UP ANIMATION
