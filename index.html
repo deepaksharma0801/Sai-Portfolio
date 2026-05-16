@@ -916,7 +916,7 @@
         }
 
         .signal-card,
-        .constellation-card {
+        .impact-card {
             border: 1px solid rgba(215, 227, 222, 0.9);
             border-radius: var(--radius-xl);
             background:
@@ -929,7 +929,7 @@
         }
 
         .signal-card::after,
-        .constellation-card::after {
+        .impact-card::after {
             content: "";
             position: absolute;
             inset: 0;
@@ -941,7 +941,7 @@
         }
 
         .signal-card:hover::after,
-        .constellation-card:hover::after {
+        .impact-card:hover::after {
             transform: translateX(120%);
         }
 
@@ -1433,68 +1433,88 @@
             line-height: 1.4;
         }
 
-        .constellation-card {
+        .impact-card {
             margin-top: 18px;
             position: relative;
             z-index: 1;
         }
 
-        .constellation {
+        .impact-summary {
+            margin-bottom: 18px;
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 760px;
+        }
+
+        .impact-table {
+            display: grid;
+            gap: 10px;
+        }
+
+        .impact-row {
             width: 100%;
-            min-height: 250px;
-            display: block;
-            border-radius: 24px;
-            background:
-                radial-gradient(circle at 20% 70%, rgba(45,156,219,0.13), transparent 30%),
-                radial-gradient(circle at 72% 24%, rgba(240,100,73,0.12), transparent 34%),
-                linear-gradient(135deg, rgba(16,42,43,0.95), rgba(15,107,95,0.88));
-        }
-
-        .constellation-line {
-            fill: none;
-            stroke: rgba(255,255,255,0.6);
-            stroke-width: 2.4;
-            stroke-linecap: round;
-            stroke-dasharray: 9 11;
-            animation: dashDrift 11s linear infinite;
-        }
-
-        .constellation-line.faint {
-            opacity: 0.42;
-            stroke-width: 1.7;
-            animation-duration: 15s;
-        }
-
-        .star-node circle {
-            fill: var(--story-accent);
-            stroke: rgba(255,255,255,0.82);
-            stroke-width: 3;
-            filter: drop-shadow(0 0 14px color-mix(in srgb, var(--story-accent), transparent 38%));
-            transform-box: fill-box;
-            transform-origin: center;
-            transition: fill 0.35s ease, transform 0.35s ease;
-        }
-
-        .star-node {
+            border: 1px solid rgba(215,227,222,0.9);
+            border-radius: 18px;
+            background: rgba(255,255,255,0.76);
+            display: grid;
+            grid-template-columns: 1.05fr 1.25fr 0.8fr auto;
+            gap: 14px;
+            align-items: center;
+            padding: 14px;
+            color: var(--text);
             cursor: pointer;
+            font: inherit;
+            text-align: left;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
         }
 
-        .star-node text {
-            fill: rgba(255,255,255,0.86);
-            text-anchor: middle;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.04em;
+        .impact-row:hover,
+        .impact-row:focus-visible,
+        .impact-row.active {
+            transform: translateY(-2px);
+            border-color: color-mix(in srgb, var(--row-color), white 32%);
+            box-shadow: 0 16px 38px rgba(16,42,43,0.1);
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78)),
+                linear-gradient(90deg, color-mix(in srgb, var(--row-color), transparent 84%), transparent 55%);
         }
 
-        .star-node.active circle {
-            transform: scale(1.25);
-            fill: var(--accent-4);
+        .impact-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            color: var(--accent-2);
         }
 
-        .star-node:focus-visible circle {
-            stroke: #ffffff;
-            stroke-width: 5;
+        .impact-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--row-color);
+            box-shadow: 0 0 0 6px color-mix(in srgb, var(--row-color), transparent 82%);
+            flex: 0 0 auto;
+        }
+
+        .impact-value {
+            color: var(--muted);
+            line-height: 1.45;
+            font-weight: 650;
+        }
+
+        .impact-proof {
+            color: var(--text);
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+
+        .impact-action {
+            color: var(--row-color);
+            font-size: 0.74rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .experience-list {
@@ -1716,6 +1736,116 @@
             color: var(--muted);
             font-size: 0.74rem;
             line-height: 1.35;
+        }
+
+        .reality-meter {
+            margin: 14px 0 6px;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(215,227,222,0.9);
+            background: rgba(255,255,255,0.68);
+            display: grid;
+            gap: 9px;
+        }
+
+        .reality-meter-label {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .reality-meter-label strong {
+            color: var(--story-accent);
+        }
+
+        .reality-bars {
+            display: grid;
+            gap: 8px;
+        }
+
+        .reality-bar {
+            display: grid;
+            grid-template-columns: minmax(86px, 0.44fr) 1fr auto;
+            gap: 8px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+
+        .reality-bar em {
+            color: var(--story-accent);
+            font-style: normal;
+            font-weight: 900;
+        }
+
+        .reality-track {
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(15,107,95,0.12);
+            overflow: hidden;
+        }
+
+        .reality-track span {
+            display: block;
+            width: var(--level);
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--story-accent), var(--accent-4));
+        }
+
+        .honest-note {
+            color: var(--text);
+            font-size: 0.82rem;
+            font-weight: 750;
+            line-height: 1.45;
+        }
+
+        .tag[data-easter],
+        .skill-item[data-easter],
+        .skill-chip[data-easter] {
+            position: relative;
+        }
+
+        .tag[data-easter]::after,
+        .skill-item[data-easter]::after,
+        .skill-chip[data-easter]::after {
+            content: attr(data-easter);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 10px);
+            transform: translateX(-50%) translateY(4px);
+            width: max-content;
+            max-width: 220px;
+            padding: 7px 10px;
+            border-radius: 12px;
+            background: rgba(16,42,43,0.94);
+            color: #f9f6f0;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-transform: none;
+            line-height: 1.35;
+            box-shadow: 0 12px 30px rgba(16,42,43,0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 30;
+        }
+
+        .tag[data-easter]:hover::after,
+        .tag[data-easter]:focus-visible::after,
+        .skill-item[data-easter]:hover::after,
+        .skill-item[data-easter]:focus-visible::after,
+        .skill-chip[data-easter]:hover::after,
+        .skill-chip[data-easter]:focus-visible::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         .story-layout {
@@ -1987,7 +2117,7 @@
 
         .capability-atlas {
             display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+            grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.85fr);
             gap: 20px;
             align-items: stretch;
         }
@@ -2005,46 +2135,54 @@
         }
 
         .atlas-map {
-            padding: 22px;
+            padding: 24px;
             position: relative;
             overflow: hidden;
-            min-height: 520px;
+            min-height: 430px;
             isolation: isolate;
         }
 
         .atlas-map::before {
             content: "";
             position: absolute;
-            inset: 18px;
-            border-radius: 24px;
+            inset: 24px;
+            border-radius: 22px;
             background:
-                radial-gradient(circle at 50% 48%, rgba(255,255,255,0.78), transparent 18%),
-                radial-gradient(circle at 18% 20%, rgba(45,156,219,0.16), transparent 30%),
-                radial-gradient(circle at 82% 20%, rgba(240,100,73,0.14), transparent 30%),
-                radial-gradient(circle at 20% 82%, rgba(115,87,255,0.13), transparent 32%),
-                radial-gradient(circle at 82% 78%, rgba(15,107,95,0.13), transparent 32%);
+                linear-gradient(rgba(15,107,95,0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,107,95,0.055) 1px, transparent 1px),
+                radial-gradient(circle at 52% 48%, color-mix(in srgb, var(--story-accent), transparent 88%), transparent 42%);
+            background-size: 34px 34px, 34px 34px, 100% 100%;
             z-index: -1;
+        }
+
+        .atlas-map::after {
+            content: "";
+            position: absolute;
+            inset: 24px;
+            border-radius: 22px;
+            border: 1px solid rgba(15,107,95,0.08);
+            pointer-events: none;
         }
 
         .atlas-svg {
             width: 100%;
-            height: min(48vw, 430px);
-            min-height: 360px;
+            height: min(42vw, 350px);
+            min-height: 330px;
             display: block;
         }
 
         .atlas-link {
             fill: none;
-            stroke: rgba(15,107,95,0.22);
-            stroke-width: 2;
-            stroke-dasharray: 8 10;
-            animation: dashDrift 14s linear infinite;
+            stroke: rgba(15,107,95,0.2);
+            stroke-width: 1.6;
+            stroke-dasharray: 5 9;
         }
 
         .atlas-link.active {
             stroke: var(--story-accent);
-            stroke-width: 3.5;
-            opacity: 0.9;
+            stroke-width: 2.6;
+            stroke-dasharray: none;
+            opacity: 0.82;
         }
 
         .atlas-node {
@@ -2052,10 +2190,10 @@
         }
 
         .atlas-node circle {
-            fill: rgba(255,255,255,0.94);
+            fill: rgba(255,255,255,0.98);
             stroke: var(--node-color);
-            stroke-width: 4;
-            filter: drop-shadow(0 18px 24px rgba(16,42,43,0.12));
+            stroke-width: 3.2;
+            filter: drop-shadow(0 12px 20px rgba(16,42,43,0.12));
             transform-box: fill-box;
             transform-origin: center;
             transition: transform 0.32s ease, fill 0.32s ease, stroke-width 0.32s ease;
@@ -2065,7 +2203,7 @@
             fill: var(--text);
             text-anchor: middle;
             font-weight: 800;
-            font-size: 18px;
+            font-size: 15px;
             pointer-events: none;
         }
 
@@ -2077,8 +2215,8 @@
         .atlas-node.active circle,
         .atlas-node:focus-visible circle {
             fill: color-mix(in srgb, var(--node-color), white 20%);
-            stroke-width: 6;
-            transform: scale(1.08);
+            stroke-width: 4.5;
+            transform: scale(1.05);
         }
 
         .atlas-node.active text,
@@ -2089,7 +2227,7 @@
 
         .atlas-core {
             fill: url(#atlasCore);
-            filter: drop-shadow(0 22px 38px rgba(16,42,43,0.18));
+            filter: drop-shadow(0 18px 30px rgba(16,42,43,0.18));
         }
 
         .atlas-core-text {
@@ -2104,6 +2242,7 @@
             display: grid;
             gap: 18px;
             align-content: start;
+            border-left: 4px solid var(--story-accent);
         }
 
         .atlas-panel-kicker,
@@ -2117,8 +2256,8 @@
 
         .atlas-panel h3 {
             color: var(--accent-2);
-            font-size: clamp(1.6rem, 3vw, 2.3rem);
-            line-height: 1.05;
+            font-size: clamp(1.45rem, 2.6vw, 2rem);
+            line-height: 1.12;
         }
 
         .atlas-panel p {
@@ -2198,20 +2337,22 @@
         .atlas-domain-rail {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 16px;
+            gap: 8px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
         }
 
         .atlas-domain-button {
             border: 1px solid rgba(215,227,222,0.94);
-            border-radius: 16px;
+            border-radius: 999px;
             background: rgba(255,255,255,0.74);
             color: var(--text);
             cursor: pointer;
             font: inherit;
             font-size: 0.76rem;
             font-weight: 800;
-            padding: 11px;
+            padding: 10px 12px;
             transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
         }
 
@@ -2628,6 +2769,49 @@
             font-size: 0.9rem;
         }
 
+        .debug-console {
+            margin-top: 16px;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 18px;
+            background: rgba(7,22,23,0.52);
+            overflow: hidden;
+        }
+
+        .debug-console-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: rgba(249,246,240,0.68);
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .debug-console-header span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--dot-color);
+        }
+
+        .debug-console pre {
+            margin: 0;
+            padding: 13px 14px 15px;
+            color: rgba(249,246,240,0.84);
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.78rem;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+
+        .debug-console b {
+            color: var(--accent-4);
+            font-weight: 800;
+        }
+
         .contact-float {
             position: absolute;
             z-index: 0;
@@ -2776,8 +2960,12 @@
             }
 
             .signal-card,
-            .constellation-card {
+            .impact-card {
                 padding: 18px;
+            }
+
+            .impact-row {
+                grid-template-columns: 1fr;
             }
 
             .signal-stats,
@@ -2799,7 +2987,7 @@
             }
 
             .atlas-svg {
-                min-height: 300px;
+                min-height: 250px;
             }
 
             .journey-map,
@@ -2835,9 +3023,6 @@
                 height: 88px;
             }
 
-            .constellation {
-                min-height: 210px;
-            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -3504,35 +3689,44 @@
                     </div>
                 </div>
 
-                <div class="constellation-card reveal slow">
+                <div class="impact-card reveal slow">
                     <div class="signal-card-header">
-                        <span>Impact Constellation</span>
-                        <strong>How the work connects</strong>
+                        <span>Impact Matrix</span>
+                        <strong>Proof, not decoration</strong>
                     </div>
-                    <svg class="constellation" viewBox="0 0 920 320" role="img" aria-label="Impact constellation connecting portfolio signals">
-                        <path class="constellation-line" d="M120 210 L270 92 L430 170 L610 72 L770 198" />
-                        <path class="constellation-line faint" d="M270 92 L300 250 L430 170 L510 252 L610 72" />
-                        <g class="star-node" data-signal-index="0" transform="translate(120 210)" tabindex="0" role="button" aria-label="Story signal">
-                            <circle r="14"></circle>
-                            <text y="-28">Story</text>
-                        </g>
-                        <g class="star-node" data-signal-index="1" transform="translate(270 92)" tabindex="0" role="button" aria-label="Privacy signal">
-                            <circle r="14"></circle>
-                            <text y="-28">Privacy</text>
-                        </g>
-                        <g class="star-node" data-signal-index="2" transform="translate(430 170)" tabindex="0" role="button" aria-label="Generation signal">
-                            <circle r="14"></circle>
-                            <text y="-28">Generation</text>
-                        </g>
-                        <g class="star-node" data-signal-index="3" transform="translate(610 72)" tabindex="0" role="button" aria-label="Forecasting signal">
-                            <circle r="14"></circle>
-                            <text y="-28">Forecasting</text>
-                        </g>
-                        <g class="star-node" data-signal-index="4" transform="translate(770 198)" tabindex="0" role="button" aria-label="Vision signal">
-                            <circle r="14"></circle>
-                            <text y="-28">Vision</text>
-                        </g>
-                    </svg>
+                    <p class="impact-summary">A quick read on what each project proves. Hover or click a row to highlight the matching project in the orbit above.</p>
+                    <div class="impact-table" aria-label="Project impact matrix">
+                        <button class="impact-row active" type="button" data-signal-index="0" style="--row-color: var(--accent-3);">
+                            <span class="impact-name"><span class="impact-dot"></span>Space Missions</span>
+                            <span class="impact-value">Turns public aerospace data into an explorable scroll story.</span>
+                            <span class="impact-proof">NASA + UNOOSA + Kaggle</span>
+                            <span class="impact-action">Highlight</span>
+                        </button>
+                        <button class="impact-row" type="button" data-signal-index="1" style="--row-color: var(--accent);">
+                            <span class="impact-name"><span class="impact-dot"></span>Secure RAG</span>
+                            <span class="impact-value">Shows retrieval can be useful while respecting privacy constraints.</span>
+                            <span class="impact-proof">TLS + anonymization</span>
+                            <span class="impact-action">Highlight</span>
+                        </button>
+                        <button class="impact-row" type="button" data-signal-index="2" style="--row-color: var(--accent-5);">
+                            <span class="impact-name"><span class="impact-dot"></span>Urban GANs</span>
+                            <span class="impact-value">Uses generative AI to explore urban block design options.</span>
+                            <span class="impact-proof">3,050 images / 50 cities</span>
+                            <span class="impact-action">Highlight</span>
+                        </button>
+                        <button class="impact-row" type="button" data-signal-index="3" style="--row-color: var(--accent-2);">
+                            <span class="impact-name"><span class="impact-dot"></span>Singapore Analytics</span>
+                            <span class="impact-value">Makes long-range demographic trends easier to interpret.</span>
+                            <span class="impact-proof">1957-2023 window</span>
+                            <span class="impact-action">Highlight</span>
+                        </button>
+                        <button class="impact-row" type="button" data-signal-index="4" style="--row-color: var(--accent-4);">
+                            <span class="impact-name"><span class="impact-dot"></span>Vision AI</span>
+                            <span class="impact-value">Applies computer vision to real-world classification tasks.</span>
+                            <span class="impact-proof">72.93% test accuracy</span>
+                            <span class="impact-action">Highlight</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -3643,11 +3837,19 @@
                             <div class="proof-item"><strong>Scroll narrative</strong><span>Historical missions turned into chapters</span></div>
                             <div class="proof-item"><strong>D3 visuals</strong><span>Interactive exploration and comparison</span></div>
                         </div>
+                        <div class="reality-meter" aria-label="Honest project reality meter">
+                            <div class="reality-meter-label"><span>Reality meter</span><strong>data wrangling: dramatic</strong></div>
+                            <div class="reality-bars">
+                                <div class="reality-bar"><span>Data mess</span><div class="reality-track"><span style="--level: 86%;"></span></div><em>86</em></div>
+                                <div class="reality-bar"><span>Demo joy</span><div class="reality-track"><span style="--level: 94%;"></span></div><em>94</em></div>
+                            </div>
+                            <div class="honest-note">Honest bit: the visuals were fun; making three public datasets agree was the real boss fight.</div>
+                        </div>
                         <div class="skills-tags">
-                            <span class="tag">React.js</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">D3.js</span>
+                            <span class="tag" data-easter="Component wrangling, but make it polished.">React.js</span>
+                            <span class="tag" data-easter="The reliable friend who cleaned the mess.">Python</span>
+                            <span class="tag" data-easter="Responsible for both magic and suspicious bugs.">JavaScript</span>
+                            <span class="tag" data-easter="Beautiful when it works. Character-building when it does not.">D3.js</span>
                             <span class="tag">CSS</span>
                         </div>
                         <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=space" target="_blank" rel="noreferrer">Find Repository</a>
@@ -3669,14 +3871,22 @@
                             <div class="proof-item"><strong>TLS</strong><span>Encrypted communication layer</span></div>
                             <div class="proof-item"><strong>Privacy</strong><span>Anonymized customer context</span></div>
                         </div>
+                        <div class="reality-meter" aria-label="Honest project reality meter">
+                            <div class="reality-meter-label"><span>Reality meter</span><strong>guardrails: mandatory</strong></div>
+                            <div class="reality-bars">
+                                <div class="reality-bar"><span>Edge cases</span><div class="reality-track"><span style="--level: 82%;"></span></div><em>82</em></div>
+                                <div class="reality-bar"><span>Usefulness</span><div class="reality-track"><span style="--level: 90%;"></span></div><em>90</em></div>
+                            </div>
+                            <div class="honest-note">Honest bit: retrieval is powerful, but only after the boring security details stop being boring.</div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">LLM</span>
                             <span class="tag">AI</span>
                             <span class="tag">API</span>
-                            <span class="tag">LangChain</span>
+                            <span class="tag" data-easter="Useful, but it likes clear instructions. Same.">LangChain</span>
                             <span class="tag">Cybersecurity</span>
                             <span class="tag">Encryption</span>
-                            <span class="tag">RAG</span>
+                            <span class="tag" data-easter="Search with receipts, basically.">RAG</span>
                         </div>
                         <a class="project-link" href="https://github.com/deepaksharma0801?tab=repositories&q=rag" target="_blank" rel="noreferrer">Find Repository</a>
                     </div>
@@ -3697,10 +3907,18 @@
                             <div class="proof-item"><strong>50 cities</strong><span>Broader design pattern coverage</span></div>
                             <div class="proof-item"><strong>cGAN</strong><span>Generated planning alternatives</span></div>
                         </div>
+                        <div class="reality-meter" aria-label="Honest project reality meter">
+                            <div class="reality-meter-label"><span>Reality meter</span><strong>GPU patience: tested</strong></div>
+                            <div class="reality-bars">
+                                <div class="reality-bar"><span>Training drama</span><div class="reality-track"><span style="--level: 88%;"></span></div><em>88</em></div>
+                                <div class="reality-bar"><span>Cool factor</span><div class="reality-track"><span style="--level: 96%;"></span></div><em>96</em></div>
+                            </div>
+                            <div class="honest-note">Honest bit: GANs are great at teaching patience, humility, and respect for image preprocessing.</div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">Machine Learning</span>
                             <span class="tag">Deep Learning</span>
-                            <span class="tag">GANs</span>
+                            <span class="tag" data-easter="Occasionally brilliant, occasionally chaos with gradients.">GANs</span>
                             <span class="tag">Computer Vision</span>
                             <span class="tag">Python</span>
                             <span class="tag">AI/ML</span>
@@ -3724,9 +3942,17 @@
                             <div class="proof-item"><strong>3 dimensions</strong><span>Age, ethnicity, and gender</span></div>
                             <div class="proof-item"><strong>Forecasting</strong><span>Population trend interpretation</span></div>
                         </div>
+                        <div class="reality-meter" aria-label="Honest project reality meter">
+                            <div class="reality-meter-label"><span>Reality meter</span><strong>spreadsheet diplomacy</strong></div>
+                            <div class="reality-bars">
+                                <div class="reality-bar"><span>Cleaning</span><div class="reality-track"><span style="--level: 78%;"></span></div><em>78</em></div>
+                                <div class="reality-bar"><span>Clarity</span><div class="reality-track"><span style="--level: 92%;"></span></div><em>92</em></div>
+                            </div>
+                            <div class="honest-note">Honest bit: the model matters, but the labels and assumptions quietly run the meeting.</div>
+                        </div>
                         <div class="skills-tags">
-                            <span class="tag">Tableau</span>
-                            <span class="tag">Excel</span>
+                            <span class="tag" data-easter="When stakeholders need answers, not notebook lore.">Tableau</span>
+                            <span class="tag" data-easter="Still undefeated in the workplace cinematic universe.">Excel</span>
                             <span class="tag">Analytics</span>
                             <span class="tag">Python</span>
                             <span class="tag">Research</span>
@@ -3750,11 +3976,19 @@
                             <div class="proof-item"><strong>CNN-SVM</strong><span>Hybrid classification approach</span></div>
                             <div class="proof-item"><strong>Augmented</strong><span>Generalization-focused training</span></div>
                         </div>
+                        <div class="reality-meter" aria-label="Honest project reality meter">
+                            <div class="reality-meter-label"><span>Reality meter</span><strong>labels mattered most</strong></div>
+                            <div class="reality-bars">
+                                <div class="reality-bar"><span>Overfitting risk</span><div class="reality-track"><span style="--level: 74%;"></span></div><em>74</em></div>
+                                <div class="reality-bar"><span>Learning value</span><div class="reality-track"><span style="--level: 95%;"></span></div><em>95</em></div>
+                            </div>
+                            <div class="honest-note">Honest bit: computer vision gets humble fast when lighting, angles, and labels start freelancing.</div>
+                        </div>
                         <div class="skills-tags">
                             <span class="tag">Machine Learning</span>
                             <span class="tag">Deep Learning</span>
-                            <span class="tag">CNN</span>
-                            <span class="tag">SVM</span>
+                            <span class="tag" data-easter="Feature extraction doing the heavy lifting.">CNN</span>
+                            <span class="tag" data-easter="Old-school, still useful, respect the classics.">SVM</span>
                             <span class="tag">AI</span>
                             <span class="tag">Research</span>
                         </div>
@@ -3783,32 +4017,34 @@
                                     <stop offset="100%" stop-color="#0f6b5f" />
                                 </linearGradient>
                             </defs>
-                            <path class="atlas-link active" data-atlas-link="0" d="M360 258 C250 230 188 172 142 104" />
-                            <path class="atlas-link" data-atlas-link="1" d="M360 258 C470 220 536 164 588 104" />
-                            <path class="atlas-link" data-atlas-link="2" d="M360 258 C250 305 188 364 142 436" />
-                            <path class="atlas-link" data-atlas-link="3" d="M360 258 C470 310 536 366 588 436" />
-                            <circle class="atlas-core" cx="360" cy="258" r="82"></circle>
-                            <text class="atlas-core-text" x="360" y="248" font-size="26">AI + DATA</text>
-                            <text class="atlas-core-text" x="360" y="281" font-size="15">systems builder</text>
-                            <g class="atlas-node active" data-atlas-index="0" tabindex="0" role="button" aria-label="Programming capability" style="--node-color: #2d9cdb;" transform="translate(142 104)">
-                                <circle r="70"></circle>
-                                <text y="-6">Code</text>
-                                <text y="22" font-size="14">Full Stack</text>
+                            <circle cx="360" cy="260" r="174" fill="none" stroke="rgba(15,107,95,0.10)" stroke-width="1"></circle>
+                            <circle cx="360" cy="260" r="112" fill="none" stroke="rgba(15,107,95,0.10)" stroke-width="1"></circle>
+                            <path class="atlas-link active" data-atlas-link="0" d="M360 260 L214 154" />
+                            <path class="atlas-link" data-atlas-link="1" d="M360 260 L506 154" />
+                            <path class="atlas-link" data-atlas-link="2" d="M360 260 L214 366" />
+                            <path class="atlas-link" data-atlas-link="3" d="M360 260 L506 366" />
+                            <circle class="atlas-core" cx="360" cy="260" r="62"></circle>
+                            <text class="atlas-core-text" x="360" y="254" font-size="21">AI + DATA</text>
+                            <text class="atlas-core-text" x="360" y="280" font-size="12">systems builder</text>
+                            <g class="atlas-node active" data-atlas-index="0" tabindex="0" role="button" aria-label="Programming capability" style="--node-color: #2d9cdb;" transform="translate(214 154)">
+                                <circle r="49"></circle>
+                                <text y="-4">Code</text>
+                                <text y="18" font-size="11">Full Stack</text>
                             </g>
-                            <g class="atlas-node" data-atlas-index="1" tabindex="0" role="button" aria-label="AI machine learning capability" style="--node-color: #f06449;" transform="translate(588 104)">
-                                <circle r="70"></circle>
-                                <text y="-6">AI/ML</text>
-                                <text y="22" font-size="14">Models</text>
+                            <g class="atlas-node" data-atlas-index="1" tabindex="0" role="button" aria-label="AI machine learning capability" style="--node-color: #f06449;" transform="translate(506 154)">
+                                <circle r="49"></circle>
+                                <text y="-4">AI/ML</text>
+                                <text y="18" font-size="11">Models</text>
                             </g>
-                            <g class="atlas-node" data-atlas-index="2" tabindex="0" role="button" aria-label="Data visualization capability" style="--node-color: #7357ff;" transform="translate(142 436)">
-                                <circle r="70"></circle>
-                                <text y="-6">Viz</text>
-                                <text y="22" font-size="14">Stories</text>
+                            <g class="atlas-node" data-atlas-index="2" tabindex="0" role="button" aria-label="Data visualization capability" style="--node-color: #7357ff;" transform="translate(214 366)">
+                                <circle r="49"></circle>
+                                <text y="-4">Viz</text>
+                                <text y="18" font-size="11">Stories</text>
                             </g>
-                            <g class="atlas-node" data-atlas-index="3" tabindex="0" role="button" aria-label="Data operations capability" style="--node-color: #0f6b5f;" transform="translate(588 436)">
-                                <circle r="70"></circle>
-                                <text y="-6">Ops</text>
-                                <text y="22" font-size="14">Pipelines</text>
+                            <g class="atlas-node" data-atlas-index="3" tabindex="0" role="button" aria-label="Data operations capability" style="--node-color: #0f6b5f;" transform="translate(506 366)">
+                                <circle r="49"></circle>
+                                <text y="-4">Ops</text>
+                                <text y="18" font-size="11">Pipelines</text>
                             </g>
                         </svg>
                         <div class="atlas-domain-rail" aria-label="Capability domains">
@@ -3960,6 +4196,19 @@
                             </div>
                         </div>
                         <p class="contact-mini-note">Best fit: teams building useful AI systems with strong data storytelling.</p>
+                        <div class="debug-console" aria-label="Honest status console">
+                            <div class="debug-console-header">
+                                <span style="--dot-color: #f06449;"></span>
+                                <span style="--dot-color: #f6b73c;"></span>
+                                <span style="--dot-color: #67e8a5;"></span>
+                                honest-status.log
+                            </div>
+                            <pre>&gt; status --sai
+building: <b>AI/data systems</b>
+debugging: always
+seeking: useful problems
+caffeine: probable</pre>
+                        </div>
                     </aside>
                 </div>
             </div>
@@ -4214,7 +4463,7 @@
             }
         ];
         const planets = Array.from(document.querySelectorAll(".planet"));
-        const starNodes = Array.from(document.querySelectorAll(".star-node"));
+        const impactRows = Array.from(document.querySelectorAll(".impact-row"));
         const orbitCaption = document.getElementById("orbit-caption");
         let activeSignalIndex = 0;
 
@@ -4228,12 +4477,12 @@
                 item.classList.toggle("active", active);
                 item.setAttribute("aria-pressed", String(active));
             });
-            starNodes.forEach(item => item.classList.toggle("active", Number(item.dataset.signalIndex) === index));
+            impactRows.forEach(item => item.classList.toggle("active", Number(item.dataset.signalIndex) === index));
             orbitCaption.querySelector("strong").textContent = signal.title;
             orbitCaption.querySelector("span").textContent = signal.copy;
         }
 
-        [...planets, ...starNodes].forEach(item => {
+        [...planets, ...impactRows].forEach(item => {
             const activate = () => setSignalIndex(Number(item.dataset.signalIndex));
             item.addEventListener("click", activate);
             item.addEventListener("mouseenter", activate);
@@ -4304,6 +4553,28 @@
         const skillSummary = document.getElementById("skill-summary");
         const skillChipList = document.getElementById("skill-chip-list");
         const skillProjectList = document.getElementById("skill-project-list");
+        const skillEasterEggs = {
+            Python: "Home base. Usually where the cleanup starts.",
+            TensorFlow: "Helpful once the shapes stop arguing.",
+            "Scikit-learn": "The dependable classic.",
+            "CNN-SVM": "Hybrid because one model wanted backup.",
+            GANs: "Cool outputs, dramatic training process.",
+            "Vector Search": "Finding needles in semantic haystacks.",
+            Embeddings: "Tiny coordinates for very large vibes.",
+            TLS: "The unglamorous part that actually matters.",
+            Anonymization: "Privacy before cleverness.",
+            "Workflow Design": "Where good demos become useful tools.",
+            "D3-style Thinking": "Charts with opinions and math.",
+            "Dashboard UX": "Make the answer easier to find.",
+            "Story Maps": "Scrolling with receipts.",
+            "Interaction Design": "Tiny details, big trust.",
+            "Responsive UI": "Because phones are unforgiving.",
+            Pandas: "Data cleanup headquarters.",
+            APIs: "Where the real world leaks into the app.",
+            ETL: "Extract, transform, lightly negotiate.",
+            Kaggle: "Dataset adventure mode.",
+            "GitHub Data": "Receipts, but public."
+        };
 
         function renderSkillDomain(index) {
             const domain = skillDomains[index];
@@ -4323,6 +4594,7 @@
                     const chip = document.createElement("span");
                     chip.className = "skill-chip";
                     chip.textContent = skill;
+                    if (skillEasterEggs[skill]) chip.dataset.easter = skillEasterEggs[skill];
                     return chip;
                 });
                 skillChipList.replaceChildren(...chips);
