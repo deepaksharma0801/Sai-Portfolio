@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
             --bg: #f6f8f5;
@@ -1944,6 +1945,441 @@
             margin-bottom: 6px;
         }
 
+        .capability-atlas {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .atlas-map,
+        .atlas-panel,
+        .journey-map-card,
+        .journey-leg {
+            border: 1px solid rgba(215,227,222,0.92);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.9), rgba(238,247,242,0.78)),
+                linear-gradient(120deg, color-mix(in srgb, var(--story-accent), transparent 90%), transparent 70%);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius-xl);
+        }
+
+        .atlas-map {
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+            min-height: 520px;
+            isolation: isolate;
+        }
+
+        .atlas-map::before {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 50% 48%, rgba(255,255,255,0.78), transparent 18%),
+                radial-gradient(circle at 18% 20%, rgba(45,156,219,0.16), transparent 30%),
+                radial-gradient(circle at 82% 20%, rgba(240,100,73,0.14), transparent 30%),
+                radial-gradient(circle at 20% 82%, rgba(115,87,255,0.13), transparent 32%),
+                radial-gradient(circle at 82% 78%, rgba(15,107,95,0.13), transparent 32%);
+            z-index: -1;
+        }
+
+        .atlas-svg {
+            width: 100%;
+            height: min(48vw, 430px);
+            min-height: 360px;
+            display: block;
+        }
+
+        .atlas-link {
+            fill: none;
+            stroke: rgba(15,107,95,0.22);
+            stroke-width: 2;
+            stroke-dasharray: 8 10;
+            animation: dashDrift 14s linear infinite;
+        }
+
+        .atlas-link.active {
+            stroke: var(--story-accent);
+            stroke-width: 3.5;
+            opacity: 0.9;
+        }
+
+        .atlas-node {
+            cursor: pointer;
+        }
+
+        .atlas-node circle {
+            fill: rgba(255,255,255,0.94);
+            stroke: var(--node-color);
+            stroke-width: 4;
+            filter: drop-shadow(0 18px 24px rgba(16,42,43,0.12));
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: transform 0.32s ease, fill 0.32s ease, stroke-width 0.32s ease;
+        }
+
+        .atlas-node text {
+            fill: var(--text);
+            text-anchor: middle;
+            font-weight: 800;
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .atlas-node small {
+            display: none;
+        }
+
+        .atlas-node:hover circle,
+        .atlas-node.active circle,
+        .atlas-node:focus-visible circle {
+            fill: color-mix(in srgb, var(--node-color), white 20%);
+            stroke-width: 6;
+            transform: scale(1.08);
+        }
+
+        .atlas-node.active text,
+        .atlas-node:hover text,
+        .atlas-node:focus-visible text {
+            fill: white;
+        }
+
+        .atlas-core {
+            fill: url(#atlasCore);
+            filter: drop-shadow(0 22px 38px rgba(16,42,43,0.18));
+        }
+
+        .atlas-core-text {
+            fill: white;
+            text-anchor: middle;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+        }
+
+        .atlas-panel {
+            padding: 24px;
+            display: grid;
+            gap: 18px;
+            align-content: start;
+        }
+
+        .atlas-panel-kicker,
+        .journey-kicker {
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .atlas-panel h3 {
+            color: var(--accent-2);
+            font-size: clamp(1.6rem, 3vw, 2.3rem);
+            line-height: 1.05;
+        }
+
+        .atlas-panel p {
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .atlas-score-row {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .atlas-score {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            color: white;
+            background: conic-gradient(var(--story-accent) var(--atlas-score, 88%), rgba(15,107,95,0.12) 0);
+            box-shadow: 0 18px 34px color-mix(in srgb, var(--story-accent), transparent 76%);
+            position: relative;
+        }
+
+        .atlas-score::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius: inherit;
+            background: rgba(16,42,43,0.88);
+        }
+
+        .atlas-score strong,
+        .atlas-score span {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .atlas-score strong {
+            font-size: 1.45rem;
+            line-height: 1;
+        }
+
+        .atlas-score span {
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .atlas-chip-grid,
+        .atlas-proof-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .atlas-chip,
+        .atlas-proof {
+            border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--story-accent), white 52%);
+            background: color-mix(in srgb, var(--story-accent), white 88%);
+            color: var(--text);
+            font-size: 0.78rem;
+            font-weight: 800;
+            padding: 8px 11px;
+        }
+
+        .atlas-proof {
+            border-radius: 14px;
+            background: rgba(255,255,255,0.76);
+        }
+
+        .atlas-domain-rail {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .atlas-domain-button {
+            border: 1px solid rgba(215,227,222,0.94);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.74);
+            color: var(--text);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.76rem;
+            font-weight: 800;
+            padding: 11px;
+            transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+
+        .atlas-domain-button:hover,
+        .atlas-domain-button:focus-visible,
+        .atlas-domain-button.active {
+            transform: translateY(-2px);
+            background: var(--story-accent);
+            color: white;
+        }
+
+        .journey-map-card {
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journey-map-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 56%, rgba(246,183,60,0.18), transparent 26%),
+                radial-gradient(circle at 78% 34%, rgba(45,156,219,0.18), transparent 28%);
+            pointer-events: none;
+        }
+
+        .journey-map-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+
+        .journey-map-header h3 {
+            color: var(--accent-2);
+            font-size: clamp(1.45rem, 3vw, 2.15rem);
+        }
+
+        .journey-map-header p {
+            color: var(--muted);
+            line-height: 1.5;
+            margin-top: 4px;
+        }
+
+        .journey-distance {
+            color: var(--story-accent);
+            font-weight: 900;
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            white-space: nowrap;
+        }
+
+        .journey-map {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 460px;
+            min-height: 430px;
+            border-radius: 26px;
+            background:
+                radial-gradient(circle at 35% 45%, rgba(255,255,255,0.10), transparent 24%),
+                linear-gradient(135deg, rgba(16,42,43,0.96), rgba(15,107,95,0.9));
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+        }
+
+        .journey-map .leaflet-container,
+        .journey-map.leaflet-container {
+            background: #102a2b;
+            color: var(--text);
+            font-family: inherit;
+        }
+
+        .journey-map .leaflet-tile {
+            filter: saturate(0.9) contrast(1.02);
+        }
+
+        .journey-map .leaflet-control-zoom {
+            border: 0;
+            box-shadow: 0 14px 30px rgba(16,42,43,0.16);
+        }
+
+        .journey-map .leaflet-control-zoom a {
+            border: 0;
+            color: var(--accent-2);
+            font-weight: 900;
+        }
+
+        .journey-map .leaflet-control-attribution {
+            border-radius: 999px 0 0 0;
+            color: rgba(16,42,43,0.74);
+            font-size: 0.68rem;
+        }
+
+        .journey-map .leaflet-popup-content-wrapper {
+            border-radius: 16px;
+            box-shadow: 0 16px 44px rgba(16,42,43,0.18);
+        }
+
+        .journey-map .leaflet-popup-content {
+            margin: 12px 14px;
+            font-family: inherit;
+            color: var(--text);
+        }
+
+        .map-pin {
+            width: 42px;
+            height: 42px;
+            border-radius: 16px 16px 16px 4px;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--pin-color), color-mix(in srgb, var(--pin-color), #102a2b 24%));
+            border: 3px solid rgba(255,255,255,0.92);
+            box-shadow: 0 16px 34px color-mix(in srgb, var(--pin-color), transparent 62%);
+            transform: rotate(-45deg);
+        }
+
+        .map-pin-icon,
+        .map-plane-icon {
+            background: transparent;
+            border: 0;
+        }
+
+        .map-pin span {
+            transform: rotate(45deg);
+        }
+
+        .map-pin-amaravati {
+            --pin-color: var(--accent-4);
+        }
+
+        .map-pin-tempe {
+            --pin-color: var(--accent);
+        }
+
+        .map-plane {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--accent-2);
+            background: rgba(255,255,255,0.94);
+            border: 2px solid rgba(255,255,255,0.96);
+            box-shadow: 0 18px 36px rgba(16,42,43,0.22);
+            font-size: 1.1rem;
+        }
+
+        .journey-map-route {
+            stroke-dasharray: 14 12;
+            animation: dashDrift 12s linear infinite;
+        }
+
+        .map-loading {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: rgba(255,255,255,0.86);
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 400;
+        }
+
+        .journey-legs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .journey-leg {
+            padding: 22px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .journey-pin {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: linear-gradient(135deg, var(--pin-color), color-mix(in srgb, var(--pin-color), #102a2b 25%));
+            box-shadow: 0 14px 30px color-mix(in srgb, var(--pin-color), transparent 72%);
+        }
+
+        .journey-leg h3 {
+            color: var(--accent-2);
+            margin-bottom: 6px;
+        }
+
+        .journey-leg p {
+            color: var(--muted);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
         .contact-panel {
             background:
                 linear-gradient(135deg, rgba(16,42,43,0.96), rgba(15,107,95,0.96)),
@@ -2014,8 +2450,19 @@
             .experience-card,
             .project-card,
             .story-layout,
-            .signal-grid {
+            .signal-grid,
+            .capability-atlas,
+            .journey-legs {
                 grid-template-columns: 1fr;
+            }
+
+            .atlas-svg {
+                height: auto;
+            }
+
+            .journey-map-header {
+                align-items: flex-start;
+                flex-direction: column;
             }
 
             .signal-stats {
@@ -2102,7 +2549,32 @@
 
             .signal-stats,
             .github-metrics,
-            .skill-domain-tabs {
+            .skill-domain-tabs,
+            .atlas-domain-rail {
+                grid-template-columns: 1fr;
+            }
+
+            .atlas-map,
+            .atlas-panel,
+            .journey-map-card,
+            .journey-leg {
+                padding: 18px;
+            }
+
+            .atlas-map {
+                min-height: auto;
+            }
+
+            .atlas-svg {
+                min-height: 300px;
+            }
+
+            .journey-map,
+            .journey-map svg {
+                min-height: 330px;
+            }
+
+            .journey-leg {
                 grid-template-columns: 1fr;
             }
 
@@ -3065,70 +3537,69 @@
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
                     <h2>Technical Skills</h2>
-                    <p>Focused on modern AI stacks, data analysis, and full-stack development.</p>
+                    <p>A capability atlas that connects tools to the kinds of systems I build.</p>
                 </div>
-                <div class="skills-grid" data-stagger-group>
-                    <div class="skill-card float-card reveal slow">
-                        <h3>Programming &amp; Development</h3>
-                        <div class="skill-list">
-                            <span class="skill-item">Python</span>
-                            <span class="skill-item">JavaScript</span>
-                            <span class="skill-item">TypeScript</span>
-                            <span class="skill-item">Node.js</span>
-                            <span class="skill-item">React.js</span>
-                            <span class="skill-item">HTML/CSS</span>
-                            <span class="skill-item">D3.js</span>
-                            <span class="skill-item">REST APIs</span>
+                <div class="capability-atlas reveal slow">
+                    <div class="atlas-map" aria-label="Interactive capability atlas">
+                        <svg class="atlas-svg" viewBox="0 0 720 520" role="img" aria-labelledby="atlas-title">
+                            <title id="atlas-title">Capability atlas connecting technical domains</title>
+                            <defs>
+                                <linearGradient id="atlasCore" x1="0" x2="1" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#2d9cdb" />
+                                    <stop offset="48%" stop-color="#7357ff" />
+                                    <stop offset="100%" stop-color="#0f6b5f" />
+                                </linearGradient>
+                            </defs>
+                            <path class="atlas-link active" data-atlas-link="0" d="M360 258 C250 230 188 172 142 104" />
+                            <path class="atlas-link" data-atlas-link="1" d="M360 258 C470 220 536 164 588 104" />
+                            <path class="atlas-link" data-atlas-link="2" d="M360 258 C250 305 188 364 142 436" />
+                            <path class="atlas-link" data-atlas-link="3" d="M360 258 C470 310 536 366 588 436" />
+                            <circle class="atlas-core" cx="360" cy="258" r="82"></circle>
+                            <text class="atlas-core-text" x="360" y="248" font-size="26">AI + DATA</text>
+                            <text class="atlas-core-text" x="360" y="281" font-size="15">systems builder</text>
+                            <g class="atlas-node active" data-atlas-index="0" tabindex="0" role="button" aria-label="Programming capability" style="--node-color: #2d9cdb;" transform="translate(142 104)">
+                                <circle r="70"></circle>
+                                <text y="-6">Code</text>
+                                <text y="22" font-size="14">Full Stack</text>
+                            </g>
+                            <g class="atlas-node" data-atlas-index="1" tabindex="0" role="button" aria-label="AI machine learning capability" style="--node-color: #f06449;" transform="translate(588 104)">
+                                <circle r="70"></circle>
+                                <text y="-6">AI/ML</text>
+                                <text y="22" font-size="14">Models</text>
+                            </g>
+                            <g class="atlas-node" data-atlas-index="2" tabindex="0" role="button" aria-label="Data visualization capability" style="--node-color: #7357ff;" transform="translate(142 436)">
+                                <circle r="70"></circle>
+                                <text y="-6">Viz</text>
+                                <text y="22" font-size="14">Stories</text>
+                            </g>
+                            <g class="atlas-node" data-atlas-index="3" tabindex="0" role="button" aria-label="Data operations capability" style="--node-color: #0f6b5f;" transform="translate(588 436)">
+                                <circle r="70"></circle>
+                                <text y="-6">Ops</text>
+                                <text y="22" font-size="14">Pipelines</text>
+                            </g>
+                        </svg>
+                        <div class="atlas-domain-rail" aria-label="Capability domains">
+                            <button class="atlas-domain-button active" type="button" data-atlas-index="0">Code</button>
+                            <button class="atlas-domain-button" type="button" data-atlas-index="1">AI/ML</button>
+                            <button class="atlas-domain-button" type="button" data-atlas-index="2">Viz</button>
+                            <button class="atlas-domain-button" type="button" data-atlas-index="3">Ops</button>
                         </div>
                     </div>
 
-                    <div class="skill-card float-card reveal slow">
-                        <h3>AI &amp; Machine Learning</h3>
-                        <div class="skill-list">
-                            <span class="skill-item">Deep Learning</span>
-                            <span class="skill-item">Computer Vision</span>
-                            <span class="skill-item">NLP</span>
-                            <span class="skill-item">GANs</span>
-                            <span class="skill-item">Transformers</span>
-                            <span class="skill-item">CNN</span>
-                            <span class="skill-item">SVM</span>
-                            <span class="skill-item">PyTorch</span>
-                            <span class="skill-item">TensorFlow</span>
-                            <span class="skill-item">Scikit-learn</span>
-                            <span class="skill-item">LLMs</span>
-                            <span class="skill-item">LangChain</span>
-                            <span class="skill-item">RAG</span>
+                    <aside class="atlas-panel">
+                        <span class="atlas-panel-kicker">Selected capability</span>
+                        <h3 id="atlas-title-text">Programming &amp; Development</h3>
+                        <p id="atlas-summary">Frontend and backend foundations for building usable AI/data products instead of one-off notebooks.</p>
+                        <div class="atlas-score-row">
+                            <div class="atlas-score" id="atlas-score-ring">
+                                <strong id="atlas-score">90</strong>
+                                <span>fit</span>
+                            </div>
+                            <p id="atlas-proof-copy">Best shown in the space scrollytelling interface, API-backed RAG workflow, and this portfolio build.</p>
                         </div>
-                    </div>
-
-                    <div class="skill-card float-card reveal slow">
-                        <h3>Data &amp; Analytics</h3>
-                        <div class="skill-list">
-                            <span class="skill-item">Tableau</span>
-                            <span class="skill-item">Power BI</span>
-                            <span class="skill-item">Excel</span>
-                            <span class="skill-item">Data Analysis</span>
-                            <span class="skill-item">SQL</span>
-                            <span class="skill-item">Pandas</span>
-                            <span class="skill-item">NumPy</span>
-                            <span class="skill-item">Research</span>
-                            <span class="skill-item">Data Visualization</span>
-                        </div>
-                    </div>
-
-                    <div class="skill-card float-card reveal slow">
-                        <h3>Tools &amp; Technologies</h3>
-                        <div class="skill-list">
-                            <span class="skill-item">API Development</span>
-                            <span class="skill-item">Cybersecurity</span>
-                            <span class="skill-item">Encryption</span>
-                            <span class="skill-item">Git</span>
-                            <span class="skill-item">GitHub</span>
-                            <span class="skill-item">Docker</span>
-                            <span class="skill-item">Jupyter</span>
-                            <span class="skill-item">OpenAI API</span>
-                        </div>
-                    </div>
+                        <div class="atlas-chip-grid" id="atlas-chip-grid" aria-label="Skills in selected capability"></div>
+                        <div class="atlas-proof-grid" id="atlas-proof-grid" aria-label="Evidence for selected capability"></div>
+                    </aside>
                 </div>
             </div>
         </section>
@@ -3137,46 +3608,57 @@
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
                     <h2>Academic Journey</h2>
-                    <p>Formal training that grounds my work in rigorous technical foundations.</p>
+                    <p>From Amaravati to the United States: the route behind the technical foundation.</p>
                 </div>
-                <div class="education-grid" data-stagger-group>
-                    <div class="education-card float-card reveal slow">
-                        <div class="education-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 8l10-4 10 4-10 4L2 8z"></path>
-                                <path d="M6 10v4c0 1.1 2.7 2 6 2s6-.9 6-2v-4"></path>
-                                <path d="M20 10v5"></path>
-                            </svg>
-                        </div>
+                <div class="journey-map-card reveal slow">
+                    <div class="journey-map-header">
                         <div>
-                            <h3>Arizona State University</h3>
-                            <p>Master of Science - Data Science</p>
-                            <p><strong>Aug 2024 - Jun 2026</strong></p>
-                            <div class="skills-tags">
-                                <span class="tag">Computer Science</span>
-                                <span class="tag">LangChain</span>
-                                <span class="tag">Machine Learning</span>
-                                <span class="tag">Data Analytics</span>
+                            <span class="journey-kicker">Academic flight path</span>
+                            <h3>Amaravati, India to Tempe, Arizona</h3>
+                            <p>B.Tech foundations at SRM University AP, then an MS in Data Science at Arizona State University.</p>
+                        </div>
+                        <strong class="journey-distance">~14,000 km</strong>
+                    </div>
+                    <div class="journey-map" id="academic-map" aria-label="Interactive real map from Amaravati, India to Tempe, Arizona">
+                        <div class="map-loading" id="map-loading">Loading real map</div>
+                    </div>
+                    <div class="journey-legs" data-stagger-group>
+                        <div class="journey-leg">
+                            <div class="journey-pin" style="--pin-color: var(--accent-4);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 8l10-4 10 4-10 4L2 8z"></path>
+                                    <path d="M6 10v4c0 1.1 2.7 2 6 2s6-.9 6-2v-4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="journey-kicker">2020 - 2024</span>
+                                <h3>SRM University, AP - Amaravati</h3>
+                                <p>Bachelor of Technology - Computer Science Engineering</p>
+                                <div class="skills-tags">
+                                    <span class="tag">Computer Science</span>
+                                    <span class="tag">Research</span>
+                                    <span class="tag">Software Development</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="education-card float-card reveal slow">
-                        <div class="education-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 8l10-4 10 4-10 4L2 8z"></path>
-                                <path d="M6 10v4c0 1.1 2.7 2 6 2s6-.9 6-2v-4"></path>
-                                <path d="M20 10v5"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3>SRM University, AP - Amaravati</h3>
-                            <p>Bachelor of Technology - Computer Science Engineering</p>
-                            <p><strong>2020 - 2024</strong></p>
-                            <div class="skills-tags">
-                                <span class="tag">Computer Science</span>
-                                <span class="tag">Research</span>
-                                <span class="tag">Software Development</span>
+                        <div class="journey-leg">
+                            <div class="journey-pin" style="--pin-color: var(--accent-3);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 8l10-4 10 4-10 4L2 8z"></path>
+                                    <path d="M6 10v4c0 1.1 2.7 2 6 2s6-.9 6-2v-4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="journey-kicker">Aug 2024 - Jun 2026</span>
+                                <h3>Arizona State University</h3>
+                                <p>Master of Science - Data Science</p>
+                                <div class="skills-tags">
+                                    <span class="tag">Computer Science</span>
+                                    <span class="tag">LangChain</span>
+                                    <span class="tag">Machine Learning</span>
+                                    <span class="tag">Data Analytics</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3205,6 +3687,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         /* ──────────────────────────────────────────
            INTRO CURTAIN
@@ -3699,6 +4182,103 @@
         if (githubSkyline) {
             syncGithubSignals();
         }
+
+        /* ──────────────────────────────────────────
+           CAPABILITY ATLAS
+        ────────────────────────────────────────── */
+        const capabilityDomains = [
+            {
+                title: "Programming & Development",
+                color: "#2d9cdb",
+                score: 90,
+                summary: "Frontend and backend foundations for building usable AI/data products instead of one-off notebooks.",
+                proof: "Best shown in the space scrollytelling interface, API-backed RAG workflow, and this portfolio build.",
+                skills: ["Python", "JavaScript", "TypeScript", "React.js", "Node.js", "D3.js", "REST APIs", "HTML/CSS"],
+                evidence: ["Interactive UI", "API workflows", "Responsive builds"]
+            },
+            {
+                title: "AI & Machine Learning",
+                color: "#f06449",
+                score: 92,
+                summary: "Applied modeling across computer vision, generative systems, language workflows, and classification.",
+                proof: "Grounded in GAN urban layouts, CNN-SVM waste classification, RAG systems, and forecasting work.",
+                skills: ["Deep Learning", "Computer Vision", "NLP", "GANs", "Transformers", "CNN", "SVM", "TensorFlow", "PyTorch", "RAG"],
+                evidence: ["72.93% test accuracy", "3,050 image dataset", "Secure RAG"]
+            },
+            {
+                title: "Data & Analytics",
+                color: "#7357ff",
+                score: 88,
+                summary: "Turning messy datasets into interpretable dashboards, scroll stories, and decision-ready analysis.",
+                proof: "Visible in NASA/UNOOSA/Kaggle mission work and Singapore demographic forecasting from 1957 to 2023.",
+                skills: ["Tableau", "Power BI", "Excel", "SQL", "Pandas", "NumPy", "Research", "Data Visualization"],
+                evidence: ["1957-2023 window", "3 public sources", "Forecasting"]
+            },
+            {
+                title: "Tools & Technologies",
+                color: "#0f6b5f",
+                score: 86,
+                summary: "Engineering habits that keep AI systems shippable: versioning, containers, notebooks, and secure APIs.",
+                proof: "Used across project repos, API-connected builds, Jupyter experiments, and privacy-aware implementation.",
+                skills: ["Git", "GitHub", "Docker", "Jupyter", "OpenAI API", "Cybersecurity", "Encryption", "API Development"],
+                evidence: ["Public GitHub sync", "TLS concepts", "Notebook-to-product"]
+            }
+        ];
+        const atlasNodes = Array.from(document.querySelectorAll(".atlas-node"));
+        const atlasLinks = Array.from(document.querySelectorAll(".atlas-link"));
+        const atlasButtons = Array.from(document.querySelectorAll(".atlas-domain-button"));
+        const atlasTitle = document.getElementById("atlas-title-text");
+        const atlasSummary = document.getElementById("atlas-summary");
+        const atlasProofCopy = document.getElementById("atlas-proof-copy");
+        const atlasScore = document.getElementById("atlas-score");
+        const atlasScoreRing = document.getElementById("atlas-score-ring");
+        const atlasChipGrid = document.getElementById("atlas-chip-grid");
+        const atlasProofGrid = document.getElementById("atlas-proof-grid");
+
+        function renderCapability(index) {
+            const domain = capabilityDomains[index];
+            if (!domain) return;
+            document.documentElement.style.setProperty("--story-accent", domain.color);
+            atlasNodes.forEach(node => node.classList.toggle("active", Number(node.dataset.atlasIndex) === index));
+            atlasLinks.forEach(link => link.classList.toggle("active", Number(link.dataset.atlasLink) === index));
+            atlasButtons.forEach(button => button.classList.toggle("active", Number(button.dataset.atlasIndex) === index));
+            if (atlasTitle) atlasTitle.textContent = domain.title;
+            if (atlasSummary) atlasSummary.textContent = domain.summary;
+            if (atlasProofCopy) atlasProofCopy.textContent = domain.proof;
+            if (atlasScore) atlasScore.textContent = domain.score;
+            if (atlasScoreRing) atlasScoreRing.style.setProperty("--atlas-score", `${domain.score}%`);
+            if (atlasChipGrid) {
+                atlasChipGrid.replaceChildren(...domain.skills.map(skill => {
+                    const chip = document.createElement("span");
+                    chip.className = "atlas-chip";
+                    chip.textContent = skill;
+                    return chip;
+                }));
+            }
+            if (atlasProofGrid) {
+                atlasProofGrid.replaceChildren(...domain.evidence.map(item => {
+                    const proof = document.createElement("span");
+                    proof.className = "atlas-proof";
+                    proof.textContent = item;
+                    return proof;
+                }));
+            }
+        }
+
+        [...atlasNodes, ...atlasButtons].forEach(item => {
+            const activate = () => renderCapability(Number(item.dataset.atlasIndex));
+            item.addEventListener("click", activate);
+            item.addEventListener("mouseenter", activate);
+            item.addEventListener("focus", activate);
+            item.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    activate();
+                }
+            });
+        });
+
+        renderCapability(0);
 
         /* ──────────────────────────────────────────
            COUNT-UP ANIMATION
