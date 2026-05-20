@@ -918,6 +918,14 @@
             z-index: 1;
         }
 
+        .signal-orbit-card {
+            grid-column: span 2;
+        }
+
+        .signal-github-card {
+            grid-column: 1 / -1;
+        }
+
         .signal-card,
         .impact-card {
             border: 1px solid rgba(215, 227, 222, 0.9);
@@ -1323,6 +1331,35 @@
             margin-bottom: 14px;
         }
 
+        .signal-github-card {
+            display: grid;
+            grid-template-columns: minmax(190px, 0.36fr) minmax(0, 1fr) minmax(240px, 0.42fr);
+            grid-template-areas:
+                "header header header"
+                "metrics skyline languages";
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .signal-github-card .signal-card-header {
+            grid-area: header;
+            margin-bottom: 0;
+        }
+
+        .signal-github-card .github-metrics {
+            grid-area: metrics;
+            grid-template-columns: 1fr;
+            margin-bottom: 0;
+        }
+
+        .signal-github-card .github-skyline {
+            grid-area: skyline;
+        }
+
+        .signal-github-card .github-language-strip {
+            grid-area: languages;
+        }
+
         .github-metrics div {
             padding: 11px;
             border-radius: 14px;
@@ -1348,11 +1385,11 @@
         }
 
         .github-skyline {
-            height: 182px;
-            padding: 18px 10px 20px;
+            height: 280px;
+            padding: 38px 18px 24px;
             display: flex;
             align-items: end;
-            gap: 3px;
+            gap: 5px;
             border: 1px solid rgba(215,227,222,0.92);
             border-radius: 22px;
             position: relative;
@@ -1368,8 +1405,8 @@
             position: absolute;
             left: 0;
             right: 0;
-            bottom: 18px;
-            height: 10px;
+            bottom: 20px;
+            height: 12px;
             background:
                 repeating-linear-gradient(90deg, rgba(16,42,43,0.22) 0 8px, transparent 8px 15px);
             opacity: 0.22;
@@ -1378,8 +1415,8 @@
         .github-skyline::after {
             content: "42-day public activity city";
             position: absolute;
-            left: 12px;
-            top: 10px;
+            left: 18px;
+            top: 14px;
             color: rgba(82,107,103,0.72);
             font-size: 0.64rem;
             font-weight: 900;
@@ -1389,7 +1426,7 @@
 
         .github-bar {
             flex: 1;
-            min-width: 6px;
+            min-width: 8px;
             height: var(--bar-height, 20%);
             border-radius: 3px 3px 1px 1px;
             background:
@@ -1416,9 +1453,10 @@
         }
 
         .github-language-strip {
-            margin-top: 14px;
+            margin-top: 0;
             display: grid;
             gap: 8px;
+            align-content: center;
         }
 
         .language-pill {
@@ -2945,6 +2983,24 @@
                 min-height: 340px;
             }
 
+            .signal-orbit-card,
+            .signal-github-card {
+                grid-column: auto;
+            }
+
+            .signal-github-card {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "metrics"
+                    "skyline"
+                    "languages";
+            }
+
+            .signal-github-card .github-metrics {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
             .story-map {
                 position: relative;
                 top: auto;
@@ -3044,7 +3100,7 @@
             }
 
             .github-skyline {
-                height: 150px;
+                height: 190px;
                 gap: 2px;
                 padding-inline: 8px;
             }
