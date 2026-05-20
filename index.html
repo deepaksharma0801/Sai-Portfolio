@@ -14,29 +14,30 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
-            --bg: #f6f8f5;
-            --bg-soft: #eef7f2;
-            --card: #ffffff;
-            --border: #d7e3de;
-            --text: #102a2b;
-            --muted: #526b67;
-            --accent: #f06449;
-            --accent-2: #0f6b5f;
-            --accent-3: #2d9cdb;
-            --accent-4: #f6b73c;
-            --accent-5: #7357ff;
-            --accent-soft: #e6f6ef;
+            --bg: #071314;
+            --bg-soft: #0b1f20;
+            --card: #0e2324;
+            --border: #254244;
+            --text: #edf7f3;
+            --muted: #91aaa5;
+            --accent: #ff6b57;
+            --accent-2: #34d399;
+            --accent-3: #38bdf8;
+            --accent-4: #fbbf24;
+            --accent-5: #8b5cf6;
+            --accent-soft: rgba(52, 211, 153, 0.12);
             --story-accent: var(--accent);
-            --shadow: 0 24px 60px rgba(16, 42, 43, 0.11);
-            --glow: 0 24px 80px rgba(45, 156, 219, 0.18);
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+            --glow: 0 24px 80px rgba(56, 189, 248, 0.18);
             --radius-xl: 28px;
             --radius-lg: 20px;
             --radius-md: 16px;
             --max-width: 1180px;
+            --mono: "JetBrains Mono", "SFMono-Regular", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
         }
 
         * {
@@ -50,9 +51,11 @@
         }
 
         body {
-            font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+            font-family: var(--mono);
             background: var(--bg);
             color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
         }
 
         body::before {
@@ -3489,6 +3492,190 @@
             opacity: 1;
             transform: translateY(0) scale(1);
             filter: blur(0);
+        }
+
+        /* ============================================================
+           DARK TERMINAL THEME OVERRIDES
+        ============================================================ */
+        body::before {
+            background:
+                radial-gradient(circle at 12% 16%, rgba(56,189,248,0.18), transparent 34%),
+                radial-gradient(circle at 86% 10%, rgba(255,107,87,0.16), transparent 32%),
+                radial-gradient(circle at 74% 82%, rgba(139,92,246,0.14), transparent 38%),
+                linear-gradient(135deg, rgba(7,19,20,0.98), rgba(5,13,14,0.98));
+            opacity: 1;
+        }
+
+        body::after {
+            background-image:
+                linear-gradient(rgba(52,211,153,0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(52,211,153,0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            opacity: 0.5;
+            mix-blend-mode: normal;
+        }
+
+        h1, h2, h3, h4, strong, .btn, .tag, .skill-item {
+            font-family: var(--mono);
+        }
+
+        nav {
+            background: rgba(7,19,20,0.82);
+            border-bottom-color: rgba(52,211,153,0.16);
+        }
+
+        nav.scrolled {
+            background: rgba(7,19,20,0.96);
+            box-shadow: 0 16px 44px rgba(0,0,0,0.24);
+        }
+
+        .logo,
+        .section-heading h2,
+        .project-content h3,
+        .experience-meta h3,
+        .education-card h3,
+        .journey-leg h3,
+        .atlas-panel h3 {
+            color: var(--text);
+        }
+
+        .nav-links a,
+        .hero-subtitle,
+        .hero-description,
+        .section-heading p,
+        .project-content p,
+        .experience-meta p,
+        .education-card p,
+        .journey-leg p,
+        .atlas-panel p,
+        .skill-summary {
+            color: var(--muted);
+        }
+
+        .hero-card,
+        .about-stat,
+        .now-card,
+        .experience-card,
+        .project-card,
+        .skill-card,
+        .education-card,
+        .signal-card,
+        .impact-card,
+        .atlas-map,
+        .atlas-panel,
+        .journey-map-card,
+        .journey-leg,
+        .contact-card,
+        .mobile-menu {
+            background:
+                linear-gradient(145deg, rgba(14,35,36,0.94), rgba(9,24,25,0.9)),
+                linear-gradient(120deg, color-mix(in srgb, var(--story-accent), transparent 90%), transparent 70%);
+            border-color: rgba(52,211,153,0.16);
+            box-shadow: var(--shadow);
+        }
+
+        .signal-card::after,
+        .impact-card::after,
+        .hero-card::after {
+            background: linear-gradient(120deg, transparent, rgba(56,189,248,0.12), transparent);
+        }
+
+        .stat,
+        .proof-item,
+        .reality-meter,
+        .skill-domain,
+        .skill-focus-panel,
+        .skill-project-match,
+        .github-metrics div,
+        .language-pill,
+        .signal-stat,
+        .impact-row,
+        .atlas-chip,
+        .atlas-proof {
+            background: rgba(13,35,36,0.78);
+            border-color: rgba(52,211,153,0.16);
+            color: var(--text);
+        }
+
+        .btn-secondary,
+        .contact-actions .btn-secondary {
+            background: rgba(237,247,243,0.96);
+            color: #071314;
+            border-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-4));
+            color: #071314;
+        }
+
+        .tag,
+        .skill-item,
+        .contact-chip {
+            background: rgba(52,211,153,0.1);
+            border-color: rgba(52,211,153,0.18);
+            color: var(--muted);
+        }
+
+        .portrait {
+            background: linear-gradient(140deg, #0b1f20 0%, #0e2324 55%, rgba(56,189,248,0.18) 100%);
+            border-color: rgba(52,211,153,0.16);
+        }
+
+        .project-media::after {
+            background:
+                linear-gradient(135deg, rgba(7,19,20,0.18), transparent 44%),
+                linear-gradient(0deg, rgba(7,19,20,0.68), transparent 64%);
+        }
+
+        .solar-system,
+        .constellation,
+        .journey-map {
+            background:
+                radial-gradient(circle at 50% 50%, rgba(56,189,248,0.13), transparent 42%),
+                linear-gradient(145deg, rgba(5,13,14,0.96), rgba(10,48,46,0.92));
+        }
+
+        .github-skyline {
+            background:
+                radial-gradient(circle at 82% 18%, rgba(251,191,36,0.22) 0 12px, transparent 13px),
+                linear-gradient(180deg, rgba(56,189,248,0.12), rgba(11,31,32,0.86) 64%, rgba(52,211,153,0.12));
+            border-color: rgba(52,211,153,0.16);
+        }
+
+        .github-skyline::after,
+        .journey-kicker,
+        .atlas-panel-kicker,
+        .signal-card-header span,
+        .github-metrics span,
+        .signal-stat span,
+        .contact-status {
+            color: rgba(237,247,243,0.62);
+        }
+
+        .map-loading,
+        .journey-map .leaflet-container,
+        .journey-map.leaflet-container {
+            background: #071314;
+        }
+
+        .journey-map .leaflet-tile {
+            filter: invert(1) hue-rotate(180deg) saturate(0.75) brightness(0.72) contrast(1.08);
+        }
+
+        .journey-map .leaflet-control-zoom a,
+        .journey-map .leaflet-control-attribution {
+            background: rgba(14,35,36,0.92);
+            color: var(--text);
+        }
+
+        .debug-console {
+            background: rgba(2,8,9,0.72);
+            border-color: rgba(52,211,153,0.18);
+        }
+
+        footer {
+            color: rgba(237,247,243,0.52);
         }
     </style>
 </head>
