@@ -806,6 +806,15 @@
             }
         }
 
+        @keyframes terminalBlink {
+            0%, 49% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+
         .section-heading {
             display: flex;
             flex-direction: column;
@@ -822,6 +831,154 @@
         .section-heading p {
             color: var(--muted);
             max-width: 640px;
+        }
+
+        .terminal-command {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            color: var(--accent-3);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: lowercase;
+            text-shadow: 0 0 18px rgba(56,189,248,0.22);
+        }
+
+        .terminal-command::before {
+            content: "$ ";
+            color: var(--accent-2);
+        }
+
+        .terminal-cursor::after,
+        .terminal-command::after {
+            content: "_";
+            color: var(--accent-4);
+            animation: terminalBlink 1.05s steps(1) infinite;
+        }
+
+        .terminal-boot {
+            margin-top: 20px;
+            width: min(100%, 620px);
+            display: grid;
+            gap: 7px;
+            padding: 14px 16px;
+            border: 1px solid rgba(52,211,153,0.18);
+            border-radius: 16px;
+            background:
+                linear-gradient(145deg, rgba(5,13,14,0.72), rgba(13,35,36,0.58)),
+                repeating-linear-gradient(0deg, rgba(52,211,153,0.03) 0 1px, transparent 1px 5px);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 18px 42px rgba(0,0,0,0.18);
+            opacity: 0;
+            transform: translateY(18px);
+            animation: fadeUp 1.1s ease 0.28s forwards;
+        }
+
+        .terminal-boot span {
+            color: rgba(237,247,243,0.74);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .terminal-boot span::before {
+            content: "> ";
+            color: var(--accent-2);
+        }
+
+        .terminal-boot strong {
+            color: var(--accent-4);
+            font-weight: 800;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            min-height: 30px;
+            padding: 7px 10px;
+            border: 1px solid rgba(52,211,153,0.16);
+            border-radius: 12px;
+            background: rgba(5,13,14,0.68);
+            color: rgba(237,247,243,0.72);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: lowercase;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+            flex: 0 0 auto;
+        }
+
+        .terminal-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px currentColor;
+        }
+
+        .terminal-dots span:nth-child(2) {
+            background: var(--accent-4);
+        }
+
+        .terminal-dots span:nth-child(3) {
+            background: var(--accent-2);
+        }
+
+        .hero-card .terminal-bar {
+            margin-bottom: 16px;
+        }
+
+        .project-card .terminal-bar {
+            grid-column: 1 / -1;
+            margin-bottom: -8px;
+        }
+
+        .project-log {
+            display: grid;
+            gap: 7px;
+            margin: 14px 0;
+            padding: 12px 13px;
+            border: 1px solid rgba(52,211,153,0.14);
+            border-left: 3px solid var(--story-accent);
+            border-radius: 14px;
+            background:
+                linear-gradient(145deg, rgba(5,13,14,0.62), rgba(13,35,36,0.54)),
+                repeating-linear-gradient(0deg, rgba(56,189,248,0.025) 0 1px, transparent 1px 5px);
+        }
+
+        .project-log span {
+            color: rgba(237,247,243,0.76);
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .project-log span::before {
+            content: attr(data-key) ": ";
+            color: var(--accent-2);
+            font-weight: 900;
+        }
+
+        .github-command {
+            grid-area: command;
+            align-self: end;
+            color: var(--accent-3);
+            font-size: 0.74rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: lowercase;
+        }
+
+        .github-command::before {
+            content: "$ ";
+            color: var(--accent-2);
         }
 
         .about-grid {
@@ -1335,7 +1492,7 @@
             display: grid;
             grid-template-columns: minmax(190px, 0.36fr) minmax(0, 1fr) minmax(240px, 0.42fr);
             grid-template-areas:
-                "header header header"
+                "header header command"
                 "metrics skyline languages";
             gap: 18px;
             align-items: stretch;
@@ -1450,6 +1607,60 @@
             box-shadow:
                 inset 0 0 0 1px rgba(255,255,255,0.22),
                 0 16px 28px color-mix(in srgb, var(--story-accent), transparent 74%);
+        }
+
+        .github-bar:focus-visible {
+            outline: 2px solid var(--accent-4);
+            outline-offset: 3px;
+            transform: translateY(-4px) scaleY(1.04);
+        }
+
+        .github-bar.active {
+            filter: brightness(1.18) saturate(1.2);
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.28),
+                0 0 28px color-mix(in srgb, var(--story-accent), transparent 58%);
+        }
+
+        .github-tooltip {
+            position: absolute;
+            left: 50%;
+            top: 18px;
+            z-index: 5;
+            min-width: 126px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(52,211,153,0.26);
+            background: rgba(5,13,14,0.94);
+            color: var(--text);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.34), 0 0 22px rgba(56,189,248,0.12);
+            transform: translate(-50%, -8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .github-tooltip.visible {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .github-tooltip strong {
+            display: block;
+            color: var(--accent-4);
+            font-size: 1.05rem;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .github-tooltip span {
+            display: block;
+            color: rgba(237,247,243,0.72);
+            font-size: 0.66rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1.35;
         }
 
         .github-language-strip {
@@ -3000,6 +3211,7 @@
                 grid-template-columns: 1fr;
                 grid-template-areas:
                     "header"
+                    "command"
                     "metrics"
                     "skyline"
                     "languages";
@@ -3186,6 +3398,7 @@
             .hero-title,
             .hero-subtitle,
             .hero-description,
+            .terminal-boot,
             .cta-row,
             .scroll-cue,
             .hero-card {
@@ -3931,6 +4144,11 @@
                     <p class="hero-description">
                         I build applied AI systems and data stories that make complex signals usable, from secure retrieval workflows to computer vision models and interactive analytics.
                     </p>
+                    <div class="terminal-boot" aria-label="Portfolio boot log">
+                        <span>loading portfolio kernel... <strong>ok</strong></span>
+                        <span>syncing github signals... <strong>live</strong></span>
+                        <span>mode set to <strong>open_to_work</strong></span>
+                    </div>
                     <div class="cta-row">
                         <a href="#projects" class="btn btn-primary">Explore My Work</a>
                         <a href="resume_new.pdf" class="btn btn-secondary">Resume</a>
@@ -3942,6 +4160,10 @@
                     </div>
                 </div>
                 <div class="hero-card float-card" data-parallax="0.12">
+                    <div class="terminal-bar">
+                        <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span>profile.md</span>
+                    </div>
                     <div class="portrait">
                         <img src="phot ds.jpeg" alt="Sai Deepak Sharma Nadiminty portrait" />
                     </div>
@@ -3970,6 +4192,7 @@
         <section id="about">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">cat about.md</span>
                     <h2>About Me</h2>
                     <p>Blending data, design, and engineering to build responsible AI products, decision tools, and visual narratives.</p>
                 </div>
@@ -4008,6 +4231,7 @@
         <section id="signals" class="signal-section">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">run signal-map --interactive</span>
                     <h2>Signal Map</h2>
                     <p>Click through the project nodes, skill domains, and live GitHub traces to see how the work connects.</p>
                 </div>
@@ -4094,6 +4318,7 @@
                             <span>GitHub Skyline</span>
                             <strong id="github-status">Syncing public activity</strong>
                         </div>
+                        <div class="github-command">gh activity --last 42d --public</div>
                         <div class="github-metrics">
                             <div>
                                 <strong id="github-repos">--</strong>
@@ -4181,6 +4406,7 @@
         <section id="experience">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">cat experience.log</span>
                     <h2>Experience</h2>
                     <p>Hands-on roles delivering operational excellence and applied AI solutions.</p>
                 </div>
@@ -4229,6 +4455,7 @@
         <section id="projects" class="story-section">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">run projects --story-mode</span>
                     <h2>Featured Projects</h2>
                     <p>Scroll through the arc: narrative data, secure AI, generated cities, demographic signals, and vision systems.</p>
                 </div>
@@ -4270,6 +4497,10 @@
 
                     <div class="project-sequence">
                 <div class="project-card float-card reveal slow story-card story-active" data-story-index="0" data-story-step="01">
+                    <div class="terminal-bar">
+                        <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span>projects/space-missions.story</span>
+                    </div>
                     <div class="project-media has-image space" data-parallax="0.08">
                         <span>Scrollytelling</span>
                     </div>
@@ -4279,6 +4510,11 @@
                         <p>
                             Created an interactive scrollytelling website chronicling space missions from Sputnik to modern Mars explorations. Integrated datasets from NASA, UNOOSA, and Kaggle to deliver engaging visualizations that highlight technological advancements, international collaborations, mission purposes, and challenges like orbital debris, combining analytical depth with a human-centered narrative.
                         </p>
+                        <div class="project-log" aria-label="Terminal summary for space missions project">
+                            <span data-key="input">NASA, UNOOSA, Kaggle mission records</span>
+                            <span data-key="process">clean, join, visualize, scroll-map the story</span>
+                            <span data-key="output">interactive mission narrative with D3 visuals</span>
+                        </div>
                         <div class="project-proof" aria-label="Project proof points">
                             <div class="proof-item"><strong>3 data sources</strong><span>NASA, UNOOSA, and Kaggle</span></div>
                             <div class="proof-item"><strong>Scroll narrative</strong><span>Historical missions turned into chapters</span></div>
@@ -4304,6 +4540,10 @@
                 </div>
 
                 <div class="project-card float-card reveal slow story-card" data-story-index="1" data-story-step="02" style="margin-top: 28px;">
+                    <div class="terminal-bar">
+                        <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span>projects/secure-rag.pipeline</span>
+                    </div>
                     <div class="project-media has-image rag" data-parallax="0.08">
                         <span>RAG Security</span>
                     </div>
@@ -4313,6 +4553,11 @@
                         <p>
                             Developed an anonymized Retrieval-Augmented Generation (RAG) framework with TLS encryption to enable secure, customizable chatbots for SaaS-based LLMs. Implemented via modern web tools and OpenAI API, the system ensures data privacy, basic GDPR/CCPA compliance, and accessibility for organizations without advanced technical resources.
                         </p>
+                        <div class="project-log" aria-label="Terminal summary for secure RAG project">
+                            <span data-key="input">support knowledge, customer context, privacy constraints</span>
+                            <span data-key="process">anonymize, retrieve, generate, encrypt transport</span>
+                            <span data-key="output">safer support chatbot workflow for SaaS teams</span>
+                        </div>
                         <div class="project-proof" aria-label="Project proof points">
                             <div class="proof-item"><strong>RAG</strong><span>Retrieval workflow for support answers</span></div>
                             <div class="proof-item"><strong>TLS</strong><span>Encrypted communication layer</span></div>
@@ -4340,6 +4585,10 @@
                 </div>
 
                 <div class="project-card float-card reveal slow story-card" data-story-index="2" data-story-step="03" style="margin-top: 28px;">
+                    <div class="terminal-bar">
+                        <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span>projects/urban-gan.train</span>
+                    </div>
                     <div class="project-media has-image urban" data-parallax="0.08">
                         <span>Urban GANs</span>
                     </div>
@@ -4349,6 +4598,11 @@
                         <p>
                             Developed an AI framework using conditional GANs and multi-objective optimization to generate realistic urban block layouts. Trained on 3,050 images from 50 cities, the model produces diverse designs to support computer-aided urban planning and optimize city livability and infrastructure.
                         </p>
+                        <div class="project-log" aria-label="Terminal summary for urban GANs project">
+                            <span data-key="input">3,050 city-layout images across 50 cities</span>
+                            <span data-key="process">preprocess, train cGAN, optimize design objectives</span>
+                            <span data-key="output">generated block layouts for planning exploration</span>
+                        </div>
                         <div class="project-proof" aria-label="Project proof points">
                             <div class="proof-item"><strong>3,050 images</strong><span>Training set across urban layouts</span></div>
                             <div class="proof-item"><strong>50 cities</strong><span>Broader design pattern coverage</span></div>
@@ -4375,6 +4629,10 @@
                 </div>
 
                 <div class="project-card float-card reveal slow story-card" data-story-index="3" data-story-step="04" style="margin-top: 28px;">
+                    <div class="terminal-bar">
+                        <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span>projects/singapore-forecast.sql</span>
+                    </div>
                     <div class="project-media has-image population" data-parallax="0.08">
                         <span>Population Analytics</span>
                     </div>
@@ -4384,6 +4642,11 @@
                         <p>
                             Analyzed the demographic composition of Singapore residents from 1957 to 2023, focusing on the distribution and trends across age groups, ethnicity, and gender. The dataset provides comprehensive demographic information that is crucial for understanding Singapore&#39;s population dynamics and social development.
                         </p>
+                        <div class="project-log" aria-label="Terminal summary for Singapore demographic project">
+                            <span data-key="input">1957-2023 demographic records</span>
+                            <span data-key="process">segment by age, ethnicity, gender, forecast trends</span>
+                            <span data-key="output">planning-ready population insights</span>
+                        </div>
                         <div class="project-proof" aria-label="Project proof points">
                             <div class="proof-item"><strong>1957-2023</strong><span>Long-range demographic view</span></div>
                             <div class="proof-item"><strong>3 dimensions</strong><span>Age, ethnicity, and gender</span></div>
@@ -4409,6 +4672,10 @@
                 </div>
 
                 <div class="project-card float-card reveal slow story-card" data-story-index="4" data-story-step="05" style="margin-top: 28px;">
+                    <div class="terminal-bar">
+                        <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span>projects/waste-vision.eval</span>
+                    </div>
                     <div class="project-media has-image waste" data-parallax="0.08">
                         <span>Vision AI</span>
                     </div>
@@ -4418,6 +4685,11 @@
                         <p>
                             Developed a CNN-SVM hybrid model, significantly improving classification precision and outperforming traditional CNN-only frameworks in material identification tasks. Implemented advanced augmentation techniques, achieving 72.93% test accuracy, enhancing model generalization, and effectively reducing overfitting.
                         </p>
+                        <div class="project-log" aria-label="Terminal summary for waste classification project">
+                            <span data-key="input">waste material images with noisy real-world variation</span>
+                            <span data-key="process">augment, extract CNN features, classify with SVM</span>
+                            <span data-key="output">72.93% test accuracy classification signal</span>
+                        </div>
                         <div class="project-proof" aria-label="Project proof points">
                             <div class="proof-item"><strong>72.93%</strong><span>Reported test accuracy</span></div>
                             <div class="proof-item"><strong>CNN-SVM</strong><span>Hybrid classification approach</span></div>
@@ -4450,6 +4722,7 @@
         <section id="skills">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">ls skills/ --capabilities</span>
                     <h2>Technical Skills</h2>
                     <p>A capability atlas that connects tools to the kinds of systems I build.</p>
                 </div>
@@ -4523,6 +4796,7 @@
         <section id="education">
             <div class="container">
                 <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">trace education.route</span>
                     <h2>Academic Journey</h2>
                     <p>From Amaravati to the United States: the route behind the technical foundation.</p>
                 </div>
@@ -4589,7 +4863,8 @@
                     <span class="contact-float two"></span>
                     <span class="contact-float three"></span>
                     <div class="contact-copy">
-                        <h2>Got a hard AI/data problem? I am already curious.</h2>
+                        <span class="terminal-command">ping sai --collab</span>
+                        <h2 class="terminal-cursor">Got a hard AI/data problem? I am already curious.</h2>
                         <p>Open to full-time roles, internships, and collaborations where engineering, product thinking, and messy real-world data meet.</p>
                         <div class="contact-sparkline" aria-hidden="true">
                             <span style="--spark-height: 42%; --spark-delay: 0ms;"></span>
@@ -5083,18 +5358,74 @@ caffeine: probable</pre>
         function renderSkyline(values) {
             if (!githubSkyline) return;
             const activity = values.length ? values : fallbackActivity;
-            const max = Math.max(...activity, 1);
-            const bars = activity.map((value, index) => {
+            const normalized = activity.map((entry, index) => {
+                if (typeof entry === "object" && entry !== null) return entry;
+                const date = new Date();
+                date.setDate(date.getDate() - (activity.length - 1 - index));
+                return { count: Number(entry) || 0, date: date.toISOString().slice(0, 10) };
+            });
+            const max = Math.max(...normalized.map(item => item.count), 1);
+            const tooltip = document.createElement("div");
+            tooltip.className = "github-tooltip";
+            tooltip.setAttribute("role", "status");
+            tooltip.setAttribute("aria-live", "polite");
+
+            const hideTooltip = () => {
+                tooltip.classList.remove("visible");
+                githubSkyline.querySelectorAll(".github-bar.active").forEach(activeBar => activeBar.classList.remove("active"));
+            };
+
+            const showTooltip = (bar, item) => {
+                const value = item.count;
+                const eventLabel = `${value} public event${value === 1 ? "" : "s"}`;
+                const dateLabel = formatActivityDate(item.date);
+                tooltip.innerHTML = `<strong>${eventLabel}</strong><span>${dateLabel}</span>`;
+                const skylineRect = githubSkyline.getBoundingClientRect();
+                const barRect = bar.getBoundingClientRect();
+                const barCenter = barRect.left + (barRect.width / 2) - skylineRect.left;
+                const clampedLeft = Math.min(Math.max(barCenter, 72), skylineRect.width - 72);
+                tooltip.style.left = `${clampedLeft}px`;
+                githubSkyline.querySelectorAll(".github-bar.active").forEach(activeBar => activeBar.classList.remove("active"));
+                bar.classList.add("active");
+                tooltip.classList.add("visible");
+            };
+
+            const bars = normalized.map((item, index) => {
+                const value = item.count;
                 const bar = document.createElement("span");
                 const intensity = value > 0 ? Math.sqrt(value / max) : 0;
                 const height = value > 0 ? Math.max(18, Math.round(intensity * 92)) : 10;
                 bar.className = "github-bar";
-                bar.title = `${value} public event${value === 1 ? "" : "s"} on this day`;
+                bar.tabIndex = 0;
+                bar.setAttribute("role", "button");
+                bar.setAttribute("aria-label", `${value} public event${value === 1 ? "" : "s"} on ${formatActivityDate(item.date)}`);
+                bar.dataset.count = String(value);
+                bar.dataset.date = item.date;
                 bar.style.setProperty("--bar-height", `${height}%`);
                 bar.style.setProperty("--bar-delay", `${index * 14}ms`);
+                bar.addEventListener("mouseenter", () => showTooltip(bar, item));
+                bar.addEventListener("focus", () => showTooltip(bar, item));
+                bar.addEventListener("click", event => {
+                    event.stopPropagation();
+                    showTooltip(bar, item);
+                });
+                bar.addEventListener("keydown", event => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        showTooltip(bar, item);
+                    }
+                });
+                bar.addEventListener("mouseleave", hideTooltip);
+                bar.addEventListener("blur", hideTooltip);
                 return bar;
             });
-            githubSkyline.replaceChildren(...bars);
+            githubSkyline.replaceChildren(...bars, tooltip);
+        }
+
+        function formatActivityDate(dateString) {
+            const date = new Date(`${dateString}T12:00:00`);
+            if (Number.isNaN(date.getTime())) return "recent day";
+            return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
         }
 
         function renderLanguages(languageCounts) {
@@ -5146,7 +5477,7 @@ caffeine: probable</pre>
                 const key = String(event.created_at || "").slice(0, 10);
                 if (counts.has(key)) counts.set(key, counts.get(key) + 1);
             });
-            return Array.from(counts.values());
+            return Array.from(counts, ([date, count]) => ({ date, count }));
         }
 
         async function fetchGithubJson(path) {
