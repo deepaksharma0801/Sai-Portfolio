@@ -1593,10 +1593,10 @@
                 inset 0 0 0 1px rgba(255,255,255,0.16),
                 0 10px 18px color-mix(in srgb, var(--story-accent), transparent 86%);
             transform-origin: bottom;
-            animation: skylineRise 0.8s cubic-bezier(0.16,1,0.3,1) both;
+            animation: skylineRise 0.32s cubic-bezier(0.16,1,0.3,1) both;
             animation-delay: var(--bar-delay, 0ms);
             cursor: help;
-            transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.08s ease, filter 0.08s ease, box-shadow 0.08s ease;
             position: relative;
             z-index: 1;
         }
@@ -1637,7 +1637,7 @@
             transform: translate(-50%, -8px);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.18s ease, transform 0.18s ease;
+            transition: opacity 0.06s ease, transform 0.06s ease;
         }
 
         .github-tooltip.visible {
@@ -5402,7 +5402,7 @@ caffeine: probable</pre>
                 bar.dataset.count = String(value);
                 bar.dataset.date = item.date;
                 bar.style.setProperty("--bar-height", `${height}%`);
-                bar.style.setProperty("--bar-delay", `${index * 14}ms`);
+                bar.style.setProperty("--bar-delay", `${index * 3}ms`);
                 bar.addEventListener("mouseenter", () => showTooltip(bar, item));
                 bar.addEventListener("focus", () => showTooltip(bar, item));
                 bar.addEventListener("click", event => {
