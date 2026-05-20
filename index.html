@@ -1316,21 +1316,24 @@
         .github-metrics {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-            margin-bottom: 18px;
+            gap: 8px;
+            margin-bottom: 14px;
         }
 
         .github-metrics div {
-            padding: 12px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.74);
+            padding: 11px;
+            border-radius: 14px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.86), rgba(238,247,242,0.64));
             border: 1px solid rgba(215,227,222,0.9);
         }
 
         .github-metrics strong {
             display: block;
             color: var(--story-accent);
-            font-size: 1.35rem;
+            font-size: clamp(1.1rem, 2.6vw, 1.55rem);
+            line-height: 1;
+            margin-bottom: 5px;
         }
 
         .github-metrics span {
@@ -1342,51 +1345,112 @@
         }
 
         .github-skyline {
-            height: 152px;
-            padding: 0 4px;
+            height: 182px;
+            padding: 18px 10px 20px;
             display: flex;
             align-items: end;
-            gap: 4px;
-            border-bottom: 2px solid rgba(15,107,95,0.16);
+            gap: 3px;
+            border: 1px solid rgba(215,227,222,0.92);
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
             background:
-                linear-gradient(180deg, transparent, rgba(15,107,95,0.06)),
-                repeating-linear-gradient(to top, rgba(15,107,95,0.08) 0 1px, transparent 1px 34px);
+                radial-gradient(circle at 82% 18%, rgba(246,183,60,0.26) 0 12px, transparent 13px),
+                linear-gradient(180deg, rgba(45,156,219,0.12), rgba(238,247,242,0.88) 62%, rgba(15,107,95,0.10)),
+                linear-gradient(90deg, rgba(255,255,255,0.42), transparent);
+        }
+
+        .github-skyline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 18px;
+            height: 10px;
+            background:
+                repeating-linear-gradient(90deg, rgba(16,42,43,0.22) 0 8px, transparent 8px 15px);
+            opacity: 0.22;
+        }
+
+        .github-skyline::after {
+            content: "42-day public activity city";
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            color: rgba(82,107,103,0.72);
+            font-size: 0.64rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .github-bar {
             flex: 1;
-            min-width: 5px;
+            min-width: 6px;
             height: var(--bar-height, 20%);
-            border-radius: 7px 7px 2px 2px;
-            background: linear-gradient(180deg, color-mix(in srgb, var(--story-accent), white 12%), var(--accent-2));
-            box-shadow: 0 10px 18px color-mix(in srgb, var(--story-accent), transparent 82%);
+            border-radius: 3px 3px 1px 1px;
+            background:
+                repeating-linear-gradient(to bottom, rgba(255,255,255,0.92) 0 3px, transparent 3px 8px),
+                linear-gradient(180deg, color-mix(in srgb, var(--story-accent), white 10%), var(--accent-2));
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.16),
+                0 10px 18px color-mix(in srgb, var(--story-accent), transparent 86%);
             transform-origin: bottom;
             animation: skylineRise 0.8s cubic-bezier(0.16,1,0.3,1) both;
             animation-delay: var(--bar-delay, 0ms);
             cursor: help;
-            transition: transform 0.2s ease, filter 0.2s ease;
+            transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .github-bar:hover {
-            transform: scaleY(1.08);
-            filter: brightness(1.12);
+            transform: translateY(-4px) scaleY(1.04);
+            filter: brightness(1.12) saturate(1.12);
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.22),
+                0 16px 28px color-mix(in srgb, var(--story-accent), transparent 74%);
         }
 
         .github-language-strip {
             margin-top: 14px;
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
             gap: 8px;
         }
 
         .language-pill {
-            padding: 7px 10px;
-            border-radius: 999px;
+            padding: 8px 10px;
+            border-radius: 14px;
             border: 1px solid rgba(215,227,222,0.94);
             background: rgba(255,255,255,0.76);
             color: var(--muted);
             font-size: 0.76rem;
             font-weight: 800;
+            display: grid;
+            grid-template-columns: minmax(88px, 0.55fr) 1fr auto;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-pill em {
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(15,107,95,0.12);
+            overflow: hidden;
+            font-style: normal;
+        }
+
+        .language-pill em span {
+            display: block;
+            width: var(--language-width);
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--story-accent), var(--accent-4));
+        }
+
+        .language-pill strong {
+            color: var(--text);
+            font-size: 0.76rem;
         }
 
         .signal-stats {
@@ -2971,8 +3035,19 @@
             .signal-stats,
             .github-metrics,
             .skill-domain-tabs,
-            .atlas-domain-rail {
+            .atlas-domain-rail,
+            .language-pill {
                 grid-template-columns: 1fr;
+            }
+
+            .github-skyline {
+                height: 150px;
+                gap: 2px;
+                padding-inline: 8px;
+            }
+
+            .github-bar {
+                min-width: 4px;
             }
 
             .atlas-map,
@@ -4639,11 +4714,12 @@ caffeine: probable</pre>
             const max = Math.max(...activity, 1);
             const bars = activity.map((value, index) => {
                 const bar = document.createElement("span");
-                const height = Math.max(12, Math.round((value / max) * 100));
+                const intensity = value > 0 ? Math.sqrt(value / max) : 0;
+                const height = value > 0 ? Math.max(18, Math.round(intensity * 92)) : 10;
                 bar.className = "github-bar";
-                bar.title = `${value} public event${value === 1 ? "" : "s"}`;
+                bar.title = `${value} public event${value === 1 ? "" : "s"} on this day`;
                 bar.style.setProperty("--bar-height", `${height}%`);
-                bar.style.setProperty("--bar-delay", `${index * 18}ms`);
+                bar.style.setProperty("--bar-delay", `${index * 14}ms`);
                 return bar;
             });
             githubSkyline.replaceChildren(...bars);
@@ -4658,9 +4734,10 @@ caffeine: probable</pre>
             const safeEntries = entries.length ? entries : Object.entries(fallbackLanguages);
             const total = safeEntries.reduce((sum, [, count]) => sum + count, 0) || 1;
             const pills = safeEntries.map(([name, count]) => {
+                const percent = Math.max(1, Math.round((count / total) * 100));
                 const pill = document.createElement("span");
                 pill.className = "language-pill";
-                pill.textContent = `${name} ${Math.max(1, Math.round((count / total) * 100))}%`;
+                pill.innerHTML = `<span>${name}</span><em><span style="--language-width: ${percent}%;"></span></em><strong>${percent}%</strong>`;
                 return pill;
             });
             githubLanguageStrip.replaceChildren(...pills);
