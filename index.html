@@ -981,151 +981,8 @@
             color: var(--accent-2);
         }
 
-        .game-hud {
-            position: fixed;
-            left: 22px;
-            bottom: 22px;
-            z-index: 1200;
-            width: min(320px, calc(100vw - 44px));
-            padding: 13px;
-            border: 1px solid rgba(52,211,153,0.20);
-            border-radius: 18px;
-            background:
-                linear-gradient(145deg, rgba(5,13,14,0.90), rgba(13,35,36,0.82)),
-                repeating-linear-gradient(0deg, rgba(52,211,153,0.035) 0 1px, transparent 1px 5px);
-            box-shadow: 0 24px 58px rgba(0,0,0,0.34), inset 0 0 0 1px rgba(255,255,255,0.035);
-            backdrop-filter: blur(16px);
-            color: var(--text);
-        }
-
-        .game-hud-top,
-        .game-hud-meta {
-            display: flex;
-            justify-content: space-between;
-            gap: 14px;
-            align-items: center;
-        }
-
-        .game-hud-top span,
-        .game-hud-meta span {
-            color: rgba(237,247,243,0.62);
-            font-size: 0.64rem;
-            font-weight: 900;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .game-hud-top strong,
-        .game-hud-meta strong {
-            color: var(--accent-4);
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .game-xp-track {
-            margin: 10px 0 9px;
-            height: 8px;
-            border-radius: 999px;
-            background: rgba(52,211,153,0.10);
-            overflow: hidden;
-            box-shadow: inset 0 0 0 1px rgba(52,211,153,0.10);
-        }
-
-        .game-xp-track span {
-            display: block;
-            width: var(--game-xp, 0%);
-            height: 100%;
-            border-radius: inherit;
-            background: linear-gradient(90deg, var(--accent-2), var(--accent-3), var(--accent-4));
-            box-shadow: 0 0 18px rgba(56,189,248,0.28);
-            transition: width 0.18s ease;
-        }
-
-        .game-quest {
-            margin-top: 10px;
-            color: rgba(237,247,243,0.82);
-            font-size: 0.76rem;
-            line-height: 1.45;
-            font-weight: 700;
-        }
-
-        .game-quest::before {
-            content: "active quest: ";
-            color: var(--accent-2);
-            font-weight: 900;
-        }
-
-        .achievement-list {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 6px;
-            margin-top: 12px;
-        }
-
-        .achievement-chip {
-            display: grid;
-            place-items: center;
-            min-height: 30px;
-            border-radius: 10px;
-            border: 1px solid rgba(52,211,153,0.12);
-            background: rgba(52,211,153,0.06);
-            color: rgba(237,247,243,0.36);
-            font-size: 0.62rem;
-            font-weight: 900;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            transition: transform 0.16s ease, border-color 0.16s ease, color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
-        }
-
-        .achievement-chip.unlocked {
-            color: #071314;
-            background: linear-gradient(135deg, var(--accent-2), var(--accent-4));
-            border-color: transparent;
-            box-shadow: 0 0 20px rgba(52,211,153,0.22);
-            transform: translateY(-1px);
-        }
-
-        .achievement-toast {
-            position: fixed;
-            left: 22px;
-            bottom: 212px;
-            z-index: 1300;
-            width: min(320px, calc(100vw - 44px));
-            padding: 12px 14px;
-            border: 1px solid rgba(251,191,36,0.34);
-            border-radius: 14px;
-            background: rgba(5,13,14,0.96);
-            box-shadow: 0 22px 48px rgba(0,0,0,0.36), 0 0 26px rgba(251,191,36,0.14);
-            color: var(--text);
-            opacity: 0;
-            transform: translateY(12px);
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .achievement-toast.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .achievement-toast strong {
-            display: block;
-            color: var(--accent-4);
-            font-size: 0.78rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 3px;
-        }
-
-        .achievement-toast span {
-            color: rgba(237,247,243,0.78);
-            font-size: 0.78rem;
-            line-height: 1.4;
-        }
-
         .project-card::after {
-            content: "+25 xp mission node";
+            content: "mission node";
             position: absolute;
             right: 22px;
             top: 22px;
@@ -3001,11 +2858,20 @@
             border: 2px solid rgba(255,255,255,0.96);
             box-shadow: 0 18px 36px rgba(16,42,43,0.22);
             font-size: 1.1rem;
+            font-weight: 900;
+            transform: rotate(var(--plane-angle, 0deg));
+            transition: transform 0.12s linear;
         }
 
         .journey-map-route {
-            stroke-dasharray: 14 12;
-            animation: dashDrift 12s linear infinite;
+            stroke-dasharray: 12 14;
+            stroke-linecap: round;
+        }
+
+        .journey-map-route-flow {
+            stroke-dasharray: 2 18;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 8px rgba(52,211,153,0.35));
         }
 
         .map-loading {
@@ -3428,19 +3294,6 @@
                 display: none;
             }
 
-            .game-hud {
-                left: 14px;
-                right: 14px;
-                bottom: 14px;
-                width: auto;
-            }
-
-            .achievement-toast {
-                left: 14px;
-                right: 14px;
-                bottom: 184px;
-                width: auto;
-            }
         }
 
         @media (max-width: 600px) {
@@ -3547,19 +3400,6 @@
 
             .skill-meter {
                 width: 100%;
-            }
-
-            .game-hud {
-                padding: 10px;
-            }
-
-            .game-quest,
-            .achievement-list {
-                display: none;
-            }
-
-            .achievement-toast {
-                bottom: 92px;
             }
 
             .solar-system {
@@ -4292,32 +4132,6 @@
     <a class="skip-link" href="#about">Skip to content</a>
     <div class="scroll-progress-bar" aria-hidden="true"><span></span></div>
     <div class="scroll-rail" aria-hidden="true" id="scroll-rail"></div>
-    <aside class="game-hud" id="game-hud" aria-label="Portfolio quest progress">
-        <div class="game-hud-top">
-            <span>player: sdsn</span>
-            <strong id="game-level">lvl 01</strong>
-        </div>
-        <div class="game-xp-track" aria-hidden="true"><span id="game-xp-fill"></span></div>
-        <div class="game-hud-meta">
-            <span>portfolio xp</span>
-            <strong id="game-xp-label">0 / 1000 xp</strong>
-        </div>
-        <div class="game-quest" id="game-quest">boot the portfolio</div>
-        <div class="achievement-list" aria-label="Unlocked portfolio achievements">
-            <span class="achievement-chip" data-achievement="about">bio</span>
-            <span class="achievement-chip" data-achievement="signals">map</span>
-            <span class="achievement-chip" data-achievement="experience">ops</span>
-            <span class="achievement-chip" data-achievement="projects">quest</span>
-            <span class="achievement-chip" data-achievement="skills">skill</span>
-            <span class="achievement-chip" data-achievement="education">route</span>
-            <span class="achievement-chip" data-achievement="contact">ping</span>
-            <span class="achievement-chip" data-achievement="complete">100%</span>
-        </div>
-    </aside>
-    <div class="achievement-toast" id="achievement-toast" role="status" aria-live="polite">
-        <strong>achievement unlocked</strong>
-        <span id="achievement-toast-copy">Portfolio quest started.</span>
-    </div>
 
     <nav>
         <div class="container nav-inner">
@@ -5342,63 +5156,6 @@ caffeine: probable</pre>
         });
 
         /* ──────────────────────────────────────────
-           PORTFOLIO QUEST SYSTEM
-        ────────────────────────────────────────── */
-        const gameLevel = document.getElementById("game-level");
-        const gameXpFill = document.getElementById("game-xp-fill");
-        const gameXpLabel = document.getElementById("game-xp-label");
-        const gameQuest = document.getElementById("game-quest");
-        const achievementToast = document.getElementById("achievement-toast");
-        const achievementToastCopy = document.getElementById("achievement-toast-copy");
-        const achievementChips = Array.from(document.querySelectorAll(".achievement-chip"));
-        const unlockedAchievements = new Set();
-        const questCopy = {
-            about: "inspect builder profile",
-            signals: "decode the signal map",
-            experience: "review shipped operations",
-            projects: "clear five project missions",
-            skills: "scan the capability atlas",
-            education: "trace the academic route",
-            contact: "send the final ping"
-        };
-        const achievementCopy = {
-            about: "Bio node discovered",
-            signals: "Signal map decoded",
-            experience: "Operations log reviewed",
-            projects: "Project questline entered",
-            skills: "Skill tree scanned",
-            education: "Academic route traced",
-            contact: "Final ping unlocked",
-            complete: "Full portfolio run complete"
-        };
-        let toastTimer;
-
-        function updateGameProgress(progress, currentSection) {
-            const xp = Math.round(clamp(progress / 100, 0, 1) * 1000);
-            const level = Math.min(7, Math.max(1, Math.floor(xp / 160) + 1));
-            if (gameLevel) gameLevel.textContent = `lvl ${String(level).padStart(2, "0")}`;
-            if (gameXpFill) gameXpFill.style.setProperty("--game-xp", `${progress.toFixed(1)}%`);
-            if (gameXpLabel) gameXpLabel.textContent = `${xp} / 1000 xp`;
-            if (gameQuest && currentSection) {
-                gameQuest.textContent = questCopy[currentSection.id] || "continue portfolio run";
-            }
-            if (progress >= 98) unlockAchievement("complete");
-        }
-
-        function unlockAchievement(id) {
-            if (!id || unlockedAchievements.has(id)) return;
-            unlockedAchievements.add(id);
-            const chip = achievementChips.find(item => item.dataset.achievement === id);
-            if (chip) chip.classList.add("unlocked");
-            if (achievementToast && achievementToastCopy) {
-                achievementToastCopy.textContent = achievementCopy[id] || "New portfolio achievement unlocked";
-                achievementToast.classList.add("visible");
-                window.clearTimeout(toastTimer);
-                toastTimer = window.setTimeout(() => achievementToast.classList.remove("visible"), 1800);
-            }
-        }
-
-        /* ──────────────────────────────────────────
            PROJECT SCROLLYTELLING
         ────────────────────────────────────────── */
         const storyMap = document.querySelector(".story-map");
@@ -5974,13 +5731,24 @@ caffeine: probable</pre>
                 interactive: false
             }).addTo(map);
 
-            L.polyline(route, {
+            const routeLine = L.polyline(route, {
                 className: "journey-map-route",
                 color: "#f06449",
                 weight: 5,
                 opacity: 0.95,
-                lineCap: "round"
+                lineCap: "round",
+                dashArray: "12 14"
             }).addTo(map).bindPopup("Academic route: Amaravati to Tempe");
+
+            const flowLine = L.polyline(route, {
+                className: "journey-map-route-flow",
+                color: "#34d399",
+                weight: 4,
+                opacity: 0.9,
+                lineCap: "round",
+                dashArray: "2 18",
+                interactive: false
+            }).addTo(map);
 
             const bounds = L.latLngBounds(route);
             map.fitBounds(bounds, { padding: [32, 32], maxZoom: 2.4 });
@@ -5993,27 +5761,49 @@ caffeine: probable</pre>
             });
             const planeMarker = L.marker(route[0], { icon: planeIcon, interactive: false }).addTo(map);
 
-            function routePosition(progress) {
+            function routePoint(progress) {
                 const scaled = progress * (route.length - 1);
                 const index = Math.min(Math.floor(scaled), route.length - 2);
                 const local = scaled - index;
                 const start = route[index];
                 const end = route[index + 1];
-                return [
+                const latlng = [
                     start[0] + (end[0] - start[0]) * local,
                     start[1] + (end[1] - start[1]) * local
                 ];
+                return { latlng, start, end };
+            }
+
+            function setPlaneRotation(start, end) {
+                const planeEl = planeMarker.getElement()?.querySelector(".map-plane");
+                if (!planeEl) return;
+                const startPoint = map.latLngToLayerPoint(start);
+                const endPoint = map.latLngToLayerPoint(end);
+                const angle = Math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x) * 180 / Math.PI;
+                planeEl.style.setProperty("--plane-angle", `${angle}deg`);
             }
 
             if (!reduceMotion) {
                 const start = performance.now();
-                const duration = 8500;
+                const duration = 7200;
                 function animatePlane(now) {
                     const progress = ((now - start) % duration) / duration;
-                    planeMarker.setLatLng(routePosition(progress));
+                    const point = routePoint(progress);
+                    planeMarker.setLatLng(point.latlng);
+                    setPlaneRotation(point.start, point.end);
+                    if (flowLine._path) {
+                        flowLine._path.style.strokeDashoffset = String(-Math.round(progress * 220));
+                    }
+                    if (routeLine._path) {
+                        routeLine._path.style.strokeDashoffset = String(-Math.round(progress * 96));
+                    }
                     requestAnimationFrame(animatePlane);
                 }
                 requestAnimationFrame(animatePlane);
+            } else {
+                const midpoint = routePoint(0.56);
+                planeMarker.setLatLng(midpoint.latlng);
+                setPlaneRotation(midpoint.start, midpoint.end);
             }
 
             if (loadingEl) loadingEl.remove();
@@ -6092,7 +5882,6 @@ caffeine: probable</pre>
             dots.forEach((dot, i) => {
                 dot.classList.toggle("active", sections[i].id === current.id);
             });
-            updateGameProgress(progress, current);
             if (current.id === "signals" && signalData[activeSignalIndex]) {
                 document.documentElement.style.setProperty("--story-accent", signalData[activeSignalIndex].color);
             } else if (current.id !== "projects" && sectionAccents[current.id]) {
@@ -6173,17 +5962,6 @@ caffeine: probable</pre>
         }, { threshold: 0.2 });
 
         document.querySelectorAll(".section-heading").forEach(el => headingObserver.observe(el));
-
-        /* Quest achievement unlocks */
-        const achievementObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                unlockAchievement(entry.target.id);
-                achievementObserver.unobserve(entry.target);
-            });
-        }, { threshold: 0.38 });
-
-        sections.forEach(section => achievementObserver.observe(section));
 
         /* Stats count-up when scrolled into view */
         const statObserver = new IntersectionObserver(entries => {
