@@ -1009,6 +1009,193 @@
             transform: translateY(0);
         }
 
+        .case-study-section {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .aegis-case-card {
+            border: 1px solid rgba(52,211,153,0.18);
+            border-radius: var(--radius-xl);
+            background:
+                radial-gradient(circle at 82% 12%, rgba(240,100,73,0.14), transparent 34%),
+                linear-gradient(145deg, rgba(14,35,36,0.96), rgba(5,13,14,0.92));
+            box-shadow: var(--shadow);
+            padding: clamp(22px, 4vw, 34px);
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1fr);
+            gap: clamp(22px, 4vw, 40px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .aegis-case-card::before {
+            content: "";
+            position: absolute;
+            inset: 20px;
+            border-radius: 22px;
+            background:
+                linear-gradient(rgba(52,211,153,0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .aegis-main,
+        .aegis-side {
+            position: relative;
+            z-index: 1;
+        }
+
+        .aegis-eyebrow {
+            color: var(--accent-4);
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .aegis-main h3 {
+            margin-top: 12px;
+            color: var(--text);
+            font-size: clamp(1.7rem, 3.4vw, 3rem);
+            line-height: 1.08;
+            max-width: 780px;
+        }
+
+        .aegis-main p {
+            margin-top: 14px;
+            color: rgba(237,247,243,0.72);
+            line-height: 1.72;
+            max-width: 760px;
+        }
+
+        .aegis-actions {
+            margin-top: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .aegis-flowchart {
+            margin-top: 22px;
+            border: 1px solid rgba(52,211,153,0.18);
+            border-radius: 20px;
+            background:
+                linear-gradient(145deg, rgba(237,247,243,0.95), rgba(218,233,229,0.92));
+            padding: clamp(8px, 1.4vw, 14px);
+            box-shadow:
+                0 18px 44px rgba(0,0,0,0.26),
+                inset 0 0 0 1px rgba(255,255,255,0.45);
+            overflow: hidden;
+        }
+
+        .aegis-flowchart img {
+            display: block;
+            width: 100%;
+            max-height: 560px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #f6f8f6;
+        }
+
+        .aegis-flowchart figcaption {
+            margin-top: 12px;
+            color: rgba(5,13,14,0.68);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            line-height: 1.45;
+            text-transform: uppercase;
+        }
+
+        .aegis-architecture {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .aegis-node,
+        .aegis-metric,
+        .aegis-note {
+            border: 1px solid rgba(52,211,153,0.16);
+            border-radius: 16px;
+            background: rgba(13,35,36,0.78);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.025);
+        }
+
+        .aegis-node {
+            padding: 12px;
+        }
+
+        .aegis-node strong {
+            display: block;
+            color: var(--accent-2);
+            font-size: 0.82rem;
+            margin-bottom: 5px;
+        }
+
+        .aegis-node span {
+            color: rgba(237,247,243,0.68);
+            font-size: 0.74rem;
+            line-height: 1.45;
+        }
+
+        .aegis-side {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            align-content: start;
+        }
+
+        .aegis-side .aegis-architecture,
+        .aegis-side .aegis-actions,
+        .aegis-note {
+            grid-column: 1 / -1;
+        }
+
+        .aegis-side .aegis-architecture {
+            margin-top: 2px;
+        }
+
+        .aegis-side .aegis-actions {
+            margin-top: 4px;
+        }
+
+        .aegis-metric {
+            padding: 16px;
+        }
+
+        .aegis-metric strong {
+            display: block;
+            color: var(--accent-4);
+            font-size: clamp(1.45rem, 3vw, 2rem);
+            line-height: 1;
+            margin-bottom: 7px;
+        }
+
+        .aegis-metric span {
+            color: rgba(237,247,243,0.68);
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            line-height: 1.45;
+        }
+
+        .aegis-note {
+            padding: 14px;
+            color: rgba(237,247,243,0.68);
+            font-size: 0.78rem;
+            line-height: 1.55;
+        }
+
+        .aegis-note strong {
+            color: var(--text);
+        }
+
         .about-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -3219,6 +3406,7 @@
             .story-layout,
             .contact-panel,
             .signal-grid,
+            .aegis-case-card,
             .capability-atlas,
             .journey-legs {
                 grid-template-columns: 1fr;
@@ -3355,6 +3543,7 @@
             .github-metrics,
             .skill-domain-tabs,
             .atlas-domain-rail,
+            .aegis-architecture,
             .language-pill {
                 grid-template-columns: 1fr;
             }
@@ -4139,6 +4328,7 @@
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#signals">Signals</a></li>
+                <li><a href="#case-study">Case Study</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -4165,6 +4355,7 @@
         <div class="mobile-menu" id="mobile-menu">
             <a href="#about">About</a>
             <a href="#signals">Signals</a>
+            <a href="#case-study">Case Study</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
@@ -4440,6 +4631,77 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="case-study" class="case-study-section">
+            <div class="container">
+                <div class="section-heading reveal reveal-mask slow">
+                    <span class="terminal-command">open case-studies/aegis-evo.md</span>
+                    <h2>Technical Case Study</h2>
+                    <p>Project Aegis-Evo: securing autonomous software evolution with information-flow gating, structural code maps, and sandboxed execution.</p>
+                </div>
+
+                <article class="aegis-case-card reveal slow" aria-label="Project Aegis-Evo technical case study">
+                    <div class="aegis-main">
+                        <div class="terminal-bar">
+                            <span class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                            <span>aegis-evo.security-architecture</span>
+                        </div>
+                        <div class="aegis-eyebrow">Autonomous agents · sandbox security · codebase evolution</div>
+                        <h3>Project Aegis-Evo: secure autonomous software engineering runtime</h3>
+                        <p>
+                            A research-driven prototype and architecture blueprint for allowing AI developer agents to patch, compile, and test multi-file repositories without handing untrusted code a direct path to critical system tools.
+                        </p>
+                        <p>
+                            The design combines FIDES-style information-flow lattice middleware, AST-guided dependency mapping, and isolated gVisor/Firecracker-style runtimes to block cross-domain indirect prompt injection and container escape chains before they reach execution.
+                        </p>
+                        <figure class="aegis-flowchart">
+                            <img src="aegis-evo-flowchart.png" alt="Aegis-Evo architecture flowchart showing untrusted GitHub ingest flowing through FIDES middleware, an AST-guided multi-agent planner, a gVisor or Firecracker sandbox, compilation, and tests.">
+                            <figcaption>Updated architecture flow from the case study: untrusted ingest is labeled before the planner and only reaches execution through the sandbox path.</figcaption>
+                        </figure>
+                    </div>
+
+                    <aside class="aegis-side" aria-label="Aegis-Evo pilot results">
+                        <div class="aegis-metric">
+                            <strong>80%</strong>
+                            <span>multi-file evolution success in 10-task pilot</span>
+                        </div>
+                        <div class="aegis-metric">
+                            <strong>100%</strong>
+                            <span>active exploit prevention across 4 injected attacks</span>
+                        </div>
+                        <div class="aegis-metric">
+                            <strong>0</strong>
+                            <span>successful system breakouts under Aegis-Evo configuration</span>
+                        </div>
+                        <div class="aegis-metric">
+                            <strong>37.1s</strong>
+                            <span>average task resolution latency with FIDES + sandbox</span>
+                        </div>
+                        <div class="aegis-note">
+                            <strong>Scope note:</strong> this is presented as a feasibility pilot and systems architecture study, not a production security guarantee. The case study explicitly calls out limitations around heuristic taint tracking, implicit flows, and the need for larger benchmark validation.
+                        </div>
+                        <div class="aegis-architecture" aria-label="Aegis-Evo architecture components">
+                            <div class="aegis-node">
+                                <strong>FIDES gate</strong>
+                                <span>Labels untrusted ingest and blocks low-integrity data from write, compile, and test tools.</span>
+                            </div>
+                            <div class="aegis-node">
+                                <strong>AST planner</strong>
+                                <span>Maps imports and class hierarchies so the agent edits with structural context.</span>
+                            </div>
+                            <div class="aegis-node">
+                                <strong>Sandbox runner</strong>
+                                <span>Runs compilation and tests inside restricted gVisor-style isolated environments.</span>
+                            </div>
+                        </div>
+                        <div class="aegis-actions">
+                            <a class="btn btn-primary" href="file:///Users/snadimi3/Documents/Sai%20Portfolio/aegis-evo-case-study.pdf">Open Full Case Study</a>
+                            <a class="btn btn-secondary" href="./aegis-evo-case-study.pdf" download>Download PDF</a>
+                        </div>
+                    </aside>
+                </article>
             </div>
         </section>
 
@@ -5116,6 +5378,7 @@ caffeine: probable</pre>
         const sectionAccents = {
             about: "#0f6b5f",
             signals: "#2d9cdb",
+            "case-study": "#34d399",
             experience: "#f06449",
             skills: "#7357ff",
             education: "#2d9cdb",
