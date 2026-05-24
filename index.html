@@ -1146,12 +1146,15 @@
         .aegis-side {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-rows: auto auto auto auto auto minmax(170px, 1fr);
             gap: 12px;
             align-content: start;
+            height: 100%;
         }
 
         .aegis-side .aegis-architecture,
         .aegis-side .aegis-actions,
+        .aegis-readout,
         .aegis-note {
             grid-column: 1 / -1;
         }
@@ -1162,6 +1165,41 @@
 
         .aegis-side .aegis-actions {
             margin-top: 4px;
+        }
+
+        .aegis-download {
+            width: min(100%, 320px);
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b3d, #ffbd2e);
+            color: #071314;
+            box-shadow: 0 18px 34px rgba(240,100,73,0.34);
+        }
+
+        .aegis-readout {
+            border: 1px solid rgba(255,189,46,0.22);
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at 94% 14%, rgba(255,189,46,0.14), transparent 30%),
+                linear-gradient(145deg, rgba(15,38,38,0.9), rgba(4,14,15,0.88));
+            padding: clamp(22px, 2.4vw, 30px);
+            display: grid;
+            gap: 14px;
+            align-content: center;
+            min-height: 280px;
+        }
+
+        .aegis-readout strong {
+            color: var(--accent-4);
+            font-size: clamp(1.05rem, 1.55vw, 1.38rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .aegis-readout span {
+            display: block;
+            color: rgba(237,247,243,0.72);
+            font-size: clamp(1rem, 1.28vw, 1.18rem);
+            line-height: 1.55;
         }
 
         .aegis-metric {
@@ -3544,6 +3582,7 @@
             .skill-domain-tabs,
             .atlas-domain-rail,
             .aegis-architecture,
+            .aegis-side,
             .language-pill {
                 grid-template-columns: 1fr;
             }
@@ -4697,8 +4736,15 @@
                             </div>
                         </div>
                         <div class="aegis-actions">
-                            <a class="btn btn-primary" href="file:///Users/snadimi3/Documents/Sai%20Portfolio/aegis-evo-case-study.pdf">Open Full Case Study</a>
-                            <a class="btn btn-secondary" href="./aegis-evo-case-study.pdf" download>Download PDF</a>
+                            <a class="btn btn-primary aegis-download" href="file:///Users/snadimi3/Documents/Sai%20Portfolio/aegis-evo-case-study.pdf" type="application/pdf">Download PDF</a>
+                        </div>
+                        <div class="aegis-readout" aria-label="Case study contents">
+                            <strong>Inside the case study</strong>
+                            <span>&gt; threat model: prompt injection + escape paths</span>
+                            <span>&gt; architecture: FIDES lattice, AST planner, sandbox runner</span>
+                            <span>&gt; security tests: blocked exploit chains</span>
+                            <span>&gt; pilot results: success rate, latency, prevention</span>
+                            <span>&gt; honest limits: heuristic taint + benchmark scale</span>
                         </div>
                     </aside>
                 </article>
