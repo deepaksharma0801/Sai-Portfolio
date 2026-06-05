@@ -16,3 +16,4 @@ Upload the contents of this folder to any static host (GitHub Pages, Netlify, Ve
 ## Notes
 - If you rename your resume file, update the Resume button href in `index.html`.
 - The mobile nav toggle appears on small screens.
+- Have fun
