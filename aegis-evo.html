@@ -9,7 +9,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600;700&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=luxury-multipage-27" />
+    <link rel="stylesheet" href="styles.css?v=luxury-multipage-28" />
+    <noscript>
+        <style>
+            .luxury-reveal,
+            .luxury-reveal [data-stagger] > *,
+            .luxury-reveal .flowchart img,
+            .page-hero .eyebrow,
+            .page-hero h1,
+            .page-hero .lede,
+            .page-hero .action-row,
+            .page-hero .github-link {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        </style>
+    </noscript>
 </head>
 <body data-page="aegis-evo">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -40,13 +55,13 @@
                 <p class="section-kicker">Architecture</p>
                 <h2>Autonomy with a control plane.</h2>
                 <p>Aegis-Evo frames autonomous engineering as a governed loop: map the codebase, propose changes, validate in isolation, enforce policy, and only then promote outputs with traceable evidence.</p>
-                <div class="metric-grid" aria-label="Case study metrics">
+                <div class="metric-grid" aria-label="Case study metrics" data-stagger>
                     <div class="metric"><strong>85/100</strong><span>Evolution confidence score in the case study model.</span></div>
                     <div class="metric"><strong>100%</strong><span>Core constraint adherence in validation scenarios.</span></div>
                     <div class="metric"><strong>0</strong><span>Unauthorized paths accepted by the policy gateway.</span></div>
                 </div>
             </div>
-            <aside class="profile-grid" aria-label="Architecture modules">
+            <aside class="profile-grid" aria-label="Architecture modules" data-stagger>
                 <div class="profile-card"><strong>Structural Mapper</strong><span>Builds context from files, dependencies, and change surfaces.</span></div>
                 <div class="profile-card"><strong>Policy Gateway</strong><span>Filters unsafe or unauthorized actions before execution.</span></div>
                 <div class="profile-card"><strong>Sandbox Runner</strong><span>Tests proposed edits in an isolated validation environment.</span></div>
@@ -56,13 +71,13 @@
         <section class="page-section luxury-reveal" aria-labelledby="flow-heading">
             <p class="section-kicker" id="flow-heading">System Flow</p>
             <div class="flowchart">
-                <img src="aegis-evo-flowchart.png" alt="Aegis-Evo architecture flowchart showing autonomous evolution and sandboxed security stages" />
+                <img src="aegis-evo-flowchart.png" alt="Aegis-Evo architecture flowchart showing autonomous evolution and sandboxed security stages" loading="lazy" decoding="async" />
             </div>
         </section>
 
         <section class="page-section luxury-reveal">
             <p class="section-kicker">Case Study Notes</p>
-            <div class="timeline">
+            <div class="timeline" data-stagger>
                 <article class="timeline-item">
                     <p class="meta">Objective</p>
                     <div>
@@ -88,7 +103,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer luxury-reveal">
         <p>A focused technical spread for secure autonomous engineering research.</p>
         <div>
             <a href="aegis-evo-case-study.pdf">PDF</a>
@@ -96,6 +111,6 @@
             <a href="profile.html">Work</a>
         </div>
     </footer>
-    <script src="script.js?v=luxury-multipage-27"></script>
+    <script src="script.js?v=luxury-multipage-28"></script>
 </body>
 </html>

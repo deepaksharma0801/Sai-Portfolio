@@ -1,27 +1,33 @@
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const INTRO_KEY = "sdsn-intro-seen";
+let introSeen = false;
+try {
+    introSeen = sessionStorage.getItem(INTRO_KEY) === "1";
+} catch (error) {
+    introSeen = false;
+}
+
 const intro = document.getElementById("intro");
-if (intro) {
-    if (prefersReducedMotion) {
-        document.body.classList.remove("intro-sdsn", "intro-hello");
-        document.body.classList.add("intro-done");
-        intro.style.display = "none";
-    } else {
-        window.setTimeout(() => {
-            document.body.classList.remove("intro-sdsn");
-            document.body.classList.add("intro-hello");
-        }, 1120);
-
-        window.setTimeout(() => {
-            document.body.classList.add("intro-done");
-        }, 3380);
-
-        window.setTimeout(() => {
-            intro.style.display = "none";
-        }, 4300);
+if (intro && !prefersReducedMotion && !introSeen) {
+    try {
+        sessionStorage.setItem(INTRO_KEY, "1");
+    } catch (error) {
+        /* storage unavailable; intro simply replays */
     }
+
+    window.setTimeout(() => {
+        document.body.classList.remove("intro-sdsn");
+        document.body.classList.add("intro-done");
+    }, 1450);
+
+    window.setTimeout(() => {
+        intro.style.display = "none";
+    }, 2350);
 } else {
+    document.body.classList.remove("intro-sdsn");
     document.body.classList.add("intro-done");
+    if (intro) intro.style.display = "none";
 }
 
 const navToggle = document.querySelector(".nav-toggle");
@@ -33,6 +39,12 @@ if (navToggle) {
     });
 }
 
+const closeNav = () => {
+    document.body.classList.remove("nav-open");
+    navToggle?.setAttribute("aria-expanded", "false");
+    navToggle?.setAttribute("aria-label", "Open navigation");
+};
+
 document.querySelectorAll(".site-nav a").forEach(link => {
     const page = document.body.dataset.page;
     const href = link.getAttribute("href") || "";
@@ -40,28 +52,11 @@ document.querySelectorAll(".site-nav a").forEach(link => {
         link.setAttribute("aria-current", "page");
     }
 
-    link.addEventListener("click", () => {
-        document.body.classList.remove("nav-open");
-        navToggle?.setAttribute("aria-expanded", "false");
-        navToggle?.setAttribute("aria-label", "Open navigation");
-    });
+    link.addEventListener("click", closeNav);
 });
 
 document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-        document.body.classList.remove("nav-open");
-        navToggle?.setAttribute("aria-expanded", "false");
-        navToggle?.setAttribute("aria-label", "Open navigation");
-    }
-});
-
-document.querySelectorAll(".credential-card").forEach(card => {
-    card.addEventListener("click", event => {
-        const href = card.getAttribute("href");
-        if (!href) return;
-        event.preventDefault();
-        window.location.href = href;
-    });
+    if (event.key === "Escape") closeNav();
 });
 
 const revealItems = document.querySelectorAll(".luxury-reveal");
@@ -74,7 +69,7 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
             entry.target.classList.add("is-visible");
             observer.unobserve(entry.target);
         });
-    }, { threshold: 0.16 });
+    }, { threshold: 0.14, rootMargin: "0px 0px -6% 0px" });
 
     revealItems.forEach(item => observer.observe(item));
 }

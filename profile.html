@@ -9,7 +9,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600;700&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=luxury-multipage-27" />
+    <link rel="stylesheet" href="styles.css?v=luxury-multipage-28" />
+    <noscript>
+        <style>
+            .luxury-reveal,
+            .luxury-reveal [data-stagger] > *,
+            .page-hero .eyebrow,
+            .page-hero h1,
+            .page-hero .lede,
+            .page-hero .action-row,
+            .page-hero .github-link {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        </style>
+    </noscript>
 </head>
 <body data-page="profile">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -36,7 +50,7 @@
                 <p class="section-kicker" id="experience-heading">Experience</p>
                 <p>Actual resume roles, tightened into recruiter-readable proof points.</p>
             </div>
-            <div class="experience-grid">
+            <div class="experience-grid" data-stagger>
                 <article class="experience-panel">
                     <div class="experience-brand">
                         <span class="org-mark org-mark-asu" aria-label="ASU">ASU</span>
@@ -131,7 +145,7 @@
                     <a class="button ghost" href="mailto:deepak.nadiminti@gmail.com">Contact</a>
                 </div>
             </div>
-            <aside class="profile-grid" aria-label="Work highlights">
+            <aside class="profile-grid" aria-label="Work highlights" data-stagger>
                 <div class="profile-card"><strong>Current</strong><span>Strategic Marketing Analyst at ASU Knowledge Enterprise.</span></div>
                 <div class="profile-card"><strong>Graduate</strong><span>MS Data Science at ASU, GPA 3.8/4.0.</span></div>
                 <div class="profile-card"><strong>Research</strong><span>Vision classification, cloud scheduling, and model optimization.</span></div>
@@ -140,7 +154,7 @@
 
         <section class="page-section luxury-reveal" aria-labelledby="skills-heading">
             <p class="section-kicker" id="skills-heading">Capabilities</p>
-            <div class="capability-grid">
+            <div class="capability-grid" data-stagger>
                 <div class="capability"><strong>AI Systems</strong><span>LLMs, NLP, RAG, automation, evaluation, and secure applied workflows.</span></div>
                 <div class="capability"><strong>Machine Learning</strong><span>TensorFlow, PyTorch, Scikit-Learn, OpenCV, XGBoost, forecasting, and CV.</span></div>
                 <div class="capability"><strong>Data Products</strong><span>Power BI, Tableau, SQL, ETL, EDA, A/B testing, KPIs, and storytelling.</span></div>
@@ -153,7 +167,7 @@
                 <p class="section-kicker" id="credential-heading">Credentials</p>
                 <p>Verified foundations from the resume, kept minimal and clickable.</p>
             </div>
-            <div class="certification-grid">
+            <div class="certification-grid" data-stagger>
                 <a class="cert-card" href="https://learn.microsoft.com/en-us/users/NSDeepakSharma-5841/credentials/FE0ED9E50D56A40D?ref=https%3a%2f%2fwww.linkedin.com%2f">
                     <span class="logo-mark microsoft-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
                     <span><strong>Microsoft Certified: Azure AI Fundamentals</strong><em>Credential ID FE0ED9E50D56A40D</em></span>
@@ -175,7 +189,7 @@
 
         <section class="page-section luxury-reveal" aria-labelledby="education-heading">
             <p class="section-kicker" id="education-heading">Education</p>
-            <div class="timeline">
+            <div class="timeline" data-stagger>
                 <article class="timeline-item">
                     <p class="meta">2024 - 2026</p>
                     <div>
@@ -194,7 +208,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer luxury-reveal">
         <p>Available for AI/data roles, collaborations, and applied research conversations.</p>
         <div>
             <a href="mailto:deepak.nadiminti@gmail.com">Email</a>
@@ -202,6 +216,6 @@
             <a href="work.html">Projects</a>
         </div>
     </footer>
-    <script src="script.js?v=luxury-multipage-27"></script>
+    <script src="script.js?v=luxury-multipage-28"></script>
 </body>
 </html>
