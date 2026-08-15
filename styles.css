@@ -23,34 +23,6 @@
     --stagger: 70ms;
 }
 
-/* Cross-document page transitions: progressive enhancement, no delay elsewhere. */
-@view-transition {
-    navigation: auto;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    ::view-transition-old(root) {
-        animation: vt-out 0.16s ease both;
-    }
-
-    ::view-transition-new(root) {
-        animation: vt-in 0.3s var(--ease-out) both;
-    }
-
-    .site-header {
-        view-transition-name: site-header;
-    }
-}
-
-@keyframes vt-out {
-    to { opacity: 0; }
-}
-
-@keyframes vt-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
-}
-
 * {
     box-sizing: border-box;
 }
@@ -127,114 +99,89 @@ img {
     top: 18px;
 }
 
-.intro {
+/* ---------------------------------------------------------------------------
+   Loading / transition screen (Snellenberg anatomy):
+   a fixed panel with convex curved edges made from oversized rounded divs in
+   overflow-hidden wraps. Reused for the hello preloader and page transitions.
+   Hidden by default; html.is-loading / html.is-arriving (stamped by the inline
+   head script before first paint) start it covering the page.
+--------------------------------------------------------------------------- */
+.loading-screen {
     position: fixed;
     inset: 0;
     z-index: 100;
     display: grid;
     place-items: center;
-    background: #030303;
+    background: #101014;
     pointer-events: none;
+    visibility: hidden;
+    transform: translateY(100%);
+}
+
+html.is-loading .loading-screen,
+html.is-arriving .loading-screen {
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.rounded-div-wrap {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10vh;
     overflow: hidden;
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 0.82s var(--ease-inout), opacity 0.45s ease;
-}
-
-.intro::before {
-    content: "";
-    position: absolute;
-    inset: 0;
     pointer-events: none;
-    background:
-        linear-gradient(90deg, transparent 0 18%, rgba(215, 181, 109, 0.08) 18.2%, transparent 18.5% 48%, rgba(245, 240, 232, 0.06) 48.2%, transparent 48.5%),
-        linear-gradient(180deg, transparent, rgba(245, 240, 232, 0.035), transparent);
-    transform: translateX(-18%);
-    animation: intro-grid-scan 1.05s var(--ease-out) both;
 }
 
-body.intro-done .intro {
-    clip-path: inset(0 0 100% 0);
-    opacity: 0;
+.rounded-div-wrap.top {
+    top: 0;
+    transform: translateY(-99%);
 }
 
-.intro-frame {
-    display: grid;
-    gap: 14px;
-    place-items: center;
-    width: min(560px, calc(100vw - 48px));
-    padding: clamp(42px, 8vw, 78px);
-    border: 1px solid rgba(245, 240, 232, 0.16);
-    position: relative;
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition: opacity 0.45s ease, transform 0.65s var(--ease-out);
+.rounded-div-wrap.bottom {
+    bottom: 0;
+    transform: translateY(99%);
 }
 
-.intro-frame::before,
-.intro-frame::after {
-    content: "";
+.rounded-div {
     position: absolute;
-    inset: 18px;
-    border: 1px solid rgba(215, 181, 109, 0.12);
+    left: -10%;
+    width: 120%;
+    height: 750px;
+    background: #101014;
+    border-radius: 50%;
 }
 
-.intro-frame::after {
-    inset: auto 18px 18px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    animation: title-scan 0.8s ease forwards;
+.rounded-div-wrap.top .rounded-div {
+    top: 0;
 }
 
-.intro-frame i {
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    border: 1px solid rgba(215, 181, 109, 0.55);
-    opacity: 0;
-    animation: intro-tick 0.8s ease forwards;
+.rounded-div-wrap.bottom .rounded-div {
+    bottom: 0;
 }
 
-.intro-frame i:nth-child(1) { left: 18px; top: 18px; animation-delay: 0.08s; }
-.intro-frame i:nth-child(2) { right: 18px; top: 18px; animation-delay: 0.16s; }
-.intro-frame i:nth-child(3) { right: 18px; bottom: 18px; animation-delay: 0.24s; }
-
-.intro-frame span {
-    font-family: var(--mono);
-    font-size: clamp(3rem, 10vw, 7rem);
-    font-weight: 700;
-    letter-spacing: 0.24em;
-    padding-left: 0.24em;
-    line-height: 0.9;
-    clip-path: inset(0 48% 0 48%);
-    animation: title-open 0.75s var(--ease-out) forwards;
+.loading-words {
+    display: flex;
+    align-items: center;
+    gap: 0.32em;
+    color: var(--ivory);
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    font-weight: 500;
+    line-height: 1;
 }
 
-.intro-frame small {
-    color: var(--dim);
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
+.loading-words .dot {
+    width: 0.22em;
+    height: 0.22em;
+    border-radius: 50%;
+    background: var(--ivory);
+    align-self: center;
+    margin-top: 0.18em;
 }
 
-@keyframes title-open {
-    to { clip-path: inset(0 0 0 0); }
-}
-
-@keyframes title-scan {
-    from { transform: scaleX(0); opacity: 0; }
-    to { transform: scaleX(1); opacity: 1; }
-}
-
-@keyframes intro-grid-scan {
-    from { opacity: 0; transform: translateX(-18%); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes intro-tick {
-    0% { opacity: 0; transform: scale(0.5); }
-    35%, 80% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0.38; }
+.loading-word {
+    display: block;
+    min-height: 1em;
 }
 
 .site-header {
@@ -401,8 +348,14 @@ main {
     width: min(220px, 42%);
     height: 1px;
     background: linear-gradient(90deg, var(--gold), transparent);
-    transform: scaleX(0);
+    transform: scaleX(1);
     transform-origin: left;
+    transition: transform 1s var(--ease-out) 0.7s;
+}
+
+html.has-motion body:not(.hero-done) .home-copy h1::after {
+    transform: scaleX(0);
+    transition: none;
 }
 
 .home-position {
@@ -484,28 +437,48 @@ main {
     transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
 }
 
+/* Pill fill: a circle rises from below the pill and floods it on hover. */
+.button {
+    --fill: var(--ivory);
+    --ink-hover: var(--black);
+    transition: color 0.35s var(--ease-out), border-color 0.35s ease;
+}
+
 .button::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background: linear-gradient(110deg, transparent 14%, rgba(245, 240, 232, 0.18), transparent 86%);
-    transform: translateX(-120%);
-    transition: transform 0.55s ease;
+    left: -12%;
+    top: 108%;
+    width: 124%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: var(--fill);
+    transition: top 0.5s var(--ease-out);
+    z-index: 1;
 }
 
-.button:hover::before {
-    transform: translateX(120%);
+.button > span {
+    position: relative;
+    z-index: 2;
 }
 
-.button:hover {
-    transform: translateY(-2px);
-    border-color: rgba(215, 181, 109, 0.52);
+.button:hover::before,
+.button:focus-visible::before {
+    top: -60%;
+}
+
+.button:hover,
+.button:focus-visible {
+    color: var(--ink-hover);
+    border-color: var(--ivory);
 }
 
 .button.primary {
     background: var(--ivory);
     border-color: var(--ivory);
     color: var(--black);
+    --fill: #141416;
+    --ink-hover: var(--ivory);
 }
 
 .button.ghost {
@@ -1076,22 +1049,79 @@ main {
     color: var(--gold);
 }
 
+/* ---------------------------------------------------------------------------
+   Footer: big closing CTA (Snellenberg-style) + meta row.
+--------------------------------------------------------------------------- */
 .site-footer {
     width: min(100% - 8vw, var(--max));
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 30px 0 46px;
+    padding: clamp(76px, 11vw, 150px) 0 40px;
     border-top: 1px solid var(--line);
 }
 
-.site-footer div {
+.footer-cta {
+    display: grid;
+    gap: clamp(20px, 3vw, 34px);
+    padding-bottom: clamp(52px, 8vw, 110px);
+}
+
+.footer-title {
+    margin: 0;
+    color: var(--ivory);
+    font-size: clamp(3.2rem, 9vw, 9.5rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: 0;
+}
+
+.footer-title span {
+    display: block;
+}
+
+.footer-title .footer-title-accent {
+    color: rgba(245, 240, 232, 0.72);
+}
+
+.footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.button.pill-lg {
+    min-height: 58px;
+    padding: 16px 30px;
+    font-size: 0.82rem;
+}
+
+.footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px 24px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line-soft);
+}
+
+.footer-meta p {
+    margin: 0;
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.footer-links {
     display: flex;
     gap: 18px;
 }
 
-.site-footer a {
+.site-footer a:not(.button) {
     color: var(--platinum);
     font-family: var(--mono);
     font-size: 0.72rem;
@@ -1102,7 +1132,7 @@ main {
     transition: color var(--dur-fast) ease;
 }
 
-.site-footer a::after {
+.site-footer a:not(.button)::after {
     content: "";
     position: absolute;
     left: 0;
@@ -1115,18 +1145,12 @@ main {
     transition: transform var(--dur-fast) var(--ease-out);
 }
 
-.site-footer a:hover::after,
-.site-footer a:focus-visible::after {
+.site-footer a:not(.button):hover::after,
+.site-footer a:not(.button):focus-visible::after {
     transform: scaleX(1);
 }
 
-.site-footer a.footer-github {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.site-footer a:hover {
+.site-footer a:not(.button):hover {
     color: var(--gold);
 }
 
@@ -1589,105 +1613,110 @@ main {
     }
 }
 
-body.home-page:not(.intro-done) .home-hero .eyebrow,
-body.home-page:not(.intro-done) .home-hero h1,
-body.home-page:not(.intro-done) .home-hero .home-position,
-body.home-page:not(.intro-done) .home-hero .signal-strip,
-body.home-page:not(.intro-done) .home-hero .home-note,
-body.home-page:not(.intro-done) .home-hero .action-row,
-body.home-page:not(.intro-done) .home-hero .scroll-cue,
-body.home-page:not(.intro-done) .home-hero .home-media {
-    opacity: 0;
-}
-
-body.intro-done .home-hero.is-visible .eyebrow,
-body.intro-done .home-hero.is-visible h1,
-body.intro-done .home-hero.is-visible .home-position,
-body.intro-done .home-hero.is-visible .signal-strip,
-body.intro-done .home-hero.is-visible .home-note,
-body.intro-done .home-hero.is-visible .action-row,
-body.intro-done .home-hero.is-visible .scroll-cue,
-body.intro-done .home-hero.is-visible .home-media {
-    animation: hero-rise 0.9s var(--ease-out) both;
-}
-
-body.intro-done .home-hero.is-visible h1 { animation-delay: 0.06s; }
-body.intro-done .home-hero.is-visible .home-position { animation-delay: 0.16s; }
-body.intro-done .home-hero.is-visible .signal-strip { animation-delay: 0.24s; }
-body.intro-done .home-hero.is-visible .home-note { animation-delay: 0.3s; }
-body.intro-done .home-hero.is-visible .action-row { animation-delay: 0.38s; }
-body.intro-done .home-hero.is-visible .scroll-cue { animation-delay: 0.46s; }
-body.intro-done .home-hero.is-visible .home-media { animation-delay: 0.2s; }
-
-body.intro-done .home-hero.is-visible .home-portrait img {
-    animation: portrait-settle 1.35s var(--ease-out) 0.18s backwards;
-}
-
-body.intro-done .home-hero.is-visible h1::after {
-    animation: name-rule 0.9s var(--ease-out) 0.56s forwards;
-}
-
-@keyframes hero-rise {
-    from {
-        opacity: 0;
-        transform: translateY(18px);
-        clip-path: inset(8% 0 0 0);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        clip-path: inset(0 0 0 0);
-    }
-}
-
-@keyframes portrait-settle {
-    from { transform: scale(1.1); }
-    to { transform: scale(1.025); }
-}
-
-@keyframes name-rule {
-    to { transform: scaleX(1); }
-}
-
-/* Sub-page hero entrance: eyebrow -> masked title -> lede -> actions.
-   Heroes carry their own child choreography, so the section itself doesn't slide. */
+/* Heroes carry their own child choreography (motion.js when active), so the
+   section itself doesn't slide. When motion.js runs it stamps html.has-motion
+   and owns hero entrances, image transforms, and marquee playback via GSAP. */
 .home-hero.luxury-reveal,
 .page-hero.luxury-reveal {
     transform: none;
 }
 
-.page-hero.luxury-reveal:not(.is-visible) :is(.eyebrow, h1, .lede, .action-row, .github-link) {
+html.has-motion :is(.home-hero, .page-hero).luxury-reveal {
+    opacity: 1;
+    transition: none;
+}
+
+/* Line-split masks (built by motion.js). CSS default is the resting state so
+   content is fully visible if motion.js never runs. */
+.line-mask {
+    display: block;
+    overflow: hidden;
+    /* Tight display line-heights (0.82-0.9) clip descenders inside an
+       overflow-hidden mask; pad and pull back so layout stays identical. */
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+}
+
+.line-mask .line-inner {
+    display: block;
+    will-change: transform;
+}
+
+/* ---------------------------------------------------------------------------
+   Award layer (motion.js): link rolls, cursor, GSAP ownership gates, Lenis.
+--------------------------------------------------------------------------- */
+
+/* Label roll: motion.js duplicates the label; hover slides both copies up. */
+.roll {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.roll > span {
+    display: block;
+    transition: transform 0.45s var(--ease-out);
+}
+
+.roll > span:nth-child(2) {
+    position: absolute;
+    inset: 0;
+    transform: translateY(102%);
+}
+
+a:hover .roll > span:first-child,
+a:focus-visible .roll > span:first-child {
+    transform: translateY(-102%);
+}
+
+a:hover .roll > span:nth-child(2),
+a:focus-visible .roll > span:nth-child(2) {
+    transform: translateY(0);
+}
+
+/* Custom cursor dot: GSAP-driven, fine pointers only, native cursor kept. */
+.cursor-dot {
+    position: fixed;
+    top: -5px;
+    left: -5px;
+    z-index: 300;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
     opacity: 0;
 }
 
-.page-hero.is-visible .eyebrow {
-    animation: hero-rise 0.7s var(--ease-out) backwards;
+/* GSAP owns transforms on these while motion.js is active; keep CSS filter
+   hovers but drop CSS transform animations/transitions so they don't fight. */
+html.has-motion :is(.image-frame img, .home-portrait img) {
+    animation: none !important;
+    transition: filter 0.8s ease;
 }
 
-.page-hero.is-visible h1 {
-    animation: masked-rise 0.85s var(--ease-out) 0.08s backwards;
+html.has-motion .skill-track {
+    animation: none;
 }
 
-.page-hero.is-visible .lede {
-    animation: hero-rise 0.7s var(--ease-out) 0.22s backwards;
+/* Lenis recommended defaults */
+html.lenis,
+html.lenis body {
+    height: auto;
 }
 
-.page-hero.is-visible .action-row,
-.page-hero.is-visible .github-link {
-    animation: hero-rise 0.7s var(--ease-out) 0.34s backwards;
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
 }
 
-@keyframes masked-rise {
-    from {
-        opacity: 0;
-        clip-path: inset(-20% 0 100% 0);
-        transform: translateY(0.14em);
-    }
-    to {
-        opacity: 1;
-        clip-path: inset(-20% 0 -20% 0);
-        transform: translateY(0);
-    }
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
 }
 
 @media (max-width: 900px) {
@@ -1807,8 +1836,9 @@ body.intro-done .home-hero.is-visible h1::after {
         gap: 8px;
     }
 
-    .site-footer {
-        display: grid;
+    .footer-meta {
+        align-items: start;
+        flex-direction: column;
     }
 
     .page-hero h1,
@@ -1909,8 +1939,12 @@ body.intro-done .home-hero.is-visible h1::after {
         scroll-behavior: auto !important;
     }
 
-    .intro {
-        display: none;
+    .loading-screen {
+        display: none !important;
+    }
+
+    .cursor-dot {
+        display: none !important;
     }
 
     .skill-track {
@@ -1952,8 +1986,11 @@ body.intro-done .home-hero.is-visible h1::after {
         transform: none;
     }
 
-    .luxury-reveal:not(.is-visible) [data-stagger] > *,
-    .page-hero.luxury-reveal:not(.is-visible) :is(.eyebrow, h1, .lede, .action-row, .github-link) {
+    .luxury-reveal:not(.is-visible) [data-stagger] > * {
         opacity: 1;
+    }
+
+    html.has-motion body:not(.hero-done) .home-copy h1::after {
+        transform: scaleX(1);
     }
 }

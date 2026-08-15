@@ -14,35 +14,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600;700&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=luxury-multipage-28" />
+    <script>
+        (function () {
+            var d = document.documentElement;
+            var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var arriving = false;
+            try { arriving = !!sessionStorage.getItem("sdsn-transition"); } catch (e) {}
+            if (arriving) d.classList.add("is-arriving");
+            else if (!reduced) d.classList.add("is-loading");
+            setTimeout(function () { d.classList.remove("is-arriving", "is-loading"); }, 4000);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=award-29" />
     <noscript>
         <style>
-            .intro { display: none; }
+            .loading-screen { display: none !important; }
             .luxury-reveal,
-            .luxury-reveal [data-stagger] > *,
-            .home-hero .eyebrow,
-            .home-hero h1,
-            .home-hero .home-position,
-            .home-hero .signal-strip,
-            .home-hero .home-note,
-            .home-hero .action-row,
-            .home-hero .scroll-cue,
-            .home-hero .home-media {
+            .luxury-reveal [data-stagger] > * {
                 opacity: 1 !important;
                 transform: none !important;
             }
         </style>
     </noscript>
 </head>
-<body class="home-page intro-sdsn">
-    <div class="intro" id="intro" aria-hidden="true">
-        <div class="intro-frame">
-            <i></i>
-            <i></i>
-            <i></i>
-            <span>SDSN</span>
-            <small>AI / DATA / SYSTEMS</small>
+<body class="home-page">
+    <div class="loading-screen" aria-hidden="true">
+        <div class="rounded-div-wrap top"><div class="rounded-div"></div></div>
+        <div class="loading-words">
+            <span class="loading-word">Hello</span>
+            <span class="dot"></span>
         </div>
+        <div class="rounded-div-wrap bottom"><div class="rounded-div"></div></div>
     </div>
 
     <a class="skip-link" href="#main">Skip to content</a>
@@ -75,10 +77,10 @@
                     I work across secure retrieval, visual intelligence, predictive analytics, and data storytelling. My focus is building tools that feel calm to use, but rigorous underneath.
                 </p>
                 <div class="action-row">
-                    <a class="button primary" href="work.html">View Projects</a>
-                    <a class="button" href="profile.html">Work</a>
-                    <a class="button" href="aegis-evo.html">Case Study</a>
-                    <a class="button ghost" href="resume_new.pdf">Resume</a>
+                    <a class="button primary" href="work.html"><span>View Projects</span></a>
+                    <a class="button" href="profile.html"><span>Work</span></a>
+                    <a class="button" href="aegis-evo.html"><span>Case Study</span></a>
+                    <a class="button ghost" href="resume_new.pdf"><span>Resume</span></a>
                     <a class="github-icon-link" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer" aria-label="Open GitHub profile">
                         <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                             <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.86 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.9-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.56 2.35 1.11 2.92.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05A9.32 9.32 0 0 1 12 6.9c.85 0 1.7.12 2.5.34 1.9-1.32 2.74-1.05 2.74-1.05.55 1.41.21 2.45.1 2.71.65.72 1.03 1.63 1.03 2.75 0 3.92-2.34 4.78-4.57 5.04.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.05 10.05 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" />
@@ -243,14 +245,29 @@
     </main>
 
     <footer class="site-footer luxury-reveal">
-        <p>Open to roles and collaborations in applied AI, data products, and analytics.</p>
-        <div>
-            <a href="mailto:deepak.nadiminti@gmail.com">Email</a>
-            <a href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">GitHub</a>
+        <div class="footer-cta">
+            <p class="eyebrow">Open to roles &amp; collaborations</p>
+            <h2 class="footer-title"><span>Let's work</span><span class="footer-title-accent">together.</span></h2>
+            <div class="footer-actions">
+                <a class="button primary pill-lg" href="mailto:deepak.nadiminti@gmail.com"><span>Get in touch</span></a>
+                <a class="button" href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer"><span>LinkedIn</span></a>
+                <a class="button" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer"><span>GitHub</span></a>
+            </div>
+        </div>
+        <div class="footer-meta">
+            <p>© 2026 Sai Deepak Sharma Nadiminty</p>
+            <div class="footer-links">
+                <a href="work.html">Projects</a>
+                <a href="profile.html">Work</a>
+                <a href="aegis-evo.html">Aegis-Evo</a>
+            </div>
         </div>
     </footer>
 
-    <script src="script.js?v=luxury-multipage-28"></script>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/vendor/ScrollTrigger.min.js"></script>
+    <script src="assets/vendor/lenis.min.js"></script>
+    <script src="script.js?v=award-29"></script>
+    <script src="motion.js?v=award-29"></script>
 </body>
 </html>

@@ -1,35 +1,5 @@
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const INTRO_KEY = "sdsn-intro-seen";
-let introSeen = false;
-try {
-    introSeen = sessionStorage.getItem(INTRO_KEY) === "1";
-} catch (error) {
-    introSeen = false;
-}
-
-const intro = document.getElementById("intro");
-if (intro && !prefersReducedMotion && !introSeen) {
-    try {
-        sessionStorage.setItem(INTRO_KEY, "1");
-    } catch (error) {
-        /* storage unavailable; intro simply replays */
-    }
-
-    window.setTimeout(() => {
-        document.body.classList.remove("intro-sdsn");
-        document.body.classList.add("intro-done");
-    }, 1450);
-
-    window.setTimeout(() => {
-        intro.style.display = "none";
-    }, 2350);
-} else {
-    document.body.classList.remove("intro-sdsn");
-    document.body.classList.add("intro-done");
-    if (intro) intro.style.display = "none";
-}
-
 const navToggle = document.querySelector(".nav-toggle");
 if (navToggle) {
     navToggle.addEventListener("click", () => {

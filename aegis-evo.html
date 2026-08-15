@@ -9,17 +9,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600;700&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=luxury-multipage-28" />
+    <script>
+        (function () {
+            var d = document.documentElement;
+            try {
+                if (sessionStorage.getItem("sdsn-transition")) d.classList.add("is-arriving");
+            } catch (e) {}
+            setTimeout(function () { d.classList.remove("is-arriving"); }, 4000);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=award-29" />
     <noscript>
         <style>
+            .loading-screen { display: none !important; }
             .luxury-reveal,
             .luxury-reveal [data-stagger] > *,
-            .luxury-reveal .flowchart img,
-            .page-hero .eyebrow,
-            .page-hero h1,
-            .page-hero .lede,
-            .page-hero .action-row,
-            .page-hero .github-link {
+            .luxury-reveal .flowchart img {
                 opacity: 1 !important;
                 transform: none !important;
             }
@@ -27,6 +32,14 @@
     </noscript>
 </head>
 <body data-page="aegis-evo">
+    <div class="loading-screen" aria-hidden="true">
+        <div class="rounded-div-wrap top"><div class="rounded-div"></div></div>
+        <div class="loading-words">
+            <span class="loading-word"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="rounded-div-wrap bottom"><div class="rounded-div"></div></div>
+    </div>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
         <a class="brand" href="index.html" aria-label="SDSN home">SDSN</a>
@@ -45,8 +58,8 @@
             <h1>Aegis-Evo</h1>
             <p class="lede">A sandboxed autonomous software-evolution concept designed around one hard question: how can AI modify code continuously while respecting security boundaries, auditability, and operational control?</p>
             <div class="action-row">
-                <a class="button primary" href="aegis-evo-case-study.pdf">Read PDF</a>
-                <a class="button" href="work.html">Back to Projects</a>
+                <a class="button primary" href="aegis-evo-case-study.pdf"><span>Read PDF</span></a>
+                <a class="button" href="work.html"><span>Back to Projects</span></a>
             </div>
         </section>
 
@@ -104,13 +117,28 @@
     </main>
 
     <footer class="site-footer luxury-reveal">
-        <p>A focused technical spread for secure autonomous engineering research.</p>
-        <div>
-            <a href="aegis-evo-case-study.pdf">PDF</a>
-            <a href="mailto:deepak.nadiminti@gmail.com">Email</a>
-            <a href="profile.html">Work</a>
+        <div class="footer-cta">
+            <p class="eyebrow">Open to roles &amp; collaborations</p>
+            <h2 class="footer-title"><span>Let's work</span><span class="footer-title-accent">together.</span></h2>
+            <div class="footer-actions">
+                <a class="button primary pill-lg" href="mailto:deepak.nadiminti@gmail.com"><span>Get in touch</span></a>
+                <a class="button" href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer"><span>LinkedIn</span></a>
+                <a class="button" href="aegis-evo-case-study.pdf"><span>Case Study PDF</span></a>
+            </div>
+        </div>
+        <div class="footer-meta">
+            <p>© 2026 Sai Deepak Sharma Nadiminty</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="work.html">Projects</a>
+                <a href="profile.html">Work</a>
+            </div>
         </div>
     </footer>
-    <script src="script.js?v=luxury-multipage-28"></script>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/vendor/ScrollTrigger.min.js"></script>
+    <script src="assets/vendor/lenis.min.js"></script>
+    <script src="script.js?v=award-29"></script>
+    <script src="motion.js?v=award-29"></script>
 </body>
 </html>
