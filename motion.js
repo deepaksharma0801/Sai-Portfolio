@@ -208,7 +208,9 @@
         gsap.set([heroParts.h1, ...heroParts.splitTargets].filter(Boolean), { autoAlpha: 0 });
         gsap.set(heroParts.fades, { opacity: 0, y: 26 });
         if (heroParts.portrait) {
-            gsap.set(heroParts.portrait, { clipPath: "inset(0 0 100% 0)" });
+            /* The blended portrait fades in; a wipe would drag a hard edge
+               across its soft mask. */
+            gsap.set(heroParts.portrait, { autoAlpha: 0 });
             gsap.set(heroParts.portraitImg, { scale: 1.3 });
         }
     }
@@ -224,11 +226,88 @@
         const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
         tl.to(lines, { yPercent: 0, duration: 1.15, stagger: 0.09 }, 0.05)
             .to(heroParts.fades, { opacity: 1, y: 0, duration: 0.85, stagger: 0.07 }, 0.32);
+        const heroEyebrow = document.querySelector(".home-hero .eyebrow, .page-hero .eyebrow");
+        if (heroEyebrow) tl.add(() => scrambleEl(heroEyebrow), 0.4);
         if (heroParts.portrait) {
-            tl.to(heroParts.portrait, { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "power3.inOut" }, 0.25)
-                .to(heroParts.portraitImg, { scale: 1.12, duration: 1.5, ease: "power3.out" }, 0.45);
+            tl.to(heroParts.portrait, { autoAlpha: 1, duration: 1.25, ease: "power2.out" }, 0.3)
+                .to(heroParts.portraitImg, { scale: 1.12, duration: 1.6, ease: "power3.out" }, 0.4);
         }
         return tl;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Label decode: mono kickers scramble into place on reveal            */
+    /* ------------------------------------------------------------------ */
+
+    const SCRAMBLE_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/·+";
+
+    function scrambleEl(el, duration = 0.75) {
+        if (!el || el.dataset.decoded === "done") return;
+        el.dataset.decoded = "done";
+        const finalText = el.textContent.trim().replace(/\s+/g, " ");
+        if (!finalText) return;
+        /* Screen readers keep the real label; the scrambling copy is hidden. */
+        el.setAttribute("aria-label", finalText);
+        const span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        el.textContent = "";
+        el.appendChild(span);
+        const proxy = { p: 0 };
+        gsap.to(proxy, {
+            p: 1,
+            duration,
+            ease: "power2.out",
+            onUpdate() {
+                const settled = Math.floor(proxy.p * finalText.length);
+                let out = finalText.slice(0, settled);
+                for (let i = settled; i < finalText.length; i += 1) {
+                    const ch = finalText[i];
+                    out += ch === " " ? " " : SCRAMBLE_GLYPHS[(Math.random() * SCRAMBLE_GLYPHS.length) | 0];
+                }
+                span.textContent = out;
+            },
+            onComplete() { span.textContent = finalText; }
+        });
+    }
+
+    function initDecodes() {
+        if (!window.ScrollTrigger) return;
+        gsap.utils.toArray(".section-kicker, .eyebrow").forEach(el => {
+            /* Hero eyebrows are choreographed inside playHero instead. */
+            if (el.closest(".home-hero, .page-hero")) return;
+            window.ScrollTrigger.create({
+                trigger: el,
+                start: "top 92%",
+                once: true,
+                onEnter: () => scrambleEl(el)
+            });
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Cursor glow inside cards                                            */
+    /* ------------------------------------------------------------------ */
+
+    function initGlow() {
+        if (!finePointer) return;
+        const hosts = gsap.utils.toArray(
+            ".work-item, .experience-panel, .capability, .cert-card, .credential-card"
+        );
+        if (!hosts.length) return;
+        hosts.forEach(host => {
+            host.classList.add("glow-host");
+            const glow = document.createElement("i");
+            glow.className = "glow";
+            glow.setAttribute("aria-hidden", "true");
+            host.appendChild(glow);
+        });
+        document.addEventListener("pointermove", e => {
+            const host = e.target.closest(".glow-host");
+            if (!host) return;
+            const r = host.getBoundingClientRect();
+            host.style.setProperty("--mx", `${e.clientX - r.left}px`);
+            host.style.setProperty("--my", `${e.clientY - r.top}px`);
+        }, { passive: true });
     }
 
     /* ------------------------------------------------------------------ */
@@ -407,6 +486,7 @@
     function initLenis() {
         if (!window.Lenis) return;
         lenis = new window.Lenis({ lerp: 0.1 });
+        window.__lenis = lenis;
         lenis.on("scroll", e => {
             if (window.ScrollTrigger) window.ScrollTrigger.update();
             marqueeVelocity(e.velocity || 0);
@@ -480,6 +560,8 @@
     initTransitions();
     initScrollReveals();
     initImages();
+    initDecodes();
+    initGlow();
 
     if (docEl.classList.contains("is-loading") && screen) {
         playHello(playHero);
@@ -498,7 +580,7 @@
         const targets = [heroParts.h1, ...heroParts.splitTargets, ...heroParts.fades].filter(Boolean);
         if (targets.length) gsap.set(targets, { clearProps: "opacity,visibility,transform" });
         gsap.utils.toArray(".line-inner").forEach(el => gsap.set(el, { yPercent: 0 }));
-        if (heroParts.portrait) gsap.set(heroParts.portrait, { clearProps: "clipPath" });
+        if (heroParts.portrait) gsap.set(heroParts.portrait, { clearProps: "clipPath,opacity,visibility" });
         body.classList.add("hero-done");
     }
 

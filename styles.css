@@ -575,17 +575,28 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
     align-content: center;
     justify-self: end;
     width: min(100%, 390px);
+    position: relative;
+}
+
+/* Faint warm ambience behind the portrait so the blend has depth. */
+.home-media::before {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    z-index: -1;
+    background: radial-gradient(60% 55% at 55% 45%, rgba(215, 181, 109, 0.07), transparent 70%);
+    pointer-events: none;
 }
 
 .home-portrait {
     margin: 0;
     position: relative;
-    border: 1px solid var(--line);
-    background: var(--graphite);
-    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.24);
     overflow: hidden;
     transform: translateZ(0);
-    transition: transform 0.75s var(--ease-out), border-color 0.32s ease;
+    /* Soft blend: the photo's edges dissolve into the page background instead
+       of sitting in a framed box. */
+    -webkit-mask-image: radial-gradient(78% 66% at 50% 44%, #000 36%, rgba(0, 0, 0, 0.72) 58%, rgba(0, 0, 0, 0.22) 78%, transparent 95%);
+    mask-image: radial-gradient(78% 66% at 50% 44%, #000 36%, rgba(0, 0, 0, 0.72) 58%, rgba(0, 0, 0, 0.22) 78%, transparent 95%);
 }
 
 .home-portrait img {
@@ -598,14 +609,9 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
     transition: transform 1.2s var(--ease-out), filter 0.8s ease;
 }
 
-.home-portrait:hover {
-    transform: translateY(-2px);
-    border-color: rgba(245, 240, 232, 0.24);
-}
-
 .home-portrait:hover img {
     transform: scale(1.055);
-    filter: grayscale(0.22) saturate(0.78) contrast(1.02) brightness(0.96);
+    filter: grayscale(0.15) saturate(0.82) contrast(1.02) brightness(0.98);
 }
 
 .scroll-cue {
@@ -738,11 +744,11 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
 }
 
 .home-overview h2 {
-    max-width: 520px;
+    max-width: 580px;
     margin: 18px 0 0;
     color: var(--ivory);
-    font-size: clamp(2.3rem, 4.4vw, 5.4rem);
-    line-height: 0.92;
+    font-size: clamp(2.2rem, 3.6vw, 4.5rem);
+    line-height: 0.96;
     letter-spacing: 0;
 }
 
@@ -1298,7 +1304,7 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
 
 .experience-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
     border: 1px solid var(--line);
     background: var(--line);
@@ -1369,6 +1375,11 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     box-shadow: inset 0 0 0 1px rgba(5, 5, 5, 0.72);
+}
+
+.org-mark-echelix {
+    border-color: rgba(215, 181, 109, 0.4);
+    color: var(--gold);
 }
 
 .org-mark-wipro {
@@ -1630,9 +1641,14 @@ html.has-motion :is(.home-hero, .page-hero).luxury-reveal {
    content is fully visible if motion.js never runs. */
 .line-mask {
     display: block;
-    overflow: hidden;
-    /* Tight display line-heights (0.82-0.9) clip descenders inside an
-       overflow-hidden mask; pad and pull back so layout stays identical. */
+    /* Clip vertically only: the mask hides the line rising into place, but a
+       word wider than its column must overflow horizontally like normal text
+       instead of being sheared at the edge (`clip` pairs with `visible`;
+       `hidden` would coerce both axes). */
+    overflow-x: visible;
+    overflow-y: clip;
+    /* Tight display line-heights (0.82-0.9) clip descenders inside the mask;
+       pad and pull back so layout stays identical. */
     padding-block: 0.12em;
     margin-block: -0.12em;
 }
@@ -1927,6 +1943,109 @@ html.lenis body {
 
     .minimal-list em {
         grid-column: 2;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Creative elements: rotating scroll-top badge, footer clock, card glow.
+--------------------------------------------------------------------------- */
+
+.footer-cta {
+    position: relative;
+}
+
+.spin-badge {
+    position: absolute;
+    right: 0;
+    top: clamp(18px, 4vw, 44px);
+    width: clamp(96px, 10vw, 132px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--dim);
+    cursor: pointer;
+}
+
+.spin-badge svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: badge-spin 18s linear infinite;
+}
+
+.spin-badge text {
+    fill: var(--dim);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.spin-badge-arrow {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--gold);
+    font-size: 1rem;
+    transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+
+.spin-badge:hover .spin-badge-arrow,
+.spin-badge:focus-visible .spin-badge-arrow {
+    border-color: rgba(215, 181, 109, 0.55);
+    background: rgba(245, 240, 232, 0.045);
+}
+
+@keyframes badge-spin {
+    to { transform: rotate(360deg); }
+}
+
+.footer-time {
+    white-space: nowrap;
+}
+
+.footer-time [data-clock] {
+    color: var(--platinum);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Cursor-following glow inside cards; host + child injected by motion.js on
+   fine pointers only. */
+.glow-host {
+    position: relative;
+}
+
+.glow-host .glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+        260px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(215, 181, 109, 0.09),
+        transparent 65%
+    );
+    transition: opacity 0.45s ease;
+}
+
+.glow-host:hover .glow {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .spin-badge {
+        position: static;
+        margin-top: 26px;
+        justify-self: start;
     }
 }
 

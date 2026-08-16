@@ -29,6 +29,27 @@ document.addEventListener("keydown", event => {
     if (event.key === "Escape") closeNav();
 });
 
+const clockEl = document.querySelector("[data-clock]");
+if (clockEl) {
+    const clockFormat = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Phoenix",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
+    const tick = () => { clockEl.textContent = clockFormat.format(new Date()); };
+    tick();
+    window.setInterval(tick, 1000);
+}
+
+document.querySelectorAll(".spin-badge").forEach(badge => {
+    badge.addEventListener("click", () => {
+        if (window.__lenis) window.__lenis.scrollTo(0);
+        else window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    });
+});
+
 const revealItems = document.querySelectorAll(".luxury-reveal");
 if (prefersReducedMotion || !("IntersectionObserver" in window)) {
     revealItems.forEach(item => item.classList.add("is-visible"));
