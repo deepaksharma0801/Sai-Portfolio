@@ -30,6 +30,9 @@
 html {
     scroll-behavior: smooth;
     background: var(--black);
+    /* clip (not hidden): decorative bleeds can't open a horizontal scroll
+       axis, even programmatically. */
+    overflow-x: clip;
 }
 
 body {
@@ -290,8 +293,8 @@ main {
 .home-hero {
     min-height: calc(100vh - 88px);
     display: grid;
-    grid-template-columns: minmax(0, 0.94fr) minmax(280px, 0.36fr);
-    gap: clamp(42px, 8vw, 118px);
+    grid-template-columns: minmax(0, 0.86fr) minmax(340px, 0.58fr);
+    gap: clamp(36px, 5vw, 84px);
     align-items: center;
     padding: clamp(48px, 7vw, 96px) 0 clamp(58px, 8vw, 108px);
 }
@@ -574,44 +577,47 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
     display: grid;
     align-content: center;
     justify-self: end;
-    width: min(100%, 390px);
+    width: min(100%, 540px);
     position: relative;
 }
 
-/* Faint warm ambience behind the portrait so the blend has depth. */
-.home-media::before {
+/* Portrait scene: cutout photo emerging from the page. */
+.portrait-scene {
+    position: relative;
+    padding-top: clamp(12px, 2vw, 28px);
+}
+
+/* Faint warm ambience behind the whole scene so the cutout has ground. */
+.portrait-scene::before {
     content: "";
     position: absolute;
-    inset: -12%;
-    z-index: -1;
-    background: radial-gradient(60% 55% at 55% 45%, rgba(215, 181, 109, 0.07), transparent 70%);
+    inset: -6% -16% -12%;
+    z-index: 0;
+    background: radial-gradient(58% 50% at 52% 46%, rgba(215, 181, 109, 0.1), transparent 72%);
     pointer-events: none;
 }
 
 .home-portrait {
     margin: 0;
     position: relative;
-    overflow: hidden;
-    transform: translateZ(0);
-    /* Soft blend: the photo's edges dissolve into the page background instead
-       of sitting in a framed box. */
-    -webkit-mask-image: radial-gradient(78% 66% at 50% 44%, #000 36%, rgba(0, 0, 0, 0.72) 58%, rgba(0, 0, 0, 0.22) 78%, transparent 95%);
-    mask-image: radial-gradient(78% 66% at 50% 44%, #000 36%, rgba(0, 0, 0, 0.72) 58%, rgba(0, 0, 0, 0.22) 78%, transparent 95%);
+    z-index: 3;
+    /* Melt the cutout's hard bottom edge into the page. */
+    -webkit-mask-image: linear-gradient(180deg, #000 80%, rgba(0, 0, 0, 0.35) 93%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 80%, rgba(0, 0, 0, 0.35) 93%, transparent 100%);
 }
 
 .home-portrait img {
     width: 100%;
-    aspect-ratio: 4 / 4.85;
-    object-fit: cover;
-    object-position: center 18%;
-    filter: grayscale(0.38) saturate(0.68) contrast(1.02) brightness(0.92);
-    transform: scale(1.025);
+    height: auto;
+    filter: grayscale(0.22) saturate(0.85) contrast(1.03) brightness(0.97) drop-shadow(0 26px 48px rgba(0, 0, 0, 0.5));
+    transform: scale(1.02);
+    transform-origin: 50% 20%;
     transition: transform 1.2s var(--ease-out), filter 0.8s ease;
 }
 
 .home-portrait:hover img {
-    transform: scale(1.055);
-    filter: grayscale(0.15) saturate(0.82) contrast(1.02) brightness(0.98);
+    transform: scale(1.045);
+    filter: grayscale(0.05) saturate(0.95) contrast(1.03) brightness(1) drop-shadow(0 26px 48px rgba(0, 0, 0, 0.5));
 }
 
 .scroll-cue {
@@ -1228,8 +1234,8 @@ html.has-motion body:not(.hero-done) .home-copy h1::after {
     line-height: 0.9;
     letter-spacing: 0;
     position: relative;
-    width: max-content;
-    max-width: 100%;
+    /* No width: max-content here — inside the work-content grid it blows the
+       auto track out to the unwrapped title width and overflows the page. */
     padding-bottom: 0.14em;
 }
 

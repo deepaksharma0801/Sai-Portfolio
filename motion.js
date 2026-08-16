@@ -208,10 +208,10 @@
         gsap.set([heroParts.h1, ...heroParts.splitTargets].filter(Boolean), { autoAlpha: 0 });
         gsap.set(heroParts.fades, { opacity: 0, y: 26 });
         if (heroParts.portrait) {
-            /* The blended portrait fades in; a wipe would drag a hard edge
-               across its soft mask. */
-            gsap.set(heroParts.portrait, { autoAlpha: 0 });
-            gsap.set(heroParts.portraitImg, { scale: 1.3 });
+            /* The cutout rises out of the page while it fades in; a wipe would
+               drag a hard edge across its soft bottom mask. */
+            gsap.set(heroParts.portrait, { autoAlpha: 0, y: 44 });
+            gsap.set(heroParts.portraitImg, { scale: 1.12, transformOrigin: "50% 20%" });
         }
     }
 
@@ -229,8 +229,8 @@
         const heroEyebrow = document.querySelector(".home-hero .eyebrow, .page-hero .eyebrow");
         if (heroEyebrow) tl.add(() => scrambleEl(heroEyebrow), 0.4);
         if (heroParts.portrait) {
-            tl.to(heroParts.portrait, { autoAlpha: 1, duration: 1.25, ease: "power2.out" }, 0.3)
-                .to(heroParts.portraitImg, { scale: 1.12, duration: 1.6, ease: "power3.out" }, 0.4);
+            tl.to(heroParts.portrait, { autoAlpha: 1, y: 0, duration: 1.25, ease: "power3.out" }, 0.34)
+                .to(heroParts.portraitImg, { scale: 1.02, duration: 1.7, ease: "power3.out" }, 0.4);
         }
         return tl;
     }
@@ -371,6 +371,11 @@
                 ease: "none",
                 scrollTrigger: { trigger: ".home-portrait", start: "top bottom", end: "bottom top", scrub: true }
             });
+            if (finePointer) {
+                const scene = portrait.closest(".portrait-scene") || portrait;
+                scene.addEventListener("mouseenter", () => gsap.to(portrait, { scale: 1.045, duration: 0.9, ease: "power3.out", overwrite: "auto" }));
+                scene.addEventListener("mouseleave", () => gsap.to(portrait, { scale: 1.02, duration: 0.9, ease: "power3.out", overwrite: "auto" }));
+            }
         }
     }
 
