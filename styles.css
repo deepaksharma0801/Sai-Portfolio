@@ -2308,6 +2308,31 @@ html.lenis body {
     gap: clamp(12px, 1.8vw, 22px);
 }
 
+/* Pixel cat in the nav: the visible door to the arcade. */
+.arcade-cat {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--platinum);
+    text-decoration: none;
+    transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.arcade-cat svg {
+    width: 22px;
+    height: auto;
+}
+
+.arcade-cat:hover,
+.arcade-cat:focus-visible {
+    color: var(--gold);
+    border-color: rgba(215, 181, 109, 0.52);
+    transform: translateY(-2px);
+}
+
 .status-pill {
     display: inline-flex;
     align-items: center;
