@@ -15,7 +15,7 @@ const closeNav = () => {
     navToggle?.setAttribute("aria-label", "Open navigation");
 };
 
-document.querySelectorAll(".site-nav a").forEach(link => {
+document.querySelectorAll(".site-nav a, .menu-links a").forEach(link => {
     const page = document.body.dataset.page;
     const href = link.getAttribute("href") || "";
     if (page && href.includes(`${page}.html`)) {
@@ -29,8 +29,8 @@ document.addEventListener("keydown", event => {
     if (event.key === "Escape") closeNav();
 });
 
-const clockEl = document.querySelector("[data-clock]");
-if (clockEl) {
+const clockEls = document.querySelectorAll("[data-clock]");
+if (clockEls.length) {
     const clockFormat = new Intl.DateTimeFormat("en-US", {
         timeZone: "America/Phoenix",
         hour: "2-digit",
@@ -38,7 +38,10 @@ if (clockEl) {
         second: "2-digit",
         hour12: true
     });
-    const tick = () => { clockEl.textContent = clockFormat.format(new Date()); };
+    const tick = () => {
+        const now = clockFormat.format(new Date());
+        clockEls.forEach(el => { el.textContent = now; });
+    };
     tick();
     window.setInterval(tick, 1000);
 }

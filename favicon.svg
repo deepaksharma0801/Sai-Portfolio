@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <rect width="512" height="512" fill="#050505"/>
+    <rect x="28" y="28" width="456" height="456" fill="none" stroke="#d7b56d" stroke-opacity="0.55" stroke-width="14"/>
+    <text x="256" y="278" font-family="'DM Sans', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif" font-size="320" font-weight="800" fill="#d7b56d" text-anchor="middle" dominant-baseline="central">S</text>
+</svg>

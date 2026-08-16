@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arcade | Sai Deepak Sharma Nadiminty</title>
+    <meta name="description" content="The secret arcade: four tiny games hiding inside Sai Deepak Sharma Nadiminty's portfolio." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="canonical" href="https://deepaksharma0801.github.io/Sai-Portfolio/arcade.html" />
+    <meta property="og:title" content="Arcade | Sai Deepak Sharma Nadiminty" />
+    <meta property="og:description" content="The secret arcade: four tiny games hiding inside Sai Deepak Sharma Nadiminty's portfolio." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://deepaksharma0801.github.io/Sai-Portfolio/arcade.html" />
+    <meta property="og:image" content="https://deepaksharma0801.github.io/Sai-Portfolio/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://deepaksharma0801.github.io/Sai-Portfolio/og-image.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600;700&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet" />
+    <script>
+        (function () {
+            var d = document.documentElement;
+            try {
+                if (sessionStorage.getItem("sdsn-transition")) d.classList.add("is-arriving");
+            } catch (e) {}
+            setTimeout(function () { d.classList.remove("is-arriving"); }, 4000);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=next-1" />
+    <noscript>
+        <style>
+            .loading-screen { display: none !important; }
+            .luxury-reveal,
+            .luxury-reveal [data-stagger] > * {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        </style>
+    </noscript>
+</head>
+<body data-page="arcade">
+    <div class="loading-screen" aria-hidden="true">
+        <div class="rounded-div-wrap top"><div class="rounded-div"></div></div>
+        <div class="loading-words">
+            <span class="loading-word"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="rounded-div-wrap bottom"><div class="rounded-div"></div></div>
+    </div>
+    <div class="menu-screen" aria-hidden="true">
+        <nav class="menu-inner" aria-label="Site menu">
+            <p class="menu-kicker">Navigation</p>
+            <div class="menu-links">
+                <a href="index.html"><span class="menu-num">01</span><span class="menu-label">Home</span></a>
+                <a href="work.html"><span class="menu-num">02</span><span class="menu-label">Projects</span></a>
+                <a href="profile.html"><span class="menu-num">03</span><span class="menu-label">Work</span></a>
+                <a href="aegis-evo.html"><span class="menu-num">04</span><span class="menu-label">Aegis-Evo</span></a>
+                <a href="resume_new.pdf"><span class="menu-num">05</span><span class="menu-label">Resume</span></a>
+            </div>
+            <div class="menu-meta">
+                <div>
+                    <p class="menu-kicker">Contact</p>
+                    <a href="mailto:deepak.nadiminti@gmail.com">Email</a>
+                    <a href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">GitHub</a>
+                </div>
+                <div>
+                    <p class="menu-kicker">Local time</p>
+                    <p>Tempe, AZ &#8212; <span data-clock></span></p>
+                </div>
+            </div>
+        </nav>
+        <div class="rounded-div-wrap bottom"><div class="rounded-div"></div></div>
+    </div>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="SDSN home">SDSN</a>
+        <div class="header-tools">
+            <nav class="site-nav" aria-label="Primary navigation">
+            <a href="work.html">Projects</a>
+            <a href="profile.html">Work</a>
+            <a href="aegis-evo.html">Aegis-Evo</a>
+            <a href="resume_new.pdf">Resume</a>
+        </nav>
+            <a class="status-pill" href="#contact" aria-label="Reach out to learn more about Echelix or my work"><i aria-hidden="true"></i><span>Reach out</span></a>
+            <button class="palette-chip" type="button" data-palette-open aria-label="Open command palette (Ctrl+K)">&#8984;K</button>
+            <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span></button>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="page-hero luxury-reveal">
+            <p class="eyebrow">Secret Room</p>
+            <h1>The Arcade.</h1>
+            <p class="lede">You followed the cat. Four tiny games, one CRT, high scores saved on your machine. The serious portfolio is one click away — no rush.</p>
+        </section>
+
+        <section class="page-section luxury-reveal" aria-label="Arcade cabinet">
+            <div class="crt-cabinet">
+                <div class="crt-frame">
+                    <div class="crt-screen">
+                        <canvas id="crt-canvas" width="720" height="480" aria-label="Arcade game screen. Use arrow keys to choose a game, Enter to start, Escape to return to the menu."></canvas>
+                        <div class="crt-scanlines" aria-hidden="true"></div>
+                        <div class="crt-vignette" aria-hidden="true"></div>
+                        <noscript><p class="crt-nojs">THIS CABINET NEEDS JAVASCRIPT ▮</p></noscript>
+                    </div>
+                </div>
+                <div class="crt-controls">
+                    <div class="crt-hud">
+                        <span data-hud-game>BOOT</span>
+                        <span data-hud-score></span>
+                        <span data-hud-best></span>
+                    </div>
+                    <div class="crt-buttons">
+                        <button class="button" type="button" data-arcade-menu><span>Game Menu</span></button>
+                        <button class="button ghost" type="button" data-arcade-share><span>Share Score</span></button>
+                    </div>
+                    <p class="crt-help" data-hud-help>&#8593;&#8595; select &#183; &#9166; start &#183; esc menu</p>
+                </div>
+                <input class="crt-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-hidden="true" tabindex="-1" />
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer luxury-reveal" id="contact">
+        <div class="footer-meta">
+            <p>&copy; 2026 Sai Deepak Sharma Nadiminty</p>
+            <p class="footer-time">Tempe, AZ &#8212; <span data-clock></span></p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="work.html">Projects</a>
+                <a href="profile.html">Work</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/vendor/ScrollTrigger.min.js"></script>
+    <script src="assets/vendor/lenis.min.js"></script>
+    <script src="script.js?v=next-1"></script>
+    <script src="motion.js?v=next-1"></script>
+    <script src="extras.js?v=next-1"></script>
+    <script src="arcade.js?v=next-1"></script>
+</body>
+</html>

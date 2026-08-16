@@ -38,7 +38,7 @@
     const curveBottom = screen ? screen.querySelector(".rounded-div-wrap.bottom") : null;
 
     const GREETINGS = ["Hello", "Bonjour", "स्वागत हे", "Ciao", "Olá", "おい", "Hallå", "Guten tag", "Hallo", "నమస్కారం"];
-    const PAGE_LABELS = { index: "Home", work: "Projects", profile: "Work", "aegis-evo": "Aegis-Evo" };
+    const PAGE_LABELS = { index: "Home", work: "Projects", profile: "Work", "aegis-evo": "Aegis-Evo", arcade: "Arcade" };
 
     const pageLabelFor = pathname => {
         const file = (pathname.split("/").pop() || "index.html").replace(/\.html$/, "") || "index";
@@ -483,6 +483,205 @@
     }
 
     /* ------------------------------------------------------------------ */
+    /* Scroll color moods: body background drifts per section              */
+    /* ------------------------------------------------------------------ */
+
+    const MOODS = { base: "#050505", warm: "#0a0806", cool: "#07090c" };
+
+    function initMoods() {
+        if (!window.ScrollTrigger) return;
+        gsap.utils.toArray("[data-mood]").forEach(section => {
+            const color = MOODS[section.dataset.mood] || MOODS.base;
+            window.ScrollTrigger.create({
+                trigger: section,
+                start: "top 55%",
+                end: "bottom 45%",
+                onToggle: self => {
+                    gsap.to(body, {
+                        backgroundColor: self.isActive ? color : MOODS.base,
+                        duration: 0.9,
+                        ease: "power2.out",
+                        overwrite: "auto"
+                    });
+                }
+            });
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Metric count-ups                                                    */
+    /* ------------------------------------------------------------------ */
+
+    function initCounts() {
+        if (!window.ScrollTrigger) return;
+        gsap.utils.toArray("[data-count]").forEach(el => {
+            const raw = el.dataset.count;
+            const end = parseFloat(raw);
+            if (Number.isNaN(end)) return;
+            const decimals = (raw.split(".")[1] || "").length;
+            const useComma = el.hasAttribute("data-comma");
+            window.ScrollTrigger.create({
+                trigger: el,
+                start: "top 92%",
+                once: true,
+                onEnter: () => {
+                    const proxy = { v: 0 };
+                    gsap.to(proxy, {
+                        v: end,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        onUpdate() {
+                            let text = decimals ? proxy.v.toFixed(decimals) : String(Math.round(proxy.v));
+                            if (useComma) text = Number(text).toLocaleString("en-US");
+                            el.textContent = text;
+                        },
+                        onComplete() {
+                            let text = decimals ? end.toFixed(decimals) : String(end);
+                            if (useComma) text = Number(text).toLocaleString("en-US");
+                            el.textContent = text;
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Film grain: pre-rendered noise tiles cycled as a repeating bg       */
+    /* ------------------------------------------------------------------ */
+
+    function initGrain() {
+        if (navigator.deviceMemory && navigator.deviceMemory <= 2) return;
+        const size = 128;
+        const tile = document.createElement("canvas");
+        tile.width = size;
+        tile.height = size;
+        const ctx = tile.getContext("2d");
+        if (!ctx) return;
+        const urls = [];
+        for (let f = 0; f < 6; f += 1) {
+            const data = ctx.createImageData(size, size);
+            for (let i = 0; i < data.data.length; i += 4) {
+                const v = (Math.random() * 255) | 0;
+                data.data[i] = v;
+                data.data[i + 1] = v;
+                data.data[i + 2] = v;
+                data.data[i + 3] = 255;
+            }
+            ctx.putImageData(data, 0, 0);
+            urls.push(`url(${tile.toDataURL()})`);
+        }
+        const grain = document.createElement("div");
+        grain.className = "grain";
+        grain.setAttribute("aria-hidden", "true");
+        grain.style.backgroundImage = urls[0];
+        body.appendChild(grain);
+        let frame = 0;
+        window.setInterval(() => {
+            if (document.hidden) return;
+            frame = (frame + 1) % urls.length;
+            grain.style.backgroundImage = urls[frame];
+        }, 125);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Overlay menu                                                        */
+    /* ------------------------------------------------------------------ */
+
+    const menuState = { open: false, close: null };
+
+    function initMenu() {
+        const menu = document.querySelector(".menu-screen");
+        const toggle = document.querySelector(".nav-toggle");
+        if (!menu || !toggle) return;
+
+        const curve = menu.querySelector(".rounded-div-wrap.bottom");
+        const linkEls = gsap.utils.toArray(menu.querySelectorAll(".menu-links a"));
+        const labels = maskBlocks(menu, ".menu-label");
+        const kicker = menu.querySelector(".menu-inner > .menu-kicker");
+        const nums = gsap.utils.toArray(menu.querySelectorAll(".menu-num"));
+        const meta = menu.querySelector(".menu-meta");
+        const pageMain = document.querySelector("main");
+        const pageFooter = document.querySelector(".site-footer");
+        let lastFocus = null;
+        let tl = null;
+
+        function openMenu() {
+            menuState.open = true;
+            lastFocus = document.activeElement;
+            body.classList.add("menu-open");
+            menu.setAttribute("aria-hidden", "false");
+            if (pageMain) pageMain.inert = true;
+            if (pageFooter) pageFooter.inert = true;
+            if (lenis) lenis.stop();
+
+            if (tl) tl.kill();
+            gsap.set(menu, { visibility: "visible", yPercent: -100 });
+            gsap.set(curve, { height: "10vh" });
+            gsap.set(labels, HIDE);
+            gsap.set([kicker, meta], { opacity: 0, y: 18 });
+            gsap.set(nums, { opacity: 0 });
+            tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+            tl.to(menu, { yPercent: 0, duration: 0.72, ease: "power4.inOut" }, 0)
+                .to(curve, { height: 0, duration: 0.35, ease: "power1.out" }, 0.44)
+                .to(labels, { yPercent: 0, duration: 0.9, stagger: 0.055 }, 0.3)
+                .to(nums, { opacity: 1, duration: 0.5, stagger: 0.055 }, 0.42)
+                .to([kicker, meta], { opacity: 1, y: 0, duration: 0.6 }, 0.5);
+            window.setTimeout(() => linkEls[0]?.focus(), 350);
+        }
+
+        function closeMenu(instant) {
+            if (!menuState.open) return;
+            menuState.open = false;
+            body.classList.remove("menu-open");
+            menu.setAttribute("aria-hidden", "true");
+            if (pageMain) pageMain.inert = false;
+            if (pageFooter) pageFooter.inert = false;
+            if (lenis) lenis.start();
+
+            if (tl) tl.kill();
+            if (instant) {
+                gsap.set(menu, { visibility: "hidden", yPercent: -100 });
+            } else {
+                gsap.set(curve, { height: "10vh" });
+                tl = gsap.timeline({
+                    onComplete: () => gsap.set(menu, { visibility: "hidden" })
+                });
+                tl.to(menu, { yPercent: -100, duration: 0.55, ease: "power3.inOut" }, 0);
+            }
+            if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+        }
+
+        menuState.close = closeMenu;
+
+        /* script.js flips body.nav-open first (registered earlier); mirror it. */
+        toggle.addEventListener("click", () => {
+            if (body.classList.contains("nav-open")) openMenu();
+            else closeMenu(false);
+        });
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeMenu(false);
+            if (e.key !== "Tab" || !menuState.open) return;
+            /* Keep focus cycling inside the open menu. */
+            const focusables = gsap.utils.toArray(menu.querySelectorAll("a[href]"));
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            } else if (!menu.contains(document.activeElement)) {
+                e.preventDefault();
+                first.focus();
+            }
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
     /* Lenis smooth scroll                                                 */
     /* ------------------------------------------------------------------ */
 
@@ -514,6 +713,21 @@
     /* ------------------------------------------------------------------ */
 
     let leaving = false;
+
+    /* Programmatic navigation through the transition screen (palette, cat). */
+    function transitionTo(href) {
+        if (leaving) return;
+        leaving = true;
+        body.classList.remove("nav-open");
+        if (menuState.close) menuState.close(false);
+        store.set("sdsn-transition", "1");
+        const go = () => { location.href = href; };
+        let url;
+        try { url = new URL(href, location.href); } catch (e) { go(); return; }
+        screenCover(pageLabelFor(url.pathname), go);
+        window.setTimeout(go, 1100);
+    }
+    window.__sdsnNavigate = transitionTo;
 
     function initTransitions() {
         if (!screen) return;
@@ -548,6 +762,7 @@
                 store.del("sdsn-transition");
                 hideScreen();
                 gsap.set(screen, { yPercent: 100 });
+                if (menuState.close) menuState.close(true);
             }
         });
     }
@@ -562,11 +777,15 @@
     initMagnetic();
     initCursor();
     initLenis();
+    initMenu();
     initTransitions();
     initScrollReveals();
     initImages();
     initDecodes();
     initGlow();
+    initMoods();
+    initCounts();
+    initGrain();
 
     if (docEl.classList.contains("is-loading") && screen) {
         playHello(playHero);

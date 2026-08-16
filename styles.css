@@ -39,10 +39,12 @@ body {
     margin: 0;
     min-height: 100vh;
     overflow-x: hidden;
-    background:
+    /* Color sits on background-color so the scroll mood system can tween it;
+       the accent washes above it are translucent. */
+    background-color: var(--black);
+    background-image:
         linear-gradient(140deg, rgba(215, 181, 109, 0.055) 0%, transparent 24%),
-        linear-gradient(215deg, rgba(143, 184, 200, 0.05) 0%, transparent 26%),
-        linear-gradient(180deg, #050505 0%, #090909 48%, #050505 100%);
+        linear-gradient(215deg, rgba(143, 184, 200, 0.05) 0%, transparent 26%);
     color: var(--ivory);
     font-family: var(--serifless);
     line-height: 1.6;
@@ -244,13 +246,28 @@ html.is-arriving .loading-screen {
 }
 
 .nav-toggle {
-    display: none;
+    display: grid;
+    place-items: center;
     width: 42px;
     height: 42px;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: transparent;
     color: var(--ivory);
+    cursor: pointer;
+    transition: border-color var(--dur-fast) ease;
+}
+
+.nav-toggle:hover {
+    border-color: rgba(215, 181, 109, 0.52);
+}
+
+/* Without the motion layer the burger only drives the mobile dropdown, so
+   hide it on desktop where the inline links already cover navigation. */
+@media (min-width: 901px) {
+    html:not(.has-motion) .nav-toggle {
+        display: none;
+    }
 }
 
 .nav-toggle span,
@@ -1712,6 +1729,136 @@ a:focus-visible .roll > span:nth-child(2) {
     opacity: 0;
 }
 
+/* ---------------------------------------------------------------------------
+   Overlay menu (motion.js drives open/close; hidden without the motion layer)
+--------------------------------------------------------------------------- */
+
+.menu-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    align-content: center;
+    background: #0d0d10;
+    visibility: hidden;
+    transform: translateY(-100%);
+    overflow: hidden;
+}
+
+.menu-screen .rounded-div {
+    background: #0d0d10;
+}
+
+.menu-inner {
+    width: min(100% - 8vw, var(--max));
+    margin: 0 auto;
+    display: grid;
+    gap: clamp(26px, 5vh, 54px);
+}
+
+.menu-kicker {
+    margin: 0;
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.menu-links {
+    display: grid;
+    gap: clamp(4px, 1.4vh, 12px);
+    justify-items: start;
+}
+
+.menu-links a {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    max-width: 100%;
+    color: var(--ivory);
+    font-size: clamp(2.3rem, 6.2vh, 4.4rem);
+    font-weight: 800;
+    line-height: 1.04;
+    text-decoration: none;
+}
+
+.menu-num {
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+.menu-label {
+    display: inline-block;
+    transition: color var(--dur-fast) ease, transform 0.45s var(--ease-out);
+}
+
+.menu-links a:hover .menu-label,
+.menu-links a:focus-visible .menu-label {
+    color: var(--gold);
+    transform: translateX(12px);
+}
+
+.menu-links a[aria-current="page"] .menu-label {
+    color: rgba(245, 240, 232, 0.5);
+}
+
+.menu-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(28px, 6vw, 90px);
+    padding-top: clamp(18px, 3vh, 30px);
+    border-top: 1px solid var(--line-soft);
+}
+
+.menu-meta > div {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+}
+
+.menu-meta a,
+.menu-meta p:not(.menu-kicker) {
+    margin: 0;
+    color: var(--platinum);
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.menu-meta a:hover,
+.menu-meta a:focus-visible {
+    color: var(--gold);
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Film grain overlay (motion.js builds the noise tiles). */
+.grain {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background-repeat: repeat;
+    background-size: 128px 128px;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* Count-up numbers hold their layout width while ticking. */
+[data-count] {
+    font-variant-numeric: tabular-nums;
+}
+
 /* GSAP owns transforms on these while motion.js is active; keep CSS filter
    hovers but drop CSS transform animations/transitions so they don't fight. */
 html.has-motion :is(.image-frame img, .home-portrait img) {
@@ -1742,6 +1889,12 @@ html.lenis body {
 }
 
 @media (max-width: 900px) {
+    /* With the motion layer, the overlay menu owns mobile navigation; the
+       legacy dropdown below only serves the no-GSAP/reduced-motion fallback. */
+    html.has-motion .site-nav {
+        display: none;
+    }
+
     .site-nav {
         position: fixed;
         left: 4vw;
@@ -2118,4 +2271,455 @@ html.lenis body {
     html.has-motion body:not(.hero-done) .home-copy h1::after {
         transform: scaleX(1);
     }
+}
+
+/* ---------------------------------------------------------------------------
+   Extras layer: toast, palette, terminal egg, pixel cat, status pill
+--------------------------------------------------------------------------- */
+
+.copy-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    z-index: 340;
+    transform: translate(-50%, 14px);
+    padding: 11px 18px;
+    border: 1px solid rgba(215, 181, 109, 0.5);
+    border-radius: 999px;
+    color: var(--ivory);
+    background: rgba(10, 10, 11, 0.94);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.copy-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.8vw, 22px);
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--platinum);
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-pill i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #39d98a;
+    box-shadow: 0 0 0 0 rgba(57, 217, 138, 0.55);
+    animation: status-pulse 2.4s ease-out infinite;
+}
+
+.status-pill:hover,
+.status-pill:focus-visible {
+    border-color: rgba(57, 217, 138, 0.5);
+    color: var(--ivory);
+}
+
+@keyframes status-pulse {
+    70% { box-shadow: 0 0 0 8px rgba(57, 217, 138, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(57, 217, 138, 0); }
+}
+
+.palette-chip {
+    display: inline-grid;
+    place-items: center;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+
+.palette-chip:hover,
+.palette-chip:focus-visible {
+    color: var(--ivory);
+    border-color: rgba(215, 181, 109, 0.5);
+}
+
+@media (max-width: 900px) {
+    .palette-chip { display: none; }
+    .status-pill span { display: none; }
+    .status-pill { padding: 8px; }
+}
+
+.palette {
+    position: fixed;
+    inset: 0;
+    z-index: 330;
+}
+
+.palette-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 3, 4, 0.62);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity var(--dur-fast) ease;
+}
+
+.palette-panel {
+    position: relative;
+    width: min(560px, calc(100vw - 32px));
+    margin: 16vh auto 0;
+    border: 1px solid rgba(245, 240, 232, 0.16);
+    border-radius: 14px;
+    background: #0e0e11;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+    transition: opacity var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.palette.open .palette-backdrop { opacity: 1; }
+.palette.open .palette-panel { opacity: 1; transform: none; }
+
+.palette-input {
+    width: 100%;
+    padding: 18px 20px;
+    border: 0;
+    border-bottom: 1px solid var(--line-soft);
+    background: transparent;
+    color: var(--ivory);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.palette-input::placeholder { color: var(--dim); }
+
+.palette-list {
+    max-height: 320px;
+    margin: 0;
+    padding: 8px;
+    list-style: none;
+    overflow-y: auto;
+}
+
+.palette-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 12px;
+    border-radius: 8px;
+    color: var(--platinum);
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+.palette-list li em {
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.palette-list li.selected {
+    background: rgba(215, 181, 109, 0.09);
+    color: var(--ivory);
+}
+
+.palette-footnote {
+    margin: 0;
+    padding: 10px 16px 12px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+}
+
+body.palette-open { overflow: hidden; }
+
+.egg-terminal {
+    position: fixed;
+    right: clamp(14px, 3vw, 36px);
+    bottom: clamp(14px, 3vw, 36px);
+    z-index: 335;
+    width: min(430px, calc(100vw - 28px));
+    border: 1px solid rgba(141, 255, 168, 0.28);
+    border-radius: 10px;
+    background: rgba(6, 9, 7, 0.97);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+}
+
+.egg-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(141, 255, 168, 0.18);
+    color: rgba(141, 255, 168, 0.75);
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.egg-bar button {
+    border: 0;
+    background: transparent;
+    color: rgba(141, 255, 168, 0.75);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.egg-body {
+    margin: 0;
+    padding: 14px 16px 18px;
+    min-height: 190px;
+    color: #8dffa8;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.pixel-cat {
+    position: fixed;
+    left: -64px;
+    bottom: 6px;
+    z-index: 320;
+    width: 56px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ivory);
+    cursor: pointer;
+    animation: cat-walk 15s linear forwards, cat-bob 0.5s steps(2) infinite;
+}
+
+.pixel-cat:hover { color: var(--gold); }
+
+.pixel-cat-sprite {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    box-shadow:
+        4px 0px 0 0 currentColor,
+        12px 0px 0 0 currentColor,
+        4px 4px 0 0 currentColor,
+        8px 4px 0 0 currentColor,
+        12px 4px 0 0 currentColor,
+        4px 8px 0 0 currentColor,
+        8px 8px 0 0 currentColor,
+        12px 8px 0 0 currentColor,
+        40px 8px 0 0 currentColor,
+        8px 12px 0 0 currentColor,
+        12px 12px 0 0 currentColor,
+        16px 12px 0 0 currentColor,
+        20px 12px 0 0 currentColor,
+        24px 12px 0 0 currentColor,
+        28px 12px 0 0 currentColor,
+        32px 12px 0 0 currentColor,
+        36px 12px 0 0 currentColor,
+        40px 12px 0 0 currentColor,
+        8px 16px 0 0 currentColor,
+        12px 16px 0 0 currentColor,
+        16px 16px 0 0 currentColor,
+        20px 16px 0 0 currentColor,
+        24px 16px 0 0 currentColor,
+        28px 16px 0 0 currentColor,
+        32px 16px 0 0 currentColor,
+        36px 16px 0 0 currentColor,
+        8px 20px 0 0 currentColor,
+        12px 20px 0 0 currentColor,
+        16px 20px 0 0 currentColor,
+        20px 20px 0 0 currentColor,
+        24px 20px 0 0 currentColor,
+        28px 20px 0 0 currentColor,
+        32px 20px 0 0 currentColor,
+        36px 20px 0 0 currentColor,
+        8px 24px 0 0 currentColor,
+        16px 24px 0 0 currentColor,
+        28px 24px 0 0 currentColor,
+        36px 24px 0 0 currentColor,
+        8px 28px 0 0 currentColor,
+        16px 28px 0 0 currentColor,
+        28px 28px 0 0 currentColor,
+        36px 28px 0 0 currentColor;
+}
+
+@keyframes cat-walk {
+    to { transform: translateX(calc(100vw + 128px)); }
+}
+
+@keyframes cat-bob {
+    50% { margin-bottom: 2px; }
+}
+
+body.cat-glitch main,
+body.cat-glitch .site-header {
+    animation: glitch-jitter 0.42s steps(6);
+}
+
+@keyframes glitch-jitter {
+    20% { transform: translate(-3px, 2px) skewX(0.6deg); filter: hue-rotate(28deg); }
+    40% { transform: translate(4px, -2px); filter: invert(0.08); }
+    60% { transform: translate(-2px, -3px) skewX(-0.8deg); }
+    80% { transform: translate(3px, 2px); filter: hue-rotate(-24deg); }
+}
+
+/* ---------------------------------------------------------------------------
+   Arcade: CRT cabinet inside the luxury shell
+--------------------------------------------------------------------------- */
+
+.crt-cabinet {
+    display: grid;
+    gap: 22px;
+    max-width: 920px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.crt-frame {
+    padding: clamp(14px, 2.4vw, 26px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background:
+        linear-gradient(160deg, rgba(245, 240, 232, 0.05), transparent 40%),
+        #101013;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.crt-screen {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #050c06;
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.75);
+}
+
+.crt-screen canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    touch-action: none;
+}
+
+.crt-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.22) 0 1px,
+        transparent 1px 3px
+    );
+    pointer-events: none;
+}
+
+.crt-vignette {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 110px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+}
+
+.crt-nojs {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    color: #8dffa8;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+}
+
+.crt-controls {
+    display: grid;
+    gap: 14px;
+}
+
+.crt-hud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 26px;
+    color: #8dffa8;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.crt-hud span:first-child { color: var(--gold); }
+
+.crt-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.crt-help {
+    margin: 0;
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+}
+
+.crt-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Sleeping cat in the footer — the discoverable path to the arcade. */
+.footer-cat {
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color var(--dur-fast) ease;
+}
+
+.footer-cat:hover,
+.footer-cat:focus-visible {
+    color: var(--gold);
 }

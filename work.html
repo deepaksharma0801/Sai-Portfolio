@@ -6,6 +6,17 @@
     <title>Projects | Sai Deepak Sharma Nadiminty</title>
     <meta name="description" content="Selected AI, data science, computer vision, analytics, and secure RAG projects by Sai Deepak Sharma Nadiminty." />
     <meta name="theme-color" content="#050505" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="canonical" href="https://deepaksharma0801.github.io/Sai-Portfolio/work.html" />
+    <meta property="og:title" content="Projects | Sai Deepak Sharma Nadiminty" />
+    <meta property="og:description" content="Selected AI, data science, computer vision, analytics, and secure RAG projects by Sai Deepak Sharma Nadiminty." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://deepaksharma0801.github.io/Sai-Portfolio/work.html" />
+    <meta property="og:image" content="https://deepaksharma0801.github.io/Sai-Portfolio/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://deepaksharma0801.github.io/Sai-Portfolio/og-image.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600;700&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet" />
@@ -18,7 +29,7 @@
             setTimeout(function () { d.classList.remove("is-arriving"); }, 4000);
         })();
     </script>
-    <link rel="stylesheet" href="styles.css?v=award-31" />
+    <link rel="stylesheet" href="styles.css?v=next-1" />
     <noscript>
         <style>
             .loading-screen { display: none !important; }
@@ -39,16 +50,46 @@
         </div>
         <div class="rounded-div-wrap bottom"><div class="rounded-div"></div></div>
     </div>
+    <div class="menu-screen" aria-hidden="true">
+        <nav class="menu-inner" aria-label="Site menu">
+            <p class="menu-kicker">Navigation</p>
+            <div class="menu-links">
+                <a href="index.html"><span class="menu-num">01</span><span class="menu-label">Home</span></a>
+                <a href="work.html"><span class="menu-num">02</span><span class="menu-label">Projects</span></a>
+                <a href="profile.html"><span class="menu-num">03</span><span class="menu-label">Work</span></a>
+                <a href="aegis-evo.html"><span class="menu-num">04</span><span class="menu-label">Aegis-Evo</span></a>
+                <a href="resume_new.pdf"><span class="menu-num">05</span><span class="menu-label">Resume</span></a>
+            </div>
+            <div class="menu-meta">
+                <div>
+                    <p class="menu-kicker">Contact</p>
+                    <a href="mailto:deepak.nadiminti@gmail.com">Email</a>
+                    <a href="https://www.linkedin.com/in/sai-deepak-sharma-09518b210/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer">GitHub</a>
+                </div>
+                <div>
+                    <p class="menu-kicker">Local time</p>
+                    <p>Tempe, AZ &#8212; <span data-clock></span></p>
+                </div>
+            </div>
+        </nav>
+        <div class="rounded-div-wrap bottom"><div class="rounded-div"></div></div>
+    </div>
+
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
         <a class="brand" href="index.html" aria-label="SDSN home">SDSN</a>
-        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span></button>
-        <nav class="site-nav" aria-label="Primary navigation">
+        <div class="header-tools">
+            <nav class="site-nav" aria-label="Primary navigation">
             <a href="work.html">Projects</a>
             <a href="profile.html">Work</a>
             <a href="aegis-evo.html">Aegis-Evo</a>
             <a href="resume_new.pdf">Resume</a>
         </nav>
+            <a class="status-pill" href="#contact" aria-label="Reach out to learn more about Echelix or my work"><i aria-hidden="true"></i><span>Reach out</span></a>
+            <button class="palette-chip" type="button" data-palette-open aria-label="Open command palette (Ctrl+K)">&#8984;K</button>
+            <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span></button>
+        </div>
     </header>
 
     <main id="main">
@@ -66,7 +107,7 @@
             </a>
         </section>
 
-        <section class="page-section work-list" aria-label="Projects index">
+        <section class="page-section work-list" data-mood="cool" aria-label="Projects index">
             <article class="work-item luxury-reveal" id="space">
                 <a class="image-frame" href="https://github.com/deepaksharma0801" target="_blank" rel="noreferrer" aria-label="Open GitHub profile">
                     <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Satellite view of Earth for the space missions analytics project" onerror="this.onerror=null;this.src='space.jpeg';" />
@@ -110,7 +151,7 @@
                     <h2>Urban GANs for City Image Synthesis</h2>
                     <p class="project-summary">A computer vision project exploring city image generation with conditional GANs, using structured urban datasets to study how architecture, geography, and visual patterns can be synthesized.</p>
                     <div class="proof-grid" aria-label="Proof points" data-stagger>
-                        <div class="proof"><strong>3,050 images</strong><span>Curated across 50 global cities.</span></div>
+                        <div class="proof"><strong><span data-count="3050" data-comma>3,050</span> images</strong><span>Curated across 50 global cities.</span></div>
                         <div class="proof"><strong>cGAN</strong><span>Conditioned generation for place-aware synthesis.</span></div>
                         <div class="proof"><strong>Research</strong><span>Compared visual coherence across generated outputs.</span></div>
                     </div>
@@ -144,9 +185,9 @@
         </section>
     </main>
 
-    <footer class="site-footer luxury-reveal">
+    <footer class="site-footer luxury-reveal" id="contact">
         <div class="footer-cta">
-            <p class="eyebrow">Open to roles &amp; collaborations</p>
+            <p class="eyebrow">Curious about Echelix or my work?</p>
             <h2 class="footer-title"><span>Let's work</span><span class="footer-title-accent">together.</span></h2>
             <div class="footer-actions">
                 <a class="button primary pill-lg" href="mailto:deepak.nadiminti@gmail.com"><span>Get in touch</span></a>
@@ -156,7 +197,7 @@
             <button class="spin-badge" type="button" data-magnetic aria-label="Back to top">
                 <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
                     <defs><path id="badge-circle" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" /></defs>
-                    <text><textPath href="#badge-circle">OPEN TO WORK &#8226; AI &#8226; DATA &#8226; SYSTEMS &#8226;&#160;</textPath></text>
+                    <text><textPath href="#badge-circle">REACH OUT &#8226; AI &#8226; DATA &#8226; SYSTEMS &#8226;&#160;</textPath></text>
                 </svg>
                 <span class="spin-badge-arrow" aria-hidden="true">&#8593;</span>
             </button>
@@ -164,6 +205,7 @@
         <div class="footer-meta">
             <p>© 2026 Sai Deepak Sharma Nadiminty</p>
             <p class="footer-time">Tempe, AZ &#8212; <span data-clock></span></p>
+            <a class="footer-cat" href="arcade.html" aria-label="A sleeping pixel cat. Wake it at your own risk.">(=^..^= ) zZ</a>
             <div class="footer-links">
                 <a href="index.html">Home</a>
                 <a href="profile.html">Work</a>
@@ -174,7 +216,8 @@
     <script src="assets/vendor/gsap.min.js"></script>
     <script src="assets/vendor/ScrollTrigger.min.js"></script>
     <script src="assets/vendor/lenis.min.js"></script>
-    <script src="script.js?v=award-31"></script>
-    <script src="motion.js?v=award-31"></script>
+    <script src="script.js?v=next-1"></script>
+    <script src="motion.js?v=next-1"></script>
+    <script src="extras.js?v=next-1"></script>
 </body>
 </html>

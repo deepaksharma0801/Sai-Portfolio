@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /arcade.html
+
+Sitemap: https://deepaksharma0801.github.io/Sai-Portfolio/sitemap.xml
