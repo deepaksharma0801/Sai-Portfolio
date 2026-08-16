@@ -262,10 +262,10 @@ html.is-arriving .loading-screen {
     border-color: rgba(215, 181, 109, 0.52);
 }
 
-/* Without the motion layer the burger only drives the mobile dropdown, so
-   hide it on desktop where the inline links already cover navigation. */
+/* Desktop shows the inline links, so the burger only exists on mobile where
+   it opens the overlay menu. */
 @media (min-width: 901px) {
-    html:not(.has-motion) .nav-toggle {
+    .nav-toggle {
         display: none;
     }
 }
