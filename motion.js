@@ -100,10 +100,12 @@
         setWord(pageLabelFor(location.pathname));
         gsap.set(screen, { visibility: "visible", yPercent: 0 });
         gsap.set(curveTop, { height: 0 });
-        gsap.set(wordsWrap, { opacity: 0, y: 22 });
+        /* The word already faded in on the previous page's exit screen — show
+           it instantly here so the two screens read as one continuous cover
+           instead of the label popping in twice. */
+        gsap.set(wordsWrap, { opacity: 1, y: 0 });
         const tl = gsap.timeline();
-        tl.to(wordsWrap, { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" }, 0.05);
-        tl.add(screenExit(onDone), 0.55);
+        tl.add(screenExit(onDone), 0.3);
     }
 
     /* ------------------------------------------------------------------ */
@@ -316,8 +318,22 @@
 
     function initScrollReveals() {
         if (!window.ScrollTrigger) return;
+
+        /* Quoted blockquotes keep their CSS open/close quote pseudo-elements,
+           which line-splitting would push onto their own lines — reveal these
+           whole instead. */
+        gsap.utils.toArray(".closing-quote blockquote, .section-quote blockquote").forEach(el => {
+            gsap.set(el, { autoAlpha: 0, y: 34 });
+            window.ScrollTrigger.create({
+                trigger: el,
+                start: "top 88%",
+                once: true,
+                onEnter: () => gsap.to(el, { autoAlpha: 1, y: 0, duration: 1.1, ease: "power4.out" })
+            });
+        });
+
         const targets = gsap.utils.toArray(
-            ".ribbon-heading strong, .home-overview h2, .closing-quote blockquote, .case-copy h2, .footer-title"
+            ".ribbon-heading strong, .home-overview h2, .case-copy h2, .footer-title"
         );
         targets.forEach(el => {
             gsap.set(el, { autoAlpha: 0 });
@@ -459,27 +475,52 @@
         const dot = document.createElement("div");
         dot.className = "cursor-dot";
         dot.setAttribute("aria-hidden", "true");
+        const ring = document.createElement("div");
+        ring.className = "cursor-ring";
+        ring.setAttribute("aria-hidden", "true");
+        body.appendChild(ring);
         body.appendChild(dot);
-        const xTo = gsap.quickTo(dot, "x", { duration: 0.4, ease: "power3" });
-        const yTo = gsap.quickTo(dot, "y", { duration: 0.4, ease: "power3" });
+
+        /* Dot snaps to the pointer; the ring drifts behind it — the lag is the charm. */
+        const dotX = gsap.quickTo(dot, "x", { duration: 0.18, ease: "power3" });
+        const dotY = gsap.quickTo(dot, "y", { duration: 0.18, ease: "power3" });
+        const ringX = gsap.quickTo(ring, "x", { duration: 0.55, ease: "power3" });
+        const ringY = gsap.quickTo(ring, "y", { duration: 0.55, ease: "power3" });
+
+        const HOT = "a, button, .credential-card, .cert-card, .work-item, input, [data-magnetic]";
         let shown = false;
+
         window.addEventListener("mousemove", e => {
-            if (!shown) { shown = true; gsap.to(dot, { opacity: 1, duration: 0.3 }); }
-            xTo(e.clientX);
-            yTo(e.clientY);
+            if (!shown) {
+                shown = true;
+                gsap.to([dot, ring], { opacity: 1, duration: 0.3 });
+            }
+            dotX(e.clientX);
+            dotY(e.clientY);
+            ringX(e.clientX);
+            ringY(e.clientY);
         }, { passive: true });
+
         document.addEventListener("mouseover", e => {
-            if (e.target.closest("a, button, .credential-card, .cert-card")) {
-                gsap.to(dot, { scale: 3.4, duration: 0.35, ease: "power3.out" });
+            if (e.target.closest(HOT)) {
+                ring.classList.add("is-hot");
+                gsap.to(ring, { scale: 1.7, duration: 0.35, ease: "power3.out" });
+                gsap.to(dot, { scale: 0.5, duration: 0.35, ease: "power3.out" });
             }
         });
         document.addEventListener("mouseout", e => {
-            if (e.target.closest("a, button, .credential-card, .cert-card")) {
+            if (e.target.closest(HOT)) {
+                ring.classList.remove("is-hot");
+                gsap.to(ring, { scale: 1, duration: 0.35, ease: "power3.out" });
                 gsap.to(dot, { scale: 1, duration: 0.35, ease: "power3.out" });
             }
         });
-        document.addEventListener("mouseleave", () => gsap.to(dot, { opacity: 0, duration: 0.25 }));
-        document.addEventListener("mouseenter", () => { if (shown) gsap.to(dot, { opacity: 1, duration: 0.25 }); });
+        /* Little squeeze on press. */
+        document.addEventListener("mousedown", () => gsap.to(ring, { scale: 0.75, duration: 0.18, ease: "power2.out" }));
+        document.addEventListener("mouseup", () => gsap.to(ring, { scale: ring.classList.contains("is-hot") ? 1.7 : 1, duration: 0.3, ease: "power3.out" }));
+
+        document.addEventListener("mouseleave", () => gsap.to([dot, ring], { opacity: 0, duration: 0.25 }));
+        document.addEventListener("mouseenter", () => { if (shown) gsap.to([dot, ring], { opacity: 1, duration: 0.25 }); });
     }
 
     /* ------------------------------------------------------------------ */

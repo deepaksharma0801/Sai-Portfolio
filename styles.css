@@ -1717,16 +1717,33 @@ a:focus-visible .roll > span:nth-child(2) {
 /* Custom cursor dot: GSAP-driven, fine pointers only, native cursor kept. */
 .cursor-dot {
     position: fixed;
-    top: -5px;
-    left: -5px;
-    z-index: 300;
-    width: 10px;
-    height: 10px;
+    top: -3px;
+    left: -3px;
+    z-index: 301;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #fff;
-    mix-blend-mode: difference;
+    background: var(--ivory);
     pointer-events: none;
     opacity: 0;
+}
+
+.cursor-ring {
+    position: fixed;
+    top: -17px;
+    left: -17px;
+    z-index: 300;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(245, 240, 232, 0.45);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: border-color 0.25s ease;
+}
+
+.cursor-ring.is-hot {
+    border-color: rgba(215, 181, 109, 0.9);
 }
 
 /* ---------------------------------------------------------------------------
@@ -2200,7 +2217,9 @@ html.lenis body {
     opacity: 1;
 }
 
-@media (max-width: 900px) {
+/* Below 1100px the CTA buttons row can run underneath the absolute badge, so
+   drop it into normal flow well before that happens. */
+@media (max-width: 1100px) {
     .spin-badge {
         position: static;
         margin-top: 26px;
