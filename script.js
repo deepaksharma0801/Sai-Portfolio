@@ -46,13 +46,6 @@ if (clockEls.length) {
     window.setInterval(tick, 1000);
 }
 
-document.querySelectorAll(".spin-badge").forEach(badge => {
-    badge.addEventListener("click", () => {
-        if (window.__lenis) window.__lenis.scrollTo(0);
-        else window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
-    });
-});
-
 const revealItems = document.querySelectorAll(".luxury-reveal");
 if (prefersReducedMotion || !("IntersectionObserver" in window)) {
     revealItems.forEach(item => item.classList.add("is-visible"));

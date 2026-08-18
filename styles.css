@@ -2123,65 +2123,11 @@ html.lenis body {
 }
 
 /* ---------------------------------------------------------------------------
-   Creative elements: rotating scroll-top badge, footer clock, card glow.
+   Creative elements: footer clock, card glow.
 --------------------------------------------------------------------------- */
 
 .footer-cta {
     position: relative;
-}
-
-.spin-badge {
-    position: absolute;
-    right: 0;
-    top: clamp(18px, 4vw, 44px);
-    width: clamp(96px, 10vw, 132px);
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--dim);
-    cursor: pointer;
-}
-
-.spin-badge svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    animation: badge-spin 18s linear infinite;
-}
-
-.spin-badge text {
-    fill: var(--dim);
-    font-family: var(--mono);
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-}
-
-.spin-badge-arrow {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    color: var(--gold);
-    font-size: 1rem;
-    transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
-}
-
-.spin-badge:hover .spin-badge-arrow,
-.spin-badge:focus-visible .spin-badge-arrow {
-    border-color: rgba(215, 181, 109, 0.55);
-    background: rgba(245, 240, 232, 0.045);
-}
-
-@keyframes badge-spin {
-    to { transform: rotate(360deg); }
 }
 
 .footer-time {
@@ -2215,16 +2161,6 @@ html.lenis body {
 
 .glow-host:hover .glow {
     opacity: 1;
-}
-
-/* Below 1100px the CTA buttons row can run underneath the absolute badge, so
-   drop it into normal flow well before that happens. */
-@media (max-width: 1100px) {
-    .spin-badge {
-        position: static;
-        margin-top: 26px;
-        justify-self: start;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
